@@ -36,6 +36,8 @@
       <sourceFolder url="file://$MODULE_DIR$/phone_app/android/app/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/phone_app/build/app/generated/not_namespaced_r_class_sources/debug/processDebugResources/r" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/phone_app/build/app/generated/source/buildConfig/debug" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
+      <excludeFolder url="file://$MODULE_DIR$/phone_app/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/phone_app/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/phone_app/build" />
     </content>
@@ -158,5 +160,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Dart SDK" level="project" />
+    <orderEntry type="library" name="Dart Packages" level="project" />
   </component>
 </module>

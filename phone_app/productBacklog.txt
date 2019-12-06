@@ -16,7 +16,7 @@ ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : The main interface of the app. It should display profile pic with "Hi $User" next to it
 at the top-right, with an add client button at the top-right, the current clients in the body. It shows
 the clients in the most-recent order and the trainer can change the sort order to be A -> Z or Z -> A
-by last name.
+by last name, and status (Active/InActive).
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.02 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
@@ -38,7 +38,7 @@ ISSUE    : When a client card is clicked, the screen shows the client applicatio
 is the same but the new client button switched to new assessement. If an assessment has been done,
 the button shows new Workout Program instead. The body will display workout program cards and an
 assessement card. If a workout program is swiped left, it is deleted. A client's info also includes
-trainer, phone number, and e-mail.
+trainer, phone number, e-mail, and whether a client is Active or not.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.04 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
@@ -267,7 +267,7 @@ their availablility and clients seeing that availablility.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.27 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Desktop Integration [End of the version 4.0 (End of the whole project)]
+NAME     : Desktop Integration [End of the version 4.0 (App Basically finished. Following user stories are optional)]
 OWNER    : 
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :  
@@ -275,19 +275,21 @@ ISSUE    : Allow full communication and integration between the desktop app and 
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.28 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : 
+NAME     : 3 Systems
 OWNER    : 
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :  
-ISSUE    : 
+ISSUE    : Create three different versions of our software. An individual package (no custom app, 15 clients,
+1 trainer/director), studio package (50 clients [extra $1 per client until 200 clients], 20 trainers), enterprise
+package (unlimited clients, 100 trainers $1 per extra trainer).
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.29 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : 
+NAME     : Managing Software
 OWNER    : 
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :  
-ISSUE    : 
+ISSUE    : Create a desktop Application that provides an interface to access companies information and manage it.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.30 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
