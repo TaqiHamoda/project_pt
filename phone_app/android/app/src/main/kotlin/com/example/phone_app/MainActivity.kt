@@ -1,4 +1,4 @@
-package com.example.project_pt
+package com.example.phone_app
 
 import android.os.Bundle
 
