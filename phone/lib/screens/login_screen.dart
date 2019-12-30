@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phone/screens/register_page.dart';
+import 'package:phone/screens/register_screen.dart';
 import 'director_screen.dart';
 import 'trainer_screen.dart';
 import 'user_screen.dart';
