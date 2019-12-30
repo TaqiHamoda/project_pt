@@ -1,0 +1,389 @@
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.00 : STATUS : InProgress
+NAME     : Log-In
+OWNER    : Youssef
+PRIORITY : 2
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Create the login page. There should be a e-mail field, a password field, a forgot password field,
+a register button. The current username and password it accepts are "username@gmail.com" and "password".
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.01 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Trainer Application
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : The main interface of the app. It should display profile pic with "Hi $User" next to it
+at the top-right, with an add client button at the top-right, the current clients in the body. It shows
+the clients in the most-recent order and the trainer can change the sort order to be A -> Z or Z -> A
+by last name, and status (Active/InActive).
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.02 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Client Cards
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : The clients card has a random color assigned to the theme of the card. The cards will be
+displayed in the main application. Each client card displays the name of the client, their most recent
+weight measurement, their three goals listed, and the date they started.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.03 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Client Class
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : When a client card is clicked, the screen shows the client application. The profile part
+is the same but the new client button switched to new assessement. If an assessment has been done,
+the button shows new Workout Program instead. The body will display workout program cards and an
+assessement card. If a workout program is swiped left, it is deleted. A client's info also includes
+trainer, phone number, e-mail, and whether a client is Active or not.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.04 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Assessment Cards
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : The assessment cards will show the different tests and their scores, along with
+the date the assessment has been done.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.05 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Assessment Application
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : The assessment application will be created by the supervisors. For now,
+I will provide a custom template.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.06 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Workout Program Cards
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : The workout program cards shows the workout split (e.g. upperbody-lowerbody),
+the number of the workout program (e.g. Workout Program 2), and the frequency per week (e.g. 2 times a week,
+3 times a week).
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.07 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Workout Program Application
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : The workout program has a new workout button at the top and it fully shows the workouts added
+in the body. The warm-up is written by the trainer. There is a standard warm-up button which will display walking
+on the treadmill at incline of 9 and a speed of 3. The workouts are like an excel table. The columns go as such:
+Exercise, Reps, Sets, Rest (min), RPE, Tempo, Notes.
+The rows are set by the trainer. The notes column has only 1 row. There is a share button
+at the bottom right corner. When clicked, it shows: it sends a pdf file to the email of the client that contains
+the workout program.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.08 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : PDF
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : The pdf produced by the workout program will have the trainer's name at the top right,
+the client's name under it, the title will be the number of the workout program with the split in
+parantheses. The body will include definition of RPE and a standard warm-up. The body will include
+ the workout name (e.g. Upper-Body) with the exercise table under it.
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.09 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : PAR-Q
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : When a new client is initiated, the client must sign the PAR-Q document in order
+to be accessible and start adding assessments and so on. The PARQ document signed will be available
+to see but not to edit. A client cannot be deleted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.10 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Access Tree
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Directors have access to edit/add/remove directors, supervisors, trainers and to edit/add all clients.
+Supervisors have access to edit/add/remove supervisors, trainers and to edit/add all clients. Trainers have access to
+edit/add their own clients.
+
+Supervisors and directors extend trainers. Each of the classes has its own application.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.11 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Trainers
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Create a trainers class. Basically same functionality as the main application.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.12 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Director Class
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : A directors application will show the following cards: directors, supervisor, trainers,
+and clients. The directors will show cards for the directors with an add directors button, the supervisors
+will show supervisors with an add supervisors button, the trainers will show the trainers with an add
+trainers button. The clients will show all clients with an add clients button. When the add client button
+is clicked, the director will have to choose a director, a supervisor, or a trainer to train that client. The client will
+appear to the supervisor/trainer chosen in their client list.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.13 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Supervisor Class
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : A supervisors application will show the following cards: supervisors, trainers, and clients.
+It will be the same functionality as the directors. The supervisors client application can allow them to
+choose to preview their own clients or all clients.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.14 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Save [End of version 1.0]
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Everytime a new action happens, it is saved in a file. Every company has it's own
+folder. Inside the company folder, there is a clients folder, a trainers folder, a supervisors folder,
+a directors folder. Inside of each folder is a file with the respective person's name, except for the
+clients. The clients folder has a folder for each client. Each client folder has a file for workout programs,
+assessment, and the PAR-Q pdf.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.15 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Server
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Setup a server
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.16 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Configure Internet Access
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Make the app online.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.17 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Encryption
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Set up a way to encrypt the information given so that it is more secure (Vignere Cipher).
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.18 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Adding Company [End of version 2.0]
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Each time a company purchases the App, they can go into the register button,
+input the confirmation code, upload a picture of their logo to be shown at the top of the app,
+and create a director.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.19 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Messaging
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Implement a messaging system such that a client can communicate with their trainer through it.
+Only the trainer and client can see those messages. No one else in the command chain can (For privacy reasons).
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.20 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Fire Base
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Implement firebase analytics
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.21 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Data Visualization
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Allow a the trainers to see graphs related to their clients progress. (E.g. weight loss/gain,
+strength in exercises [with relation to reps/sets], improvement in cardio [with relation to distance/time]).
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.22 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Fitness Apps
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Add Integration with other fitness apps (e.g. MyFitnessPal)
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.23 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : In-Depth Data
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Directors and Supervisors are able to view much more in depth data about all trainers (including themselves).
+How many active (had a session in the past month) client each trainer has, on average how many hours a trainer works per:
+day/week/month/3-month/6-month/year, how much progress clients have progressed with a trainer, number of client
+increase/decrease per: month/3-month/6-month/year.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.24 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Custom Apps [End of version 3.0 (commence desktop application)]
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Allow the ability to create a custom app for each company contracted on the play store and app store.
+Basically same old app but with different name and logo. Will simplify a lot of issues on the back-end.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.25 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Calendar
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Implement a calendar option.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.26 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Calendar Functionality
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Allow events to be added and removed in the calendar. Allow trainers to register clients in
+the calendar and that change will be reflected in the client's calendar as well. Allow trainers to input
+their availablility and clients seeing that availablility.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.27 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Desktop Integration [End of the version 4.0 (App Basically finished. Following user stories are optional)]
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Allow full communication and integration between the desktop app and the phone/tablet app.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.28 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : 3 Systems
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Create three different versions of our software. An individual package (no custom app, 15 clients,
+1 trainer/director), studio package (50 clients [extra $1 per client until 200 clients], 20 trainers), enterprise
+package (unlimited clients, 100 trainers $1 per extra trainer).
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.29 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Managing Software
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Create a desktop Application that provides an interface to access companies information and manage it.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.30 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     :
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    :
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.31 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     :
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    :
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.32 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     :
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    :
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.33 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     :
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    :
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.34 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     :
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    :
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.35 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     :
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    :
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.36 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     :
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    :
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.37 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     :
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    :
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.38 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     :
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    :
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.39 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     :
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    :
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.40 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     :
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    :
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.41 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     :
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    :
+--------------------------------------------------------------------------

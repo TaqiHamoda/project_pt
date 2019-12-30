@@ -1,0 +1,4 @@
+Directories:
+- screens: The screen that the user will see in the front end, such as a login page.
+- components (may be split up further): Custom widgets, a constants file (if needed), any classes such as a
+                                        User or Trainer class.
