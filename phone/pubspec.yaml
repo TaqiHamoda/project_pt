@@ -17,7 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  flutter_svg: ^0.15.0
+  random_color: ^1.0.3
   flutter:
     sdk: flutter
 
