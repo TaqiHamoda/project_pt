@@ -14,7 +14,7 @@ OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : The main interface of the app. It should display profile pic with "Hi $User" next to it
-at the top-right, with an add client button at the top-right, the current clients in the body. It shows
+at the top-right, with an add client button, the current clients in the body. It shows
 the clients in the most-recent order and the trainer can change the sort order to be A -> Z or Z -> A
 by last name, and status (Active/InActive).
 --------------------------------------------------------------------------
@@ -88,7 +88,7 @@ NAME     : PDF
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : The pdf produced by the workout program will have the trainer's name at the top right,
+ISSUE    : The pdf produced by the workout program will have the trainer's name at the top left,
 the client's name under it, the title will be the number of the workout program with the split in
 parantheses. The body will include definition of RPE and a standard warm-up. The body will include
  the workout name (e.g. Upper-Body) with the exercise table under it.

@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phone/screens/register_screen.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'director_screen.dart';
 import 'trainer_screen.dart';
 import 'user_screen.dart';
 import 'forgot_password_screen.dart';
+import 'local_users.dart';
+import 'users.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,8 +14,32 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String userEmail = '';
-  String userPassword = '';
+  String _userEmail = '';
+  String _userPassword = '';
+  bool error = false;
+
+  void logIn(){
+    createUsers();
+
+    for(User user in users){
+      if((user.email == this._userEmail) && user.signIn(this._userPassword)){
+
+        if(user is Client){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => UserPage()));
+        }
+
+        else if(user is Trainer){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => TrainerPage()));
+        }
+      }
+    }
+
+    setState(() {
+      this.error = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 onChanged: (value) {
-                  userEmail = value;
+                  _userEmail = value;
                 },
               ),
             ),
@@ -90,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 onChanged: (value) {
-                  userPassword = value;
+                  _userPassword = value;
                 },
               ),
             ),
@@ -107,27 +132,23 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            Container(
-              width: 250.0,
-              height: 50.0,
-              decoration: BoxDecoration(
-                color: Colors.lightBlue[50].withOpacity(0.1),
-                border: Border(
-                  top: BorderSide(width: 2.0, color: Colors.lightBlue.shade50),
-                  bottom: BorderSide(width: 2.0, color: Colors.lightBlue.shade50),
-                  right: BorderSide(width: 2.0, color: Colors.lightBlue.shade50),
-                  left: BorderSide(width: 2.0, color: Colors.lightBlue.shade50)
+            InkWell(
+              onTap: () { this.logIn(); },
+              child: Container(
+                width: 250.0,
+                height: 50.0,
+                decoration: BoxDecoration(
+                  color: Colors.lightBlue[50].withOpacity(0.1),
+                  border: Border(
+                    top: BorderSide(width: 2.0, color: Colors.lightBlue.shade50),
+                    bottom: BorderSide(width: 2.0, color: Colors.lightBlue.shade50),
+                    right: BorderSide(width: 2.0, color: Colors.lightBlue.shade50),
+                    left: BorderSide(width: 2.0, color: Colors.lightBlue.shade50)
+                  ),
+
                 ),
 
-              ),
-
-              child: Center(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TrainerPage()));
-                    // for now, eventually will have bunch of if statements to determine user type.
-                  },
+                child: Center(
                   child: Text('Log-in',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -139,6 +160,19 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
+
+            SizedBox(height: 20,),
+
+            Visibility(
+              visible: this.error,
+              child: Text('The E-mail or the password is incorrect',
+                style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0),
+                textAlign: TextAlign.center,
+              ),
+            )
           ],
         ),
       ),
