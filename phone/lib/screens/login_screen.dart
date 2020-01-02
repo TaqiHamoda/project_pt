@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: InkWell(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => UserPage()));
+                        MaterialPageRoute(builder: (context) => TrainerPage()));
                     // for now, eventually will have bunch of if statements to determine user type.
                   },
                   child: Text('Log-in',
