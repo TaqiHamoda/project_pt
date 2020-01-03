@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:phone/screens/messages_screen.dart';
 import 'package:phone/screens/user_card.dart';
 import 'user_card.dart';
+import 'users.dart';
+import 'local_users.dart';
+
 
 
 class TrainerPage extends StatefulWidget {
@@ -9,34 +13,119 @@ class TrainerPage extends StatefulWidget {
 }
 
 class _TrainerPageState extends State<TrainerPage> {
+
+  TextEditingController controller = new TextEditingController();
+  String filter;
+
+  // will add search functionality later
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      appBar: AppBar(
+        title: Text(
+          'Trainer',
+          style: TextStyle(
+            fontSize: 30.0,
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.near_me,
+            ),
+            onPressed: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MessagePage()));
+            },
+          ),
+        ],
+      ),
+      body: ListView(
         children: <Widget>[
-          Expanded(
-            child: Container(
-              color: Colors.lightBlue,
-              child: Icon(
-                Icons.near_me,
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Search by name',
+              prefixIcon: Icon(
+                Icons.search,
               ),
-              height: 20.0,
-              alignment: Alignment.centerRight,
-              padding: EdgeInsets.only(right: 20.0, top: 20.0),
+            ),
+            controller: controller,
+          ),
+          GridView.count(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            padding: EdgeInsets.all(10),
+            children: <Widget>[
+              Hero(
+                tag: 'dash',
+                child: UserCard(
+                  name: 'Youssef',
+                  photo: 'images/temp-logo.png'
+                ),
+              ),
+              UserCard(
+                name: 'Youssef Nafei',
+                photo: 'images/temp-logo.png'
+              ),
+              UserCard(
+                name: 'Youssef Nafei',
+                photo: 'images/temp-logo.png'
+              ),
+              UserCard(
+                name: 'Youssef Nafei',
+                photo: 'images/temp-logo.png'
+              ),
+              UserCard(
+                name: 'Youssef Nafei',
+                photo: 'images/temp-logo.png'
+              ),
+              UserCard(
+                name: 'Youssef Nafei',
+                photo: 'images/temp-logo.png'
+              ),
+              UserCard(
+                name: 'Youssef Nafei',
+                photo: 'images/temp-logo.png'
+              ),
+              UserCard(
+                name: 'Youssef Nafei',
+                photo: 'images/temp-logo.png'
+              ),
+              UserCard(
+                name: 'Youssef Nafei',
+                photo: 'images/temp-logo.png'
+              ),
+              UserCard(
+                name: 'Youssef Nafei',
+                photo: 'images/temp-logo.png'
+              ),
+              UserCard(
+                name: 'Youssef Nafei',
+                photo: 'images/temp-logo.png'
+              ),
+              UserCard(
+                name: 'Youssef Nafei',
+                photo: 'images/temp-logo.png'
+              ),
+            ],
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            title: Text('Schedule'),
+            icon: Icon(
+              Icons.schedule,
             ),
           ),
-          Expanded(
-            flex: 6,
-            child: UserCard()
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.lightBlue,
-              child: Icon(
-                Icons.near_me,
-              ),
-              height: 20.0,
+          BottomNavigationBarItem(
+            title: Text('Add Client'),
+            icon: Icon(
+              Icons.add,
             ),
           ),
         ],
