@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'user_details_card.dart';
+import 'client_details_card.dart';
+import '../components/users.dart';
 
-class UserCard extends StatelessWidget {
+class ClientCard extends StatelessWidget {
 
-  UserCard({@required this.name, @required this.photo});
+  ClientCard({@required this.client, @required this.name, @required this.photo});
 
   final String name;
   final String photo; // photo location
+  final Client client;
 
 
   @override
@@ -19,7 +21,13 @@ class UserCard extends StatelessWidget {
               onTap: (){
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) =>
-                        UserDetails(this.name,this.photo)));
+                        ClientDetails(
+                          client: this.client,
+                          name: this.name,
+                          photo: this.photo,
+                        ),
+                    ),
+                );
               },
               child: Image.asset(
                 this.photo,

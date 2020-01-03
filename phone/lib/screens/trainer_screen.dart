@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:phone/screens/messages_screen.dart';
-import 'package:phone/screens/user_card.dart';
-import 'user_card.dart';
-import 'users.dart';
+import 'package:phone/screens/client_card.dart';
+import 'client_card.dart';
+import '../components/users.dart';
 
 class TrainerPage extends StatefulWidget {
   Trainer user;
@@ -26,7 +26,8 @@ class _TrainerPageState extends State<TrainerPage> {
   void createClients() {
     for(Client client in this.user.clients){
 
-      this.clients.add(UserCard(
+      this.clients.add(ClientCard(
+          client: client,
           name: client.firstName + " " + client.lastName,
           photo: 'images/profile.png'));
     }

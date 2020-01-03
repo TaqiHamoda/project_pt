@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:phone/screens/user_card.dart';
+import 'package:phone/screens/client_card.dart';
 import 'messages_screen.dart';
+import '../components/users.dart';
 
-class UserDetails extends StatelessWidget {
+class ClientDetails extends StatelessWidget {
 
-  UserDetails(this.name, this.photo);
+  ClientDetails({@required this.client, @required this.name, @required this.photo});
 
   final String name;
   final String photo;
+  final Client client;
 
   @override
   Widget build(BuildContext context) {

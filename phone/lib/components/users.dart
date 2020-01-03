@@ -47,10 +47,20 @@ class Trainer extends User{
 
 }
 
+class Director extends Trainer{
+  List<Trainer> trainers;
+
+  Director(String firstName, String lastName, String email, String password, String cellNum, {age = ''}) :
+        super(firstName, lastName, email, password, cellNum, age: age);
+
+  void addTrainer(Trainer trainer){
+    this.trainers.add(trainer);
+  }
+}
+
 
 List<User> localUsers(){
   Trainer trainer = Trainer('Taqi', 'Hamoda', 'taqi@app.com', 'Bebop', '1234567890');
-  Client bob = Client('Bob', 'James', 'bob@app.com', 'Bebop', '1234567890', trainer);
   Client james = Client('James', 'Bob', 'james@app.com', 'Bebop', '1234567890', trainer);
   Client juan = Client('Juan', 'Martinez', 'juan@app.com', 'Bebop', '1234567890', trainer);
   Client sidney = Client('Sidney', 'Austaralia', 'sidney@app.com', 'Bebop', '1234567890', trainer);
@@ -61,7 +71,6 @@ List<User> localUsers(){
   Client jotaro = Client('Jotaro', 'Kujo', 'jotaro@app.com', 'Bebop', '1234567890', trainer);
   Client johnny = Client('Johnny', 'Joestar', 'johnny@app.com', 'Bebop', '1234567890', trainer);
 
-  trainer.addClient(bob);
   trainer.addClient(james);
   trainer.addClient(juan);
   trainer.addClient(sidney);
@@ -73,5 +82,5 @@ List<User> localUsers(){
   trainer.addClient(johnny);
 
 
-  return [trainer, bob, james, juan, sidney, richard, jonathan, dio, joseph, jotaro, johnny];
+  return [trainer, james, juan, sidney, richard, jonathan, dio, joseph, jotaro, johnny];
 }
