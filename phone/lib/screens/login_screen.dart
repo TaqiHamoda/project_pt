@@ -19,14 +19,17 @@ class _LoginPageState extends State<LoginPage> {
   bool error = false;
 
   void logIn() {
+    bool success = false;
     createUsers();
 
     for (User user in createUsers()) {
       if ((user.email == this._userEmail) && user.signIn(this._userPassword)) {
         if (user is Client) {
+          success = true;
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => UserPage()));
         } else if (user is Trainer) {
+          success = true;
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => TrainerPage()));
         }
@@ -34,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     setState(() {
-      this.error = true;
+      this.error =  !success;
     });
   }
 
