@@ -7,7 +7,7 @@ import 'client_card.dart';
 import '../components/users.dart';
 
 class TrainerPage extends StatefulWidget {
-  Trainer user;
+  final Trainer user;
 
   TrainerPage(this.user);
 
@@ -16,14 +16,13 @@ class TrainerPage extends StatefulWidget {
 }
 
 class _TrainerPageState extends State<TrainerPage> {
-  TextEditingController controller = new TextEditingController();
-  List<Widget> clients = [];
-  String filter;
+  List<Widget> clients = []; // original client list
+  List<Widget> tempClients = []; // filtered client list
+  String searchText = '';
   Trainer user;
 
-  _TrainerPageState(this.user){
-    createClients();
-  }
+
+  _TrainerPageState(this.user);
 
   void createClients() {
     for(Client client in this.user.clients){
@@ -33,6 +32,28 @@ class _TrainerPageState extends State<TrainerPage> {
           name: client.firstName + " " + client.lastName,
           photo: 'images/profile.png'));
     }
+    tempClients.addAll(clients);
+  }
+
+  List<Widget> filterClients(String filterText){
+    if(filterText == ''){
+      return clients;
+    }
+    List<Widget> filteredClients = [];
+    for(ClientCard client in this.clients){
+      String clientName = client.name.toLowerCase();
+      if(clientName.contains(filterText.toLowerCase())){
+        filteredClients.add(client);
+      }
+    }
+    return filteredClients;
+
+  }
+
+  @override
+  void initState(){
+    createClients();
+    super.initState();
   }
 
   @override
@@ -84,14 +105,19 @@ class _TrainerPageState extends State<TrainerPage> {
                 Icons.search,
               ),
             ),
-            controller: controller,
+            onChanged: (value){
+              this.searchText = value;
+              setState(() {
+                tempClients = filterClients(searchText);
+              });
+            },
           ),
           GridView.count(
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             crossAxisCount: 2,
             padding: EdgeInsets.all(10),
-            children: this.clients,
+            children: tempClients,
           ),
         ],
       ),
