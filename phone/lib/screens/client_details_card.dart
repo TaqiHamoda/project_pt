@@ -23,7 +23,7 @@ class ClientDetails extends StatelessWidget {
           IconButton(
             onPressed: (){
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MessagePage()));
+                  MaterialPageRoute(builder: (context) => MessagePage(this.client)));
             },
             icon: Icon(
               Icons.near_me,

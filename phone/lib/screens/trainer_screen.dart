@@ -89,7 +89,7 @@ class _TrainerPageState extends State<TrainerPage> {
             ),
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MessagePage()));
+                  MaterialPageRoute(builder: (context) => MessagePage(this.user)));
             },
           ),
         ],
