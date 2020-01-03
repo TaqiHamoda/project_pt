@@ -39,16 +39,16 @@ class _TrainerPageState extends State<TrainerPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => SettingsPage()));
-        },
+        onPressed: () {},
       ),
 
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset('images/profile.png'),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SettingsPage()));
+          },
         ),
         centerTitle: true,
         title: Text(
