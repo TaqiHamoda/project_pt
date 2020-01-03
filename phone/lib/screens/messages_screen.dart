@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phone/screens/new_message_screen.dart';
 import 'package:phone/components/users.dart';
+import 'message_card.dart';
 
 class MessagePage extends StatefulWidget {
   final User user;
@@ -17,7 +18,13 @@ class _MessagePageState extends State<MessagePage> {
   _MessagePageState(this.user);
 
   List<Widget> createMessageList(List users){
-
+    List<Widget> messageWidgets = [];
+    for(User person in users){
+      String name = person.firstName + ' ' + person.lastName;
+      MessageCard mc = MessageCard(name, 'images/profile.png');
+      messageWidgets.add(mc);
+    }
+    return messageWidgets;
   }
 
   @override
@@ -32,9 +39,7 @@ class _MessagePageState extends State<MessagePage> {
         ),
       ),
       body: ListView(
-        children: <Widget>[
-
-        ],
+        children: createMessageList(user.messageList),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
