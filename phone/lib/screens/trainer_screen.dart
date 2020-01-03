@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phone/screens/messages_screen.dart';
 import 'package:phone/screens/client_card.dart';
+import 'package:phone/screens/settings_screen.dart';
 import 'client_card.dart';
 import '../components/users.dart';
 
@@ -38,7 +39,10 @@ class _TrainerPageState extends State<TrainerPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => SettingsPage()));
+        },
       ),
 
       appBar: AppBar(
