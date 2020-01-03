@@ -1,3 +1,5 @@
+import 'dart:html';
+
 class User{
   String firstName;
   String lastName;
@@ -43,3 +45,10 @@ class Trainer extends User{
 
 }
 
+
+List<User> createUsers(){
+  Trainer trainer = Trainer('Taqi', 'Hamoda', 'taqi@app.com', 'passwordbb', '1234567890');
+  Client client = Client('Bob', 'James', 'bob@app.com', 'Bebop', '1234567890', trainer);
+
+  return [trainer, client];
+}
