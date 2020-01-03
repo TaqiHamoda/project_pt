@@ -1,5 +1,3 @@
-import 'dart:html';
-
 class User{
   String firstName;
   String lastName;

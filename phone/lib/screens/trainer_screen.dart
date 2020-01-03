@@ -22,6 +22,7 @@ class _TrainerPageState extends State<TrainerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),),
       appBar: AppBar(
         title: Text(
           'Trainer',
@@ -117,15 +118,15 @@ class _TrainerPageState extends State<TrainerPage> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            title: Text('Schedule'),
+            title: Text('Home'),
             icon: Icon(
-              Icons.schedule,
+              Icons.home,
             ),
           ),
           BottomNavigationBarItem(
-            title: Text('Add Client'),
+            title: Text('Schedule'),
             icon: Icon(
-              Icons.add,
+              Icons.calendar_today,
             ),
           ),
         ],
