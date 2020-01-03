@@ -16,6 +16,7 @@ class UserDetails extends StatelessWidget {
         title: Text(
           '$name\'s profile'
         ),
+        centerTitle: true,
         actions: <Widget>[
           IconButton(
             onPressed: (){

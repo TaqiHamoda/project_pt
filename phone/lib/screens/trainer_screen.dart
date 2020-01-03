@@ -22,8 +22,13 @@ class _TrainerPageState extends State<TrainerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: (){},
+      ),
+
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Trainer',
           style: TextStyle(
