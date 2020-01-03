@@ -5,6 +5,7 @@ class User{
   String _password;
   String phoneNum;
   String age;
+  List<User> messageList = [];
 
   User(firstName, lastName, email, password, cellNum, {age = ''}){
     this.firstName = firstName;
@@ -28,6 +29,7 @@ class Client extends User{
   Client(String firstName, String lastName, String email, String password, String cellNum, Trainer trainer, {age = ''}) :
         super(firstName, lastName, email, password, cellNum, age: age){
     this.trainer = trainer;
+    this.messageList.add(trainer);
   }
 
   void addWorkout(){}
@@ -43,6 +45,10 @@ class Trainer extends User{
 
   void addClient(Client client){
     this.clients.add(client);
+  }
+
+  void addClientMessage(Client client){
+    this.messageList.add(client);
   }
 
 }
@@ -80,6 +86,7 @@ List<User> localUsers(){
   trainer.addClient(dio);
   trainer.addClient(jotaro);
   trainer.addClient(johnny);
+  trainer.messageList.addAll(trainer.clients); // for now.
 
 
   return [trainer, james, juan, sidney, richard, jonathan, dio, joseph, jotaro, johnny];

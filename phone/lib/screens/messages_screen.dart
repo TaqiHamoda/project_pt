@@ -16,6 +16,10 @@ class _MessagePageState extends State<MessagePage> {
 
   _MessagePageState(this.user);
 
+  List<Widget> createMessageList(List users){
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +32,9 @@ class _MessagePageState extends State<MessagePage> {
         ),
       ),
       body: ListView(
+        children: <Widget>[
 
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
