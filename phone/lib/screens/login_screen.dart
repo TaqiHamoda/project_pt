@@ -5,7 +5,6 @@ import 'director_screen.dart';
 import 'trainer_screen.dart';
 import 'user_screen.dart';
 import 'forgot_password_screen.dart';
-import 'local_users.dart';
 import 'users.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,18 +19,17 @@ class _LoginPageState extends State<LoginPage> {
 
   void logIn() {
     bool success = false;
-    createUsers();
 
-    for (User user in createUsers()) {
+    for (User user in localUsers()) {
       if ((user.email == this._userEmail) && user.signIn(this._userPassword)) {
         if (user is Client) {
           success = true;
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => UserPage()));
+              context, MaterialPageRoute(builder: (context) => UserPage(user)));
         } else if (user is Trainer) {
           success = true;
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => TrainerPage()));
+              context, MaterialPageRoute(builder: (context) => TrainerPage(user)));
         }
       }
     }

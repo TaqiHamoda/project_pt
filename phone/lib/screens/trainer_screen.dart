@@ -3,31 +3,48 @@ import 'package:phone/screens/messages_screen.dart';
 import 'package:phone/screens/user_card.dart';
 import 'user_card.dart';
 import 'users.dart';
-import 'local_users.dart';
-
-
 
 class TrainerPage extends StatefulWidget {
+  Trainer user;
+
+  TrainerPage(this.user);
+
   @override
-  _TrainerPageState createState() => _TrainerPageState();
+  _TrainerPageState createState() => _TrainerPageState(this.user);
 }
 
 class _TrainerPageState extends State<TrainerPage> {
-
   TextEditingController controller = new TextEditingController();
+  List<Widget> clients = [];
   String filter;
+  Trainer user;
 
-  // will add search functionality later
+  _TrainerPageState(this.user){
+    createClients();
+  }
+
+  void createClients() {
+    for(Client client in this.user.clients){
+
+      this.clients.add(UserCard(
+          name: client.firstName + " " + client.lastName,
+          photo: 'images/profile.png'));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: (){},
+        onPressed: () {},
       ),
 
       appBar: AppBar(
+        leading: IconButton(
+          icon: Image.asset('images/profile.png'),
+          onPressed: () {},
+        ),
         centerTitle: true,
         title: Text(
           'Trainer',
@@ -40,13 +57,14 @@ class _TrainerPageState extends State<TrainerPage> {
             icon: Icon(
               Icons.near_me,
             ),
-            onPressed: (){
+            onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => MessagePage()));
             },
           ),
         ],
       ),
+
       body: ListView(
         children: <Widget>[
           TextField(
@@ -64,59 +82,7 @@ class _TrainerPageState extends State<TrainerPage> {
             shrinkWrap: true,
             crossAxisCount: 2,
             padding: EdgeInsets.all(10),
-            children: <Widget>[
-              Hero(
-                tag: 'dash',
-                child: UserCard(
-                  name: 'Youssef',
-                  photo: 'images/temp-logo.png'
-                ),
-              ),
-              UserCard(
-                name: 'Youssef Nafei',
-                photo: 'images/temp-logo.png'
-              ),
-              UserCard(
-                name: 'Youssef Nafei',
-                photo: 'images/temp-logo.png'
-              ),
-              UserCard(
-                name: 'Youssef Nafei',
-                photo: 'images/temp-logo.png'
-              ),
-              UserCard(
-                name: 'Youssef Nafei',
-                photo: 'images/temp-logo.png'
-              ),
-              UserCard(
-                name: 'Youssef Nafei',
-                photo: 'images/temp-logo.png'
-              ),
-              UserCard(
-                name: 'Youssef Nafei',
-                photo: 'images/temp-logo.png'
-              ),
-              UserCard(
-                name: 'Youssef Nafei',
-                photo: 'images/temp-logo.png'
-              ),
-              UserCard(
-                name: 'Youssef Nafei',
-                photo: 'images/temp-logo.png'
-              ),
-              UserCard(
-                name: 'Youssef Nafei',
-                photo: 'images/temp-logo.png'
-              ),
-              UserCard(
-                name: 'Youssef Nafei',
-                photo: 'images/temp-logo.png'
-              ),
-              UserCard(
-                name: 'Youssef Nafei',
-                photo: 'images/temp-logo.png'
-              ),
-            ],
+            children: this.clients,
           ),
         ],
       ),
