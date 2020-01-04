@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Workout extends StatefulWidget {
+class ParQ extends StatefulWidget {
   @override
-  _WorkoutState createState() => _WorkoutState();
+  _ParQState createState() => _ParQState();
 }
 
-class _WorkoutState extends State<Workout> {
+class _ParQState extends State<ParQ> {
   @override
   Widget build(BuildContext context) {
     return Container();
   }
 }
+
 

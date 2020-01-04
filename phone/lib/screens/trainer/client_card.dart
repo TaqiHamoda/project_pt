@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'client_details_card.dart';
-import '../components/users.dart';
+import '../../components/users.dart';
 
 class ClientCard extends StatelessWidget {
 

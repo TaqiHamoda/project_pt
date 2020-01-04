@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../components/users.dart';
+import 'package:phone/components/users.dart';
 
 class DirectorPage extends StatefulWidget {
   Director user;

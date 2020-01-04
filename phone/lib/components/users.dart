@@ -1,19 +1,20 @@
+import 'paperwork.dart';
+import 'goals.dart';
+
 class User{
   String firstName;
   String lastName;
   String email;
   String _password;
   String phoneNum;
-  String age;
   List<User> messageList = [];
 
-  User(firstName, lastName, email, password, cellNum, {age = ''}){
+  User(firstName, lastName, email, password, cellNum){
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this._password = password;
     this.phoneNum = cellNum;
-    this.age = age;
   }
 
   bool signIn(String password){
@@ -23,32 +24,47 @@ class User{
 
 class Client extends User{
 
-  List workouts = [];
+  List<Program> programs = [];
   Trainer trainer;
+  List<Goal> goals = [];
 
-  Client(String firstName, String lastName, String email, String password, String cellNum, Trainer trainer, {age = ''}) :
-        super(firstName, lastName, email, password, cellNum, age: age){
+  Client(String firstName, String lastName, String email, String password, String cellNum, Trainer trainer) :
+        super(firstName, lastName, email, password, cellNum){
     this.trainer = trainer;
     this.messageList.add(trainer);
   }
 
-  void addWorkout(){}
+  void addProgram(Program program){
+    this.programs.add(program);
+  }
+
+  void addGoal(String goal){
+    this.goals.add(Goal(goal));
+  }
 
 }
 
 
 class Trainer extends User{
-  List<Client> clients = [];
+  List<Client> _clients = [];
 
-  Trainer(String firstName, String lastName, String email, String password, String cellNum, {age = ''}) :
-        super(firstName, lastName, email, password, cellNum, age: age);
+  Trainer(String firstName, String lastName, String email, String password, String cellNum) :
+        super(firstName, lastName, email, password, cellNum);
 
   void addClient(Client client){
-    this.clients.add(client);
+    this._clients.add(client);
   }
 
   void addClientMessage(Client client){
     this.messageList.add(client);
+  }
+
+  List<Client> getClients(User user){
+    if ((user is Director) || (user == this)){
+      return this._clients;
+    }
+
+    return [];
   }
 
 }
@@ -56,8 +72,8 @@ class Trainer extends User{
 class Director extends Trainer{
   List<Trainer> trainers;
 
-  Director(String firstName, String lastName, String email, String password, String cellNum, {age = ''}) :
-        super(firstName, lastName, email, password, cellNum, age: age);
+  Director(String firstName, String lastName, String email, String password, String cellNum) :
+        super(firstName, lastName, email, password, cellNum);
 
   void addTrainer(Trainer trainer){
     this.trainers.add(trainer);
@@ -86,7 +102,12 @@ List<User> localUsers(){
   trainer.addClient(dio);
   trainer.addClient(jotaro);
   trainer.addClient(johnny);
-  trainer.messageList.addAll(trainer.clients); // for now.
+  trainer.messageList.addAll(trainer._clients); // for now.
+
+
+  james.addGoal("Lose 15 lbs before break");
+  james.addGoal("Run a marathon in January");
+  james.addGoal("Bench 2 plates by the end of the semester");
 
 
   return [trainer, james, juan, sidney, richard, jonathan, dio, joseph, jotaro, johnny];

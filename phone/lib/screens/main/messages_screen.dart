@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phone/screens/new_message_screen.dart';
+import 'package:phone/screens/main/new_message_screen.dart';
 import 'package:phone/components/users.dart';
 import 'message_card.dart';
 

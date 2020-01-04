@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:phone/screens/add_client_screen.dart';
-import 'package:phone/screens/messages_screen.dart';
-import 'package:phone/screens/client_card.dart';
-import 'package:phone/screens/settings_screen.dart';
+import 'package:phone/screens/trainer/add_client_screen.dart';
+import 'package:phone/screens/main/messages_screen.dart';
+import 'package:phone/screens/trainer/client_card.dart';
+import 'package:phone/screens/main/profile_edit.dart';
 import 'client_card.dart';
-import '../components/users.dart';
+import '../../components/users.dart';
 
 class TrainerPage extends StatefulWidget {
   final Trainer user;
@@ -18,14 +18,13 @@ class TrainerPage extends StatefulWidget {
 class _TrainerPageState extends State<TrainerPage> {
   List<Widget> clients = []; // original client list
   List<Widget> tempClients = []; // filtered client list
-  String searchText = '';
   Trainer user;
 
 
   _TrainerPageState(this.user);
 
   void createClients() {
-    for(Client client in this.user.clients){
+    for(Client client in this.user.getClients(user)){
 
       this.clients.add(ClientCard(
           client: client,
@@ -106,9 +105,8 @@ class _TrainerPageState extends State<TrainerPage> {
               ),
             ),
             onChanged: (value){
-              this.searchText = value;
               setState(() {
-                tempClients = filterClients(searchText);
+                tempClients = filterClients(value);
               });
             },
           ),

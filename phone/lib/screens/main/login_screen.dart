@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'director_screen.dart';
-import 'trainer_screen.dart';
-import 'client_screen.dart';
+import '../director/director_screen.dart';
+import '../trainer/trainer_screen.dart';
+import '../trainer/client_screen.dart';
 import 'forgot_password_screen.dart';
-import '../components/users.dart';
+import '../../components/users.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -26,14 +26,14 @@ class _LoginPageState extends State<LoginPage> {
           success = true;
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => ClientPage(user)));
-        } else if (user is Trainer) {
-          success = true;
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => TrainerPage(user)));
         } else if (user is Director){
           success = true;
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => DirectorPage(user)));
+        } else if (user is Trainer) {
+          success = true;
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => TrainerPage(user)));
         }
 
       }
