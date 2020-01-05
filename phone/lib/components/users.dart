@@ -1,5 +1,4 @@
 import 'paperwork.dart';
-import 'goals.dart';
 import 'package:phone/screens/trainer/client_card.dart';
 
 class User{

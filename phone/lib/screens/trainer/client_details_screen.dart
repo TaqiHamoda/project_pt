@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:phone/screens/trainer/client_card.dart';
-import 'package:phone/screens/trainer/trainer_program_screen.dart';
 import '../main/messages_screen.dart';
 import '../../components/users.dart';
+import 'package:phone/screens/main/dialog.dart';
 import 'package:phone/components/paperwork.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientDetails extends StatefulWidget {
   final Client user;
@@ -30,57 +30,20 @@ class _ClientDetails extends State<ClientDetails> {
   void addProgram(BuildContext context) {
     String programName = '';
 
-    showDialog<Null>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return new SimpleDialog(
-          title: const Text('Create a new program'),
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0),
-                labelText: 'Program Name',
-              ),
-              onChanged: (value) {
-                programName = value;
-              },
-            ),
-            Row(children: <Widget>[
-              Container(
-                alignment: Alignment(-1.0, 0.0),
-                child: FlatButton(
-                  child: new Text(
-                    'Ok',
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    setState(() {
-                      this
-                          .client
-                          .addProgram(Program(programName, this.client.goals));
-                    });
-                  },
-                ),
-              ),
-              Container(
-                alignment: Alignment(1.0, 0.0),
-                child: FlatButton(
-                  child: new Text(
-                    'Cancel',
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-            ])
-          ],
-        );
-      },
-    );
+    SpecialDialog(context, 'Create a new program',
+            (){setState(() {
+              this.client.addProgram(Program(programName, this.client.goals));
+            });},
+        [TextField(
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(left: 10.0),
+            labelText: 'Program Name',
+          ),
+          onChanged: (value) {
+            programName = value;
+          },
+        ),]);
+
   }
 
   @override
@@ -127,8 +90,8 @@ class _ClientDetails extends State<ClientDetails> {
                           alignment: Alignment(-1, 0),
                         ),
 
-                        PressableInfo('Email: ', this.client.email, (){}),
-                        PressableInfo('Phone Number: ', this.client.phoneNum, (){}),
+                        PressableInfo('Email: ', this.client.email, 'mailto:'),
+                        PressableInfo('Phone Number: ', this.client.phoneNum, 'tel:'),
                         
                       ],
                     ),
@@ -189,11 +152,29 @@ class AddProgramButton extends StatelessWidget {
 }
 
 class PressableInfo extends StatelessWidget {
-  final String label;
-  final String info;
-  final Function _function;
+  String label;
+  String info;
+  String ext;
 
-  PressableInfo(this.label, this.info, this._function);
+  PressableInfo(this.label, this.info, this.ext){
+    if(this.ext == 'mailto:'){
+      this.ext = 'mailto:' + this.info +'?subject=Training&body= ';
+    } else if(this.ext == 'tel:'){
+      if(this.info.length == 10){
+        this.ext = 'tel:+1' + this.info;
+      }
+    }
+
+  }
+
+  Future<void> _launchURL(String url) async {
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +189,7 @@ class PressableInfo extends StatelessWidget {
           InkWell(
             splashColor: Colors.transparent,
             enableFeedback: false,
-            onTap: this._function,
+            onTap: (){_launchURL(this.ext);},
             child: Text(
               this.info,
               textAlign: TextAlign.left,
@@ -224,5 +205,6 @@ class PressableInfo extends StatelessWidget {
     );
   }
 }
+
 
 enum Choices { delete }

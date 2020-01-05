@@ -92,7 +92,7 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
 
     SpecialDialog(context, 'Create a Workout',
             (){ setState(() {
-              this.program.addWorkout(Workout(rows, name));
+              this.program.addWorkout(Workout(name, rows));
             });},
         [TextField(
           onChanged: (value){ name = value; },
@@ -171,15 +171,7 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
               ),
             ],
           ),
-
-          GridView.count(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            padding: EdgeInsets.all(10),
-            children: [],
-          ),
-        ] + this.program.workouts,
+        ] + this.program.goals + this.program.workouts,
       ),
     );
   }

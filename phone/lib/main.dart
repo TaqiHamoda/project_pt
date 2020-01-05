@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/main/login_screen.dart';
 import 'package:phone/components/users.dart';
-import 'package:phone/screens/trainer/trainer_screen.dart';
 
 
 void main() => runApp(Starter());
