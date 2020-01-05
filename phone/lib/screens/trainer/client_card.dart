@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'client_details_card.dart';
+import 'client_details_screen.dart';
 import '../../components/users.dart';
 
 class ClientCard extends StatelessWidget {
@@ -17,15 +17,11 @@ class ClientCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Center(
-            child: GestureDetector(
-              onTap: (){
+            child: FlatButton(
+              onPressed: (){
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) =>
-                        ClientDetails(
-                          client: this.client,
-                          name: this.name,
-                          photo: this.photo,
-                        ),
+                        ClientDetails(this.client, this.name, this.photo),
                     ),
                 );
               },

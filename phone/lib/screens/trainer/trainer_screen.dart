@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:phone/screens/trainer/add_client_screen.dart';
 import 'package:phone/screens/main/messages_screen.dart';
 import 'package:phone/screens/trainer/client_card.dart';
 import 'package:phone/screens/main/profile_edit.dart';
@@ -16,30 +15,17 @@ class TrainerPage extends StatefulWidget {
 }
 
 class _TrainerPageState extends State<TrainerPage> {
-  List<Widget> clients = []; // original client list
-  List<Widget> tempClients = []; // filtered client list
   Trainer user;
-
+  String search = '';
 
   _TrainerPageState(this.user);
 
-  void createClients() {
-    for(Client client in this.user.getClients(user)){
-
-      this.clients.add(ClientCard(
-          client: client,
-          name: client.firstName + " " + client.lastName,
-          photo: 'images/profile.png'));
-    }
-    tempClients.addAll(clients);
-  }
-
   List<Widget> filterClients(String filterText){
     if(filterText == ''){
-      return clients;
+      return this.user.cards();
     }
     List<Widget> filteredClients = [];
-    for(ClientCard client in this.clients){
+    for(ClientCard client in this.user.cards()){
       String clientName = client.name.toLowerCase();
       if(clientName.contains(filterText.toLowerCase())){
         filteredClients.add(client);
@@ -49,10 +35,95 @@ class _TrainerPageState extends State<TrainerPage> {
 
   }
 
-  @override
-  void initState(){
-    createClients();
-    super.initState();
+  void addClient(BuildContext context) {
+    String firstName;
+    String lastName;
+    String email;
+    String phone;
+
+    showDialog<Null>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return new SimpleDialog(
+          title: const Text('Create a new client'),
+          children: <Widget>[
+
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 10.0),
+                      labelText: 'First Name',
+                    ),
+
+                    onChanged: (value){ firstName = value; },
+                  ),
+                ),
+
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 10.0),
+                      labelText: 'Last Name',
+                    ),
+
+                    onChanged: (value){ lastName = value; },
+                  ),
+                ),
+              ],
+            ),
+
+            TextField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 10.0),
+                labelText: 'Email',
+              ),
+
+              onChanged: (value){ email = value; },
+            ),
+
+            TextField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 10.0),
+                labelText: 'Phone Number',
+              ),
+
+              onChanged: (value){ phone = value; },
+            ),
+
+
+            Row(children: <Widget>[
+              Container(
+                alignment: Alignment(-1.0, 0.0),
+                child: FlatButton(
+                  child: new Text('Ok',
+                    style: TextStyle(color: Colors.blue),),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    setState(() {
+                      this.user.addClient(Client(firstName, lastName, email, 'Bebop', phone, this.user));
+                    });
+                  },
+                ),
+              ),
+
+              Container(
+                alignment: Alignment(1.0, 0.0),
+                child: FlatButton(
+                  child: new Text('Cancel',
+                    style: TextStyle(color: Colors.blue),),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ])
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -60,10 +131,7 @@ class _TrainerPageState extends State<TrainerPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddClientPage()));
-          },
+        onPressed: () { addClient(context); },
       ),
 
       appBar: AppBar(
@@ -76,7 +144,7 @@ class _TrainerPageState extends State<TrainerPage> {
         ),
         centerTitle: true,
         title: Text(
-          'Trainer',
+          'Trainer ' + this.user.firstName,
           style: TextStyle(
             fontSize: 30.0,
           ),
@@ -96,26 +164,31 @@ class _TrainerPageState extends State<TrainerPage> {
 
       body: ListView(
         children: <Widget>[
-          TextField(
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(left: 10.0),
-              labelText: 'Search by name',
-              prefixIcon: Icon(
-                Icons.search,
+          Container(
+            margin: EdgeInsets.only(top: 5.0),
+            child: TextField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 10.0),
+                labelText: 'Search by name',
+                prefixIcon: Icon(
+                  Icons.search,
+                ),
               ),
+              onChanged: (value){
+                setState(() {
+                  this.search = value;
+                });
+              },
             ),
-            onChanged: (value){
-              setState(() {
-                tempClients = filterClients(value);
-              });
-            },
           ),
+
+
           GridView.count(
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             crossAxisCount: 2,
             padding: EdgeInsets.all(10),
-            children: tempClients,
+            children: this.filterClients(this.search),
           ),
         ],
       ),

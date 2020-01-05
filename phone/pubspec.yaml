@@ -17,6 +17,10 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  pdf: ^1.4.0
+  fit_kit: ^1.1.0
+  share_extend: ^1.1.0
+  path_provider: ^1.5.1
   flutter:
     sdk: flutter
 

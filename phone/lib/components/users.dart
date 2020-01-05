@@ -1,5 +1,6 @@
 import 'paperwork.dart';
 import 'goals.dart';
+import 'package:phone/screens/trainer/client_card.dart';
 
 class User{
   String firstName;
@@ -44,7 +45,6 @@ class Client extends User{
 
 }
 
-
 class Trainer extends User{
   List<Client> _clients = [];
 
@@ -65,6 +65,19 @@ class Trainer extends User{
     }
 
     return [];
+  }
+
+  List<ClientCard> cards(){
+    List<ClientCard> cards = [];
+
+    for(Client client in this._clients){
+      cards.add(ClientCard(
+          client: client,
+          name: client.firstName + " " + client.lastName,
+          photo: 'images/profile.png'));
+    }
+
+    return cards;
   }
 
 }

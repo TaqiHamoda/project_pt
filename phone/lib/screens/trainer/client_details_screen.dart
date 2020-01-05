@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:phone/screens/trainer/client_card.dart';
+import 'package:phone/screens/trainer/program_screen.dart';
 import '../main/messages_screen.dart';
 import '../../components/users.dart';
 import 'package:phone/components/paperwork.dart';
 
-class ClientDetails extends StatelessWidget {
+class ClientDetails extends StatefulWidget {
+  final Client user;
+  final String photo;
+  final String name;
 
-  ClientDetails({@required this.client, @required this.name, @required this.photo});
+  ClientDetails(this.user, this.name, this.photo);
 
+  @override
+  _ClientDetails createState() => _ClientDetails(this.user, this.name, this.photo);
+}
+
+class _ClientDetails extends State<ClientDetails> {
   final String name;
   final String photo;
   final Client client;
 
+  _ClientDetails(this.client, this.name, this.photo);
+
+  void delete(){}
+
   void addProgram(BuildContext context) {
     String programName = '';
-    String warmup = '';
 
     showDialog<Null>(
       context: context,
@@ -31,17 +43,9 @@ class ClientDetails extends StatelessWidget {
                 labelText: 'Program Name',
               ),
 
-              onChanged: (value){ programName += value; },
+              onChanged: (value){ programName = value; },
             ),
 
-            TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0),
-                labelText: 'Warmup',
-              ),
-
-              onChanged: (value){ warmup += value; },
-            ),
 
             Row(children: <Widget>[
             Container(
@@ -50,8 +54,10 @@ class ClientDetails extends StatelessWidget {
                 child: new Text('Ok',
                   style: TextStyle(color: Colors.blue),),
                 onPressed: () {
-                  this.client.addProgram(Program(programName, warmup, this.client.goals));
                   Navigator.of(context).pop();
+                  setState(() {
+                    this.client.addProgram(Program(programName, this.client.goals));
+                  });
                 },
               ),
             ),
@@ -82,20 +88,20 @@ class ClientDetails extends StatelessWidget {
       ),
 
       appBar: AppBar(
-        title: Text(
-          '$name\'s profile'
-        ),
-        centerTitle: true,
         actions: <Widget>[
           IconButton(
-            onPressed: (){
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MessagePage(this.client)));
-            },
-            icon: Icon(
-              Icons.near_me,
-            ),
-          ),
+              icon: Icon(Icons.near_me),
+              onPressed: (){}),
+
+          PopupMenuButton<Choices>(
+            onSelected: (Choices result) { setState(() { delete(); }); },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<Choices>>[
+              PopupMenuItem<Choices>(
+                value: Choices.delete,
+                child: Text('Delete ' + this.client.firstName),
+              ),
+            ],
+          )
         ],
       ),
 
@@ -114,9 +120,9 @@ class ClientDetails extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(bottom: 10.0, left: 5.0),
-                      child: Text("Name: " + this.client.firstName + " " + this.client.lastName,
-                        style: TextStyle(fontSize: 15,
+                      margin: EdgeInsets.only(bottom: 2.0, left: 5.0),
+                      child: Text(this.client.firstName + " " + this.client.lastName,
+                        style: TextStyle(fontSize: 30,
                             fontWeight: FontWeight.bold),),
                       alignment: Alignment(-1, 0),
                     ),
@@ -169,11 +175,13 @@ class ClientDetails extends StatelessWidget {
                 ),
               )
             ],
-
-
           )
-        ],
+        ] + this.client.programs,
       ),
     );
   }
 }
+
+
+enum Choices{delete}
+
