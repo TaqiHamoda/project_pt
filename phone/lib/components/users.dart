@@ -8,6 +8,7 @@ class User{
   String email;
   String _password;
   String phoneNum;
+  String photo = 'images/profile.png';
   List<User> messageList = [];
 
   User(firstName, lastName, email, password, cellNum){
@@ -89,8 +90,7 @@ class Trainer extends User{
     for(Client client in this._clients){
       cards.add(ClientCard(
           client: client,
-          name: client.firstName + " " + client.lastName,
-          photo: 'images/profile.png'));
+          name: client.firstName + " " + client.lastName));
     }
 
     return cards;

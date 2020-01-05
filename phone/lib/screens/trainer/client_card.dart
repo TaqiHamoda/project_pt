@@ -4,10 +4,9 @@ import '../../components/users.dart';
 
 class ClientCard extends StatelessWidget {
 
-  ClientCard({@required this.client, @required this.name, @required this.photo});
+  ClientCard({@required this.client, @required this.name});
 
   final String name;
-  final String photo; // photo location
   final Client client;
 
 
@@ -16,30 +15,33 @@ class ClientCard extends StatelessWidget {
     return Container(
       child: Column(
         children: <Widget>[
-          Center(
-            child: FlatButton(
-              onPressed: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) =>
-                        ClientDetails(this.client, this.name, this.photo),
-                    ),
-                );
-              },
-              child: Image.asset(
-                this.photo,
-                height: 100.0,
-                width: 100.0,
-              ),
+          FlatButton(
+            onPressed: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>
+                      ClientDetails(this.client, this.name, client.photo),
+                  ),
+              );
+            },
+
+            child: Column(
+              children: <Widget>[
+                Image.asset(
+                  client.photo,
+                  height: 100.0,
+                  width: 100.0,
+                ),
+                Text(
+                  this.name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+              ],
             ),
           ),
-          Center(
-            child: Text(
-              this.name,
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-          ),
+
         ],
       ),
     );

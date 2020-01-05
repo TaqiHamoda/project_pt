@@ -52,7 +52,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
             Image.asset(
-              'images/profile.png',
+              user.photo,
               height: 100.0,
               width: 100.0,
             ),

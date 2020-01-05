@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phone/components/goals.dart';
-import 'package:phone/screens/trainer/program_screen.dart';
+import 'package:phone/screens/trainer/trainer_program_screen.dart';
 
 
 class Program extends StatefulWidget {
@@ -43,7 +43,7 @@ class _ProgramState extends State<Program> {
         leading: Icon(Icons.table_chart),
         onTap: (){
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ProgramPage(this.program)));
+              MaterialPageRoute(builder: (context) => TrainerProgramPage(this.program)));
         },
 
         title: Text(this.program.name, textAlign: TextAlign.left,)

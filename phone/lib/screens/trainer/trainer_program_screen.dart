@@ -3,29 +3,32 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:share_extend/share_extend.dart';
 import 'package:phone/components/paperwork.dart';
+import 'package:phone/screens/main/dialog.dart';
 
 
-class ProgramPage extends StatefulWidget {
+class TrainerProgramPage extends StatefulWidget {
   final Program program;
 
-  ProgramPage(this.program);
+  TrainerProgramPage(this.program);
 
   @override
-  _ProgramPageState createState() => _ProgramPageState(this.program);
+  _TrainerProgramPageState createState() => _TrainerProgramPageState(this.program);
 }
 
-class _ProgramPageState extends State<ProgramPage> {
+class _TrainerProgramPageState extends State<TrainerProgramPage> {
   Program program;
   final String rpe = "\n";
 
-  _ProgramPageState(this.program);
+
+  _TrainerProgramPageState(this.program);
+
 
   void get share async {
     final directory = await getTemporaryDirectory();
 
     File testFile = new File('${directory.path}/flutter/test.pdf');
 
-    if (!await testFile.exists()) {
+    if (!await testFile.exists()) { //Write the file to the temporary path first
       await testFile.create(recursive: true);
       testFile.writeAsStringSync('test for share documents file');
     }
@@ -33,7 +36,9 @@ class _ProgramPageState extends State<ProgramPage> {
     ShareExtend.share(testFile.path, 'file');
   }
 
+
   void delete(){}
+
 
   Future<void> rpeDialog() async {
     return showDialog<void>(
@@ -64,67 +69,47 @@ class _ProgramPageState extends State<ProgramPage> {
     );
   }
 
+
+  Future<void> warmupDialog() async {
+    String warmup;
+
+    SpecialDialog(context, 'Create Warmup',
+            (){ this.program.warmup = warmup;
+            print(this.program.warmup);},
+        [TextField(
+          onChanged: (value){ warmup = value; },
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(10.0),
+            labelText: 'Warmup'
+          ),
+        )]);
+  }
+
+
   void addWorkout(BuildContext context) {
     int rows;
     String name;
 
-    showDialog<Null>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return new SimpleDialog(
-          title: const Text('Create a new workout'),
-          children: <Widget>[
+    SpecialDialog(context, 'Create a Workout',
+            (){ setState(() {
+              this.program.addWorkout(Workout(rows, name));
+            });},
+        [TextField(
+          onChanged: (value){ name = value; },
+          decoration: InputDecoration(
+            labelText: 'Workout Name',
+            contentPadding: EdgeInsets.all(10.0),
+          ),
+        ),
 
-            TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0),
+          TextField(
+            onChanged: (value){ rows = int.parse(value); },
+            decoration: InputDecoration(
                 labelText: 'Rows',
-              ),
-
-              onChanged: (value){ rows = int.parse(value); },
+                contentPadding: EdgeInsets.all(10.0)
             ),
-
-            TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0),
-                labelText: 'Workout Name',
-              ),
-
-              onChanged: (value){ name = value; },
-            ),
-
-
-            Row(children: <Widget>[
-              Container(
-                alignment: Alignment(-1.0, 0.0),
-                child: FlatButton(
-                  child: new Text('Ok',
-                    style: TextStyle(color: Colors.blue),),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    setState(() {
-                      this.program.addWorkout(Workout(rows, name));
-                    });
-                  },
-                ),
-              ),
-
-              Container(
-                alignment: Alignment(1.0, 0.0),
-                child: FlatButton(
-                  child: new Text('Cancel',
-                    style: TextStyle(color: Colors.blue),),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-            ])
-          ],
-        );
-      },
-    );
+          )
+        ]);
   }
 
 
@@ -176,7 +161,7 @@ class _ProgramPageState extends State<ProgramPage> {
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                   child: FlatButton(
-                    onPressed: (){},
+                    onPressed: warmupDialog,
                     child: Text('Warm-up',
                       style: TextStyle(fontSize: 20.0,
                           color: Colors.blue),
@@ -185,7 +170,15 @@ class _ProgramPageState extends State<ProgramPage> {
                 ),
               ),
             ],
-          )
+          ),
+
+          GridView.count(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            padding: EdgeInsets.all(10),
+            children: [],
+          ),
         ] + this.program.workouts,
       ),
     );
