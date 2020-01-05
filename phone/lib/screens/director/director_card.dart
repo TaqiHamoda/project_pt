@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'trainer_details_card.dart';
+import 'director_details_card.dart';
 import '../../components/users.dart';
 
-class TrainerCard extends StatelessWidget {
+class DirectorCard extends StatelessWidget {
 
-  TrainerCard({@required this.trainer, @required this.name});
+  DirectorCard({@required this.director, @required this.name});
 
   final String name;
-  final Trainer trainer;
+  final Director director;
 
 
   @override
@@ -19,7 +19,7 @@ class TrainerCard extends StatelessWidget {
             onPressed: (){
               Navigator.push(context,
                 MaterialPageRoute(builder: (context) =>
-                    TrainerDetails(this.trainer, this.name, trainer.photo),
+                    DirectorDetails(this.director, this.name, director.photo),
                 ),
               );
             },
@@ -27,7 +27,7 @@ class TrainerCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Image.asset(
-                  trainer.photo,
+                  director.photo,
                   height: 100.0,
                   width: 100.0,
                 ),
@@ -47,5 +47,3 @@ class TrainerCard extends StatelessWidget {
     );
   }
 }
-
-
