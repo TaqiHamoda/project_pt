@@ -21,6 +21,22 @@ class User{
   bool signIn(String password){
     return this._password == password;
   }
+
+  void setName(String name){
+
+    var splitName = name.split(' ');
+    this.firstName = splitName[0];
+    this.lastName = splitName[1];
+  }
+
+  void setEmail(String email){
+    this.email = email;
+  }
+
+  void setNumber(String number){
+    this.phoneNum = number;
+  }
+
 }
 
 class Client extends User{

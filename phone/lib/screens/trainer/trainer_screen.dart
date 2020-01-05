@@ -139,7 +139,7 @@ class _TrainerPageState extends State<TrainerPage> {
           icon: Image.asset('images/profile.png'),
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SettingsPage()));
+                MaterialPageRoute(builder: (context) => SettingsPage(this.user)));
           },
         ),
         centerTitle: true,
