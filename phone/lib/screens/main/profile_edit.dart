@@ -60,6 +60,7 @@ class _SettingsPageState extends State<SettingsPage> {
               thickness: 1.1,
             ),
             TextFormField(
+              autovalidate: true,
               initialValue: user.firstName + ' ' + user.lastName,
               validator: (String value){
                 return value.contains(' ')? null : 'enter valid name';
@@ -73,6 +74,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             TextFormField(
+              autovalidate: true,
               initialValue: user.email,
               validator: (String value){
                 return value.contains('@')? null : 'Please enter valid email';
@@ -86,6 +88,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             TextFormField(
+              autovalidate: true, // will add one eventually
               initialValue: user.phoneNum,
               onFieldSubmitted: (String value){
                 this.user.setNumber(value);
