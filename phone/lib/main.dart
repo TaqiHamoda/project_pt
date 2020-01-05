@@ -13,7 +13,7 @@ class Starter extends StatelessWidget {
     List<User> users = localUsers();
 
     for(User user in users){
-      if(user is Trainer){
+      if(user is Director){
         this.user = user;
         break;
       }
