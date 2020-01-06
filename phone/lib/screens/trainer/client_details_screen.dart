@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../main/messages_screen.dart';
-import '../../components/users.dart';
+import 'package:phone/components/users.dart';
+import 'package:phone/screens/main/custom_button.dart';
 import 'package:phone/screens/main/dialog.dart';
 import 'package:phone/components/paperwork.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -101,55 +102,21 @@ class _ClientDetails extends State<ClientDetails> {
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10.0),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black)),
-                      child: FlatButton(
-                        onPressed: () {},
-                        child: Text("Par-Q"),
-                      ),
-                    ),
+                    child: CustomButton((){}, 'Par-Q')
                   ),
                   Expanded(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10.0),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black)),
-                      child: FlatButton(
-                          onPressed: () {}, child: Text("Assessment")),
-                    ),
+                    child: CustomButton((){}, 'Assessment')
                   )
                 ],
               )
             ] +
             this.client.programs +
-            [AddProgramButton(this.addProgram)],
+            [CustomButton((){this.addProgram(context);}, 'Create Program')],
       ),
     );
   }
 }
 
-class AddProgramButton extends StatelessWidget {
-  final Function _function;
-
-  AddProgramButton(this._function);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-      child: FlatButton(
-          onPressed: () {
-            this._function(context);
-          },
-          child: Text('Create Program')),
-    );
-  }
-}
 
 class PressableInfo extends StatelessWidget {
   String label;

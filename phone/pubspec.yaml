@@ -21,7 +21,6 @@ dependencies:
   fit_kit: ^1.1.0
   share_extend: ^1.1.0
   path_provider: ^1.5.1
-  font_awesome_flutter: ^8.5.0
   flutter:
     sdk: flutter
 

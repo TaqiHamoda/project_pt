@@ -1,7 +1,6 @@
 import 'paperwork.dart';
 import 'package:phone/screens/trainer/client_card.dart';
-import 'package:phone/screens/director/director_card.dart';
-import 'package:phone/screens/director/trainer_card.dart';
+import 'package:phone/screens/director/typical_card.dart';
 
 class User{
   String firstName;
@@ -38,6 +37,8 @@ class User{
   void setNumber(String number){
     this.phoneNum = number;
   }
+
+
 
 }
 
@@ -85,7 +86,7 @@ class Trainer extends User{
     return [];
   }
 
-  List<ClientCard> cards(){
+  List<ClientCard> myClientCards(){
     List<ClientCard> cards = [];
 
     for(Client client in this._clients){
@@ -100,26 +101,27 @@ class Trainer extends User{
 }
 
 class Director extends Trainer{
-  List<Trainer> trainers = [];
-  List<Director> directors = [];
+  List<Trainer> _trainers = [];
+  List<Director> _directors = [];
 
   Director(String firstName, String lastName, String email, String password, String cellNum) :
         super(firstName, lastName, email, password, cellNum);
 
   void addTrainer(Trainer trainer){
-    this.trainers.add(trainer);
+    this._trainers.add(trainer);
   }
 
   void addDirector(Director director){
-    this.directors.add(director);
+    this._directors.add(director);
   }
 
-  List<DirectorCard> directorCards(){
-    List<DirectorCard> cards = [];
 
-    for(Director director in this.directors){
-      cards.add(DirectorCard(
-          director: director,
+  List<UserCard> directorCards(){
+    List<UserCard> cards = [];
+
+    for(Director director in this._directors){
+      cards.add(UserCard(
+          user: director,
           name: director.firstName + " " + director.lastName));
     }
 
@@ -127,26 +129,26 @@ class Director extends Trainer{
   }
 
 
-  List<TrainerCard> trainerCards(){
-    List<TrainerCard> cards = [];
+  List<UserCard> trainerCards(){
+    List<UserCard> cards = [];
 
-    for(Trainer trainer in this.trainers){
-      cards.add(TrainerCard(
-          trainer: trainer,
+    for(Trainer trainer in this._trainers){
+      cards.add(UserCard(
+          user: trainer,
           name: trainer.firstName + " " + trainer.lastName));
     }
 
     return cards;
   }
 
-  List<ClientCard> clientCards(){
-    List<ClientCard> cards = [];
+  List<UserCard> otherClientCards(){
+    List<UserCard> cards = [];
 
-    for(User user in localUsers()){
-      if(user is Client){
-        cards.add(ClientCard(
-            client: user,
-            name: user.firstName + " " + user.lastName));
+    for(Trainer user in (this._trainers + this._directors)){
+      for(Client client in user.getClients(user)){
+        cards.add(UserCard(
+            user: client,
+            name: client.firstName + " " + client.lastName));
       }
     }
 

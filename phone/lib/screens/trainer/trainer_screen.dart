@@ -24,10 +24,10 @@ class _TrainerPageState extends State<TrainerPage> {
 
   List<Widget> filterClients(String filterText) {
     if (filterText == '') {
-      return this.user.cards();
+      return this.user.myClientCards();
     }
     List<Widget> filteredClients = [];
-    for (ClientCard client in this.user.cards()) {
+    for (ClientCard client in this.user.myClientCards()) {
       String clientName = client.name.toLowerCase();
       if (clientName.contains(filterText.toLowerCase())) {
         filteredClients.add(client);
@@ -107,6 +107,27 @@ class _TrainerPageState extends State<TrainerPage> {
           },
         ),
         appBar: AppBar(
+          bottom: PreferredSize(
+            preferredSize: Size(100, 50),
+            child: Container(
+              margin: EdgeInsets.only(top: 5.0),
+              child: TextField(
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelStyle: TextStyle(color: Colors.white),
+                  contentPadding: EdgeInsets.only(left: 10.0),
+                  labelText: 'Search by name',
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                ),
+                onChanged: (value){setState(() {
+                  this.search = value;
+                });},
+              ),
+            ),
+          ),
           leading: IconButton(
             icon: Image.asset('images/profile.png'),
             onPressed: () {

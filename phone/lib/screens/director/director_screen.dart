@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:phone/components/users.dart';
-import 'package:phone/screens/director/all_clients_screen.dart';
-import 'package:phone/screens/director/my_clients_screen.dart';
+import 'package:phone/screens/main/messages_screen.dart';
+import 'package:phone/screens/trainer/client_card.dart';
 import 'package:phone/screens/main/profile_edit.dart';
-import 'directors_screen.dart';
-import 'trainers_screen.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:phone/screens/main/custom_button.dart';
+import 'typical_screen.dart';
+import 'package:phone/screens/main/dialog.dart';
+import 'package:phone/components/users.dart';
+import 'package:flutter/services.dart';
 
 class DirectorPage extends StatefulWidget {
   final Director user;
@@ -18,190 +19,205 @@ class DirectorPage extends StatefulWidget {
 
 class _DirectorPageState extends State<DirectorPage> {
   Director user;
+  String search = '';
+
   _DirectorPageState(this.user);
 
-  @override
-  Widget build(BuildContext context) { // will deal with the icons later.
-    return Scaffold(
-      backgroundColor: Color(0xFF0A0E21),
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Image.asset('images/profile.png'),
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => SettingsPage(this.user)));
-          },
-        ),
-        centerTitle: true,
-        title: Text(
-          'Director ' + this.user.firstName,
-          style: TextStyle(
-            fontSize: 30.0,
-          ),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.near_me,
-            ),
-            onPressed: () {
+  List<Widget> filterClients(String filterText) {
+    if (filterText == '') {
+      return this.user.myClientCards();
+    }
+    List<Widget> filteredClients = [];
+    for (ClientCard client in this.user.myClientCards()) {
+      String clientName = client.name.toLowerCase();
+      if (clientName.contains(filterText.toLowerCase())) {
+        filteredClients.add(client);
+      }
+    }
+    return filteredClients;
+  }
 
-            },
+  void addClient(BuildContext context) {
+    String firstName;
+    String lastName;
+    String email;
+    String phone;
+
+    SpecialDialog(context, 'Create a client', () {
+      setState(() {
+        this.user.addClient(
+            Client(firstName, lastName, email, 'Bebop', phone, this.user));
+      });
+    }, <Widget>[
+      Row(
+        children: <Widget>[
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 10.0),
+                labelText: 'First Name',
+              ),
+              onChanged: (value) {
+                firstName = value;
+              },
+            ),
+          ),
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 10.0),
+                labelText: 'Last Name',
+              ),
+              onChanged: (value) {
+                lastName = value;
+              },
+            ),
           ),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
+      TextField(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(left: 10.0),
+          labelText: 'Email',
+        ),
+        onChanged: (value) {
+          email = value;
+        },
+      ),
+      TextField(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(left: 10.0),
+          labelText: 'Phone Number',
+        ),
+        onChanged: (value) {
+          phone = value;
+        },
+      ),
+    ]);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            addClient(context);
+          },
+        ),
+        appBar: AppBar(
+          bottom: PreferredSize(
+            preferredSize: Size(100, 50),
+            child: Container(
+              margin: EdgeInsets.only(top: 5.0),
+              child: TextField(
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelStyle: TextStyle(color: Colors.white),
+                  contentPadding: EdgeInsets.only(left: 10.0),
+                  labelText: 'Search by name',
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                ),
+                onChanged: (value){setState(() {
+                  this.search = value;
+                });},
+              ),
+            ),
+          ),
+          leading: IconButton(
+            icon: Image.asset('images/profile.png'),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SettingsPage(this.user)));
+            },
+          ),
+          centerTitle: true,
+          title: Text(
+            'Director ' + this.user.firstName,
+            style: TextStyle(
+              fontSize: 30.0,
+            ),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.near_me,
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MessagePage(this.user)));
+              },
+            ),
+          ],
+        ),
+        body: ListView(
           children: <Widget>[
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Expanded(
-                  child: RaisedButton(
-                    color: Color(0xFF4C4F5E),
-                    onPressed: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DirectorsPage(this.user)));
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Icon(
-                          Icons.supervisor_account,
-                          size: 50.0,
-                          color: Colors.pink,
-                        ),
-                        Text(
-                          'Directors',
-                          style: TextStyle(
-                            fontSize: 30.0,
-                            color: Color(0xFF8D8E98),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 8.0,
-                ),
-                Expanded(
-                  child: RaisedButton(
-                    color: Color(0xFF4C4F5E),
-                    onPressed: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TrainersPage(this.user)));
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Icon(
-                          Icons.supervisor_account,
-                          size: 50.0,
-                          color: Colors.pink,
-                        ),
-                        Text(
-                          'Trainers',
-                          style: TextStyle(
-                            fontSize: 30.0,
-                            color: Color(0xFF8D8E98),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                Expanded(child: CustomButton((){Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UserPage(this.user, 'Director', this.user.directorCards())));
+                }, 'Directors')),
+
+                Expanded(child: CustomButton((){Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UserPage(this.user, 'Trainer', this.user.trainerCards())));
+                }, 'Trainers')),
+
+                Expanded(child: CustomButton((){Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UserPage(this.user, 'Client', this.user.otherClientCards())));
+                }, 'Other Clients'))
+
               ],
             ),
-            SizedBox(
-              height: 8.0,
+
+            GridView.count(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              padding: EdgeInsets.all(10),
+              children: this.filterClients(this.search),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Expanded(
-                  child: RaisedButton(
-                    color: Color(0xFF4C4F5E),
-                    onPressed: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MyClientsPage(this.user)));
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Icon(
-                          Icons.supervisor_account,
-                          size: 50.0,
-                          color: Colors.pink,
-                        ),
-                        Text(
-                          'My Clients',
-                          style: TextStyle(
-                            fontSize: 30.0,
-                            color: Color(0xFF8D8E98),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 8.0,
-                ),
-                Expanded(
-                  child: RaisedButton(
-                    color: Color(0xFF4C4F5E),
-                    onPressed: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AllClientsPage(this.user)));
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Icon(
-                          Icons.supervisor_account,
-                          size: 50.0,
-                          color: Colors.pink,
-                        ),
-                        Text(
-                          'All Clients',
-                          style: TextStyle(
-                            fontSize: 30.0,
-                            color: Color(0xFF8D8E98),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              title: Text('Home'),
+              icon: Icon(
+                Icons.home,
+              ),
+            ),
+            BottomNavigationBarItem(
+              title: Text('Schedule'),
+              icon: Icon(
+                Icons.calendar_today,
+              ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            title: Text('Home'),
-            icon: Icon(
-              Icons.home,
-            ),
-          ),
-          BottomNavigationBarItem(
-            title: Text('Schedule'),
-            icon: Icon(
-              Icons.calendar_today,
-            ),
-          ),
-        ],
-      ),
     );
   }
+}
+
+
+Future<bool> _onWillPop() async {
+  //await showDialog or Show add banners or whatever
+  // then
+  await SystemNavigator.pop(animated: true);
+  return false; // return true if the route to be popped
 }
