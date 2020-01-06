@@ -120,9 +120,7 @@ class Director extends Trainer{
     List<UserCard> cards = [];
 
     for(Director director in this._directors){
-      cards.add(UserCard(
-          user: director,
-          name: director.firstName + " " + director.lastName));
+      cards.add(UserCard(director, director.firstName + " " + director.lastName));
     }
 
     return cards;
@@ -133,9 +131,7 @@ class Director extends Trainer{
     List<UserCard> cards = [];
 
     for(Trainer trainer in this._trainers){
-      cards.add(UserCard(
-          user: trainer,
-          name: trainer.firstName + " " + trainer.lastName));
+      cards.add(UserCard(trainer, trainer.firstName + " " + trainer.lastName));
     }
 
     return cards;
@@ -146,9 +142,7 @@ class Director extends Trainer{
 
     for(Trainer user in (this._trainers + this._directors)){
       for(Client client in user.getClients(user)){
-        cards.add(UserCard(
-            user: client,
-            name: client.firstName + " " + client.lastName));
+        cards.add(UserCard(client, client.firstName + " " + client.lastName));
       }
     }
 
@@ -161,8 +155,8 @@ class Director extends Trainer{
 
 
 List<User> localUsers(){
-  Director director = Director('Youssef', 'Nafei', 'you@app.com', 'a7a', '123456789');
-  Director mo = Director('Mo', 'Momo', 'mo@app.com', 'a7a', '123456789');
+  Director director = Director('Youssef', 'Nafei', 'you@app.com', 'Bebop', '123456789');
+  Director mo = Director('Mo', 'Momo', 'mo@app.com', 'Bebop', '123456789');
 
   Trainer mozza = Trainer('Mozza', 'Hamoda', 'mozza@app.com', 'Bebop', '1234567890');
   Client khalid = Client('Khalid', 'Bob', 'james@app.com', 'Bebop', '1234567890', mozza);

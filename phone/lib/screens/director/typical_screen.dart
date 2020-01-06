@@ -25,12 +25,12 @@ class _UserPageState extends State<UserPage> {
 
   _UserPageState(this.user, this.screenType, this.cards);
 
-  List<Widget> filter(String filterText) {
+  List<UserCard> filter(String filterText) {
 
     if (filterText == '') {
       return cards;
     }
-    List<Widget> filteredUsers = [];
+    List<UserCard> filteredUsers = [];
     for (UserCard card in cards) {
       String userName = card.name.toLowerCase();
       if (userName.contains(filterText.toLowerCase())) {
@@ -164,15 +164,7 @@ class _UserPageState extends State<UserPage> {
         ],
       ),
       body: ListView(
-        children: <Widget>[
-          GridView.count(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            padding: EdgeInsets.all(10),
-            children: this.filter(this.search),
-          ),
-        ],
+        children: this.filter(this.search),
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int index){

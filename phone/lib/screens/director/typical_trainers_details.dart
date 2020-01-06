@@ -26,8 +26,7 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
       this.cards = [];
 
       for (Client client in trainer.getClients(trainer)) {
-        cards.add(UserCard(
-            user: client, name: client.firstName + " " + client.lastName));
+        cards.add(UserCard(client, client.firstName + " " + client.lastName));
       }
 
     } else {
