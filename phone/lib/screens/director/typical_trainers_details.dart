@@ -127,15 +127,8 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
             )
           ],
         ),
-
-        GridView.count(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          crossAxisCount: 2,
-          padding: EdgeInsets.all(10),
-          children: this.filter(this.search),
-        )
-      ]),
+      ] + this.filter(this.search)
+      ),
     );
   }
 }
