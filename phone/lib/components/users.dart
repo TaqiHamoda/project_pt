@@ -38,9 +38,8 @@ class User{
     this.phoneNum = number;
   }
 
-
-
 }
+
 
 class Client extends User{
 
@@ -63,6 +62,37 @@ class Client extends User{
   }
 
 }
+
+
+class Group extends User{
+  Trainer trainer;
+  List<Program> programs = [];
+  List<Client> clients = [];
+
+  Group(String name, Trainer trainer, ) :
+  super(null, null, null, null, null){
+    this.trainer = trainer;
+    this.messageList.add(trainer);
+  }
+
+  @override
+  bool signIn(String password){
+    return false;
+  }
+
+  void addClient(Client client){
+    this.clients.add(client);
+  }
+
+  void addProgram(Program program){
+    this.programs.add(program);
+
+    for(Client client in this.clients) {
+      client.addProgram(program);
+    }
+  }
+}
+
 
 class Trainer extends User{
   List<Client> _clients = [];
