@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:phone/components/users.dart';
 import 'package:phone/screens/director/typical_card.dart';
 import 'package:phone/screens/main/custom_button.dart';
-import 'package:phone/screens/main/custom_app_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TypicalTrainerDetails extends StatefulWidget {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:phone/screens/main/messages_screen.dart';
 import 'package:phone/screens/main/dialog.dart';
 import 'package:phone/components/users.dart';
-import 'package:phone/screens/main/custom_app_bar.dart';
 import 'typical_card.dart';
 
 class UserPage extends StatefulWidget {
