@@ -149,7 +149,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ],
             ),
-              CircleAvatar(backgroundImage: this.user.photo, backgroundColor: Colors.transparent, radius: 50,),
+              CircleAvatar(backgroundImage: this.user.photo, backgroundColor: Colors.transparent, radius: 80,),
             Divider(
               thickness: 1.1,
             ),
