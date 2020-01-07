@@ -2,7 +2,7 @@ import 'paperwork.dart';
 import 'package:phone/screens/trainer/client_card.dart';
 import 'package:phone/screens/director/typical_card.dart';
 
-class User{
+class User {
   String firstName;
   String lastName;
   String email;
@@ -11,7 +11,7 @@ class User{
   String photo = 'images/profile.png';
   List<User> messageList = [];
 
-  User(firstName, lastName, email, password, cellNum){
+  User(firstName, lastName, email, password, cellNum) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
@@ -19,32 +19,33 @@ class User{
     this.phoneNum = cellNum;
   }
 
-  bool signIn(String password){
+  bool signIn(String password) {
     return this._password == password;
   }
 
-  void setName(String name){
-
+  void setName(String name) {
     var splitName = name.split(' ');
     this.firstName = splitName[0];
     this.lastName = splitName[1];
   }
 
-  void setEmail(String email){
+  void setEmail(String email) {
     this.email = email;
   }
 
-  void setNumber(String number){
+  void setNumber(String number) {
     this.phoneNum = number;
   }
 
-  void setPassword(String password){
+
+  void setPassword(String password) {
     this._password = password;
   }
 
-
-
 }
+
+
+
 
 class Client extends User{
 
@@ -67,6 +68,37 @@ class Client extends User{
   }
 
 }
+
+
+class Group extends User{
+  Trainer trainer;
+  List<Program> programs = [];
+  List<Client> clients = [];
+
+  Group(String name, Trainer trainer, ) :
+  super(null, null, null, null, null){
+    this.trainer = trainer;
+    this.messageList.add(trainer);
+  }
+
+  @override
+  bool signIn(String password){
+    return false;
+  }
+
+  void addClient(Client client){
+    this.clients.add(client);
+  }
+
+  void addProgram(Program program){
+    this.programs.add(program);
+
+    for(Client client in this.clients) {
+      client.addProgram(program);
+    }
+  }
+}
+
 
 class Trainer extends User{
   List<Client> _clients = [];

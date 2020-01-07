@@ -160,23 +160,6 @@ class _TrainerPageState extends State<TrainerPage> {
         ),
         body: ListView(
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 5.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(left: 10.0),
-                  labelText: 'Search by name',
-                  prefixIcon: Icon(
-                    Icons.search,
-                  ),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    this.search = value;
-                  });
-                },
-              ),
-            ),
             GridView.count(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
