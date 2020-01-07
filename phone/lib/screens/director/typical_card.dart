@@ -3,22 +3,13 @@ import 'package:phone/components/users.dart';
 import 'package:phone/screens/director/typical_trainers_details.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class UserCard extends StatefulWidget {
-  final User user;
-  final String name;
+class UserCard extends StatelessWidget {
 
-  UserCard(this.user, this.name);
-
-  @override
-  _UserCard createState() => _UserCard(this.user, this.name);
-}
-
-class _UserCard extends State<UserCard> {
   final String name;
   final User user;
   Widget preferredWidget;
 
-  _UserCard(this.user, this.name) {
+  UserCard(this.user, this.name){
     if (this.user is Trainer) {
       preferredWidget = IconButton(
           icon: Icon(
@@ -47,9 +38,7 @@ class _UserCard extends State<UserCard> {
       );
     }
   }
-
   void delete() {}
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -170,3 +159,4 @@ class PressableInfo extends StatelessWidget {
 }
 
 enum Choices { parQ, assessment }
+

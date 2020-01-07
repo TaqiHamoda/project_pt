@@ -2,7 +2,7 @@ import 'paperwork.dart';
 import 'package:phone/screens/trainer/client_card.dart';
 import 'package:phone/screens/director/typical_card.dart';
 
-class User{
+class User {
   String firstName;
   String lastName;
   String email;
@@ -11,7 +11,7 @@ class User{
   String photo = 'images/profile.png';
   List<User> messageList = [];
 
-  User(firstName, lastName, email, password, cellNum){
+  User(firstName, lastName, email, password, cellNum) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
@@ -19,26 +19,32 @@ class User{
     this.phoneNum = cellNum;
   }
 
-  bool signIn(String password){
+  bool signIn(String password) {
     return this._password == password;
   }
 
-  void setName(String name){
-
+  void setName(String name) {
     var splitName = name.split(' ');
     this.firstName = splitName[0];
     this.lastName = splitName[1];
   }
 
-  void setEmail(String email){
+  void setEmail(String email) {
     this.email = email;
   }
 
-  void setNumber(String number){
+  void setNumber(String number) {
     this.phoneNum = number;
   }
 
+
+  void setPassword(String password) {
+    this._password = password;
+  }
+
 }
+
+
 
 
 class Client extends User{
@@ -187,8 +193,8 @@ class Director extends Trainer{
 
 
 List<User> localUsers(){
-  Director director = Director('Youssef', 'Nafei', 'you@app.com', 'Bebop', '123456789');
-  Director mo = Director('Mo', 'Momo', 'mo@app.com', 'Bebop', '123456789');
+  Director director = Director('Youssef', 'Nafei', 'you@app.com', 'Bebop', '1234567890');
+  Director mo = Director('Mo', 'Momo', 'mo@app.com', 'Bebop', '1234567890');
 
   Trainer mozza = Trainer('Mozza', 'Hamoda', 'mozza@app.com', 'Bebop', '1234567890');
   Client khalid = Client('Khalid', 'Bob', 'james@app.com', 'Bebop', '1234567890', mozza);

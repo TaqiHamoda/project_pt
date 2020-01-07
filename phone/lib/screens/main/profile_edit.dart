@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phone/components/users.dart';
-
+import 'package:phone/screens/main/change_password_screen.dart';
+import 'package:image_picker/image_picker.dart';
+import 'login_screen.dart';
 
 class SettingsPage extends StatefulWidget {
 
@@ -17,13 +20,85 @@ class _SettingsPageState extends State<SettingsPage> {
   String name = '';
   String email = '';
   String number = '';
+  bool _darkMode = false;
+
+  final RegExp nameExp = RegExp(r"^[a-z]+ [a-z]+$", caseSensitive: false);
+  final RegExp phoneExp = RegExp(r"^[0-9]{10}$");
+  // No regex for email cuz a7a bro there's .com, .ca, youssef.nafei@mail.utoronto.ca
+
+  var _image;
+
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = image;
+    });
+  }
+
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text('Are you sure you want to log out?'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Back'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LoginPage()));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   _SettingsPageState(this.user);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: 20.0),
+        child: FloatingActionButton.extended(
+          onPressed: (){
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ChangePwPage(this.user)));
+          },
+          label: Text('Change Password'),
+          icon: Icon(
+            Icons.lock,
+          ),
+          backgroundColor: Colors.pink,
+        ),
+      ),
       appBar: AppBar(
+        actions: <Widget>[
+          FlatButton(
+            onPressed: (){
+              _showDialog();
+            },
+            child: Text(
+              'Log Out?',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
         title: Text(
           'Edit Profile',
         ),
@@ -36,26 +111,50 @@ class _SettingsPageState extends State<SettingsPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
+                  'Dark Mode',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  ),
+                ),
+                CupertinoSwitch(
+                  value: _darkMode,
+                  onChanged: (bool value){
+                    setState(() {
+                      _darkMode = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
                   'Profile Picture',
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
-                  'Edit',
-                  style: TextStyle(
-                    color: Colors.lightBlue,
-                    fontSize: 18.0
+                FlatButton(
+                  onPressed: (){
+                    getImage();
+                  },
+                  child: Text(
+                    'Edit',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.lightBlue,
+                    ),
                   ),
                 ),
               ],
             ),
-            Image.asset(
-              user.photo,
-              height: 100.0,
-              width: 100.0,
-            ),
+              _image == null? Image.asset(
+                user.photo,
+                height: 100.0,
+                width: 100.0,
+              ) : Image.file(_image),
             Divider(
               thickness: 1.1,
             ),
@@ -63,7 +162,7 @@ class _SettingsPageState extends State<SettingsPage> {
               autovalidate: true,
               initialValue: user.firstName + ' ' + user.lastName,
               validator: (String value){
-                return value.contains(' ')? null : 'enter valid name';
+                return nameExp.hasMatch(value.trim()) ? null : 'Enter valid name';
               },
               onFieldSubmitted: (String value){
                 this.user.setName(value);
@@ -74,11 +173,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             TextFormField(
-              autovalidate: true,
               initialValue: user.email,
-              validator: (String value){
-                return value.contains('@')? null : 'Please enter valid email';
-              },
               onFieldSubmitted: (String value){
                 this.user.setEmail(value);
               },
@@ -88,8 +183,11 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             TextFormField(
-              autovalidate: true, // will add one eventually
+              autovalidate: true,
               initialValue: user.phoneNum,
+              validator: (String value){
+                return phoneExp.hasMatch(value.trim()) ? null : 'Enter valid phone number';
+              },
               onFieldSubmitted: (String value){
                 this.user.setNumber(value);
               },
