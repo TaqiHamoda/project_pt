@@ -134,37 +134,35 @@ ISSUE    : The add button isn't working in the director class. Fix it.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.15 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Server
+NAME     : FireBase
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Setup a server
+ISSUE    : Learn FireBase and how to use it with flutter
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.16 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Configure Internet Access
+NAME     : Configure Login
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Make the app online.
+ISSUE    : Configure how to login users
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.17 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Encryption
+NAME     : Configure storage
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Set up a way to encrypt the information given so that it is more secure (Vignere Cipher).
+ISSUE    : Configure how to store user info. How to divide data based on company.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.18 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Adding Company [End of version 2.0]
+NAME     : Save functionality [End of version 2.0]
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Each time a company purchases the App, they can go into the register button,
-input the confirmation code, upload a picture of their logo to be shown at the top of the app,
-and create a director.
+ISSUE    : Configure how the app will interact with the server and save information.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.19 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
@@ -173,78 +171,74 @@ OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Implement a messaging system such that a client can communicate with their trainer through it.
-Only the trainer and client can see those messages. No one else in the command chain can (For privacy reasons).
+Only the trainer and client can see those messages.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.20 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Fire Base
+NAME     : Group Message
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Implement firebase analytics
+ISSUE    : There should be a group chat that includes all the directors and trainers. Also add the ability to create a
+group chat.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.21 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Data Visualization
-OWNER    :
-PRIORITY : (1,2,3)
-ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Allow a the trainers to see graphs related to their clients progress. (E.g. weight loss/gain,
-strength in exercises [with relation to reps/sets], improvement in cardio [with relation to distance/time]).
---------------------------------------------------------------------------
---------------------------------------------------------------------------
-TYPE     : USER STORY 1.22 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Fitness Apps
-OWNER    :
-PRIORITY : (1,2,3)
-ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Add Integration with other fitness apps (e.g. MyFitnessPal)
---------------------------------------------------------------------------
---------------------------------------------------------------------------
-TYPE     : USER STORY 1.23 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : In-Depth Data
-OWNER    :
-PRIORITY : (1,2,3)
-ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Directors and Supervisors are able to view much more in depth data about all trainers (including themselves).
-How many active (had a session in the past month) client each trainer has, on average how many hours a trainer works per:
-day/week/month/3-month/6-month/year, how much progress clients have progressed with a trainer, number of client
-increase/decrease per: month/3-month/6-month/year.
---------------------------------------------------------------------------
---------------------------------------------------------------------------
-TYPE     : USER STORY 1.24 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Custom Apps [End of version 3.0 (commence desktop application)]
-OWNER    :
-PRIORITY : (1,2,3)
-ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Allow the ability to create a custom app for each company contracted on the play store and app store.
-Basically same old app but with different name and logo. Will simplify a lot of issues on the back-end.
---------------------------------------------------------------------------
---------------------------------------------------------------------------
-TYPE     : USER STORY 1.25 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
 NAME     : Calendar
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Implement a calendar option.
+ISSUE    : Create the calendar option. Trainers can only view and modify their own calendar. Client's can view
+their trainer's calendar. Directors can view and modify all the trainer's calendar's.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.22 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Calendar Events
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Create a class called calendar events so that users can add events to their calendar.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.23 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Availability
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Trainers will be able to input their availability and the clients can view it. The clients can then
+request to book a time. If the trainer approves the request, the area will turn green.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.24 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Redesign [End of Online App]
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Redesign the app to make it look sexy. https://dribbble.com/shots/9240685-Ladder-Dark-Mode
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+TYPE     : USER STORY 1.25 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+NAME     : Website
+OWNER    :
+PRIORITY : (1,2,3)
+ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
+ISSUE    : Create a website version of the app for trainer and director access.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.26 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Calendar Functionality
+NAME     : Desktop App
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Allow events to be added and removed in the calendar. Allow trainers to register clients in
-the calendar and that change will be reflected in the client's calendar as well. Allow trainers to input
-their availablility and clients seeing that availablility.
+ISSUE    : Create a desktop app using the website and electron.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.27 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Desktop Integration [End of the version 4.0 (App Basically finished. Following user stories are optional)]
+NAME     : Configure Communication [End of the Desktop System. Rest of the user stories are optional]
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Allow full communication and integration between the desktop app and the phone/tablet app.
+ISSUE    : Allow full communication and integration between the desktop, website and the phone/tablet versions of the app.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.28 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
