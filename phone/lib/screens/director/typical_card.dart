@@ -60,8 +60,7 @@ class UserCard extends StatelessWidget {
               flex: 5,
               child: Row(
                 children: <Widget>[
-                  SizedBox(width: 70, height: 70,
-                  child: this.user.photo,),
+                  CircleAvatar(backgroundImage: this.user.photo, radius: 25,),
                   SizedBox(width: 10.0,),
                   Text(
                     this.name,

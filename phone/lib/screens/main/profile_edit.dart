@@ -31,7 +31,7 @@ class _SettingsPageState extends State<SettingsPage> {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {
-      this.user.pic = (image == null ? this.user.pic : Image.file(image));
+      this.user.photo = (image == null ? this.user.photo : FileImage(image));
     });
   }
 
@@ -149,7 +149,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ],
             ),
-              SizedBox(width: 100, height: 100, child: this.user.photo,),
+              CircleAvatar(backgroundImage: this.user.photo, backgroundColor: Colors.transparent, radius: 50,),
             Divider(
               thickness: 1.1,
             ),

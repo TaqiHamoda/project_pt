@@ -129,7 +129,7 @@ class _TrainerPageState extends State<TrainerPage> {
             ),
           ),
           leading: InkWell(
-            child: this.user.photo,
+            child: CircleAvatar(backgroundImage: this.user.photo, radius: 25,),
             onTap: () {
               Navigator.push(
                   context,

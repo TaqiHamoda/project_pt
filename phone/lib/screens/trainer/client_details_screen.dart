@@ -73,7 +73,7 @@ class _ClientDetails extends State<ClientDetails> {
                   Expanded(
                     child: Container(
                         margin: EdgeInsets.only(top: 5.0, left: 5.0),
-                        child: SizedBox(width: 100, height: 100, child: this.client.photo)),
+                        child: CircleAvatar(backgroundImage: this.client.photo, radius: 50,)),
                   ),
                   Expanded(
                     flex: 2,

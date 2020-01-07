@@ -105,7 +105,7 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
             Expanded(
               child: Container(
                   margin: EdgeInsets.only(top: 5.0, left: 5.0),
-                  child: SizedBox(child: this.user.photo, width: 100, height: 100,)),
+                  child: CircleAvatar(backgroundImage: this.user.photo, radius: 50,)),
             ),
             Expanded(
               flex: 2,

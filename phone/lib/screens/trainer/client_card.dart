@@ -26,7 +26,7 @@ class ClientCard extends StatelessWidget {
 
             child: Column(
               children: <Widget>[
-                SizedBox(width: 100, height: 100, child: this.client.photo),
+                CircleAvatar(backgroundImage: this.client.photo, radius: 50,),
                 Text(
                   this.name,
                   textAlign: TextAlign.center,
