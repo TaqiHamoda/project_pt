@@ -43,37 +43,46 @@ class Program extends StatelessWidget {
 }
 
 
-class Workout extends StatelessWidget {
-  List<DataRow> rowsData = [];
+class Workout{
+  List<List<String>> datas = [];
+  int rows;
   bool edit = true;
   String name;
 
-  Workout(this.name, int rows){
-    List<DataCell> cells = [];
-
-    for (int row = 0; row < rows; row++) {
-      cells.clear();
+  Workout(this.name, this.rows){
+    for (int row = 0; row < this.rows; row++) {
+      List<String> data = [];
 
       for (int i = 0; i < 6; i++) {
-        cells.add(DataCell(Text('')));
+        data.add('');
       }
-
-      this.rowsData.add(DataRow(cells: cells));
     }
   }
 
 
-  @override
-  Widget build(BuildContext context) {
+  Widget client(){
+    List<DataRow> rowsData = [];
+    List<DataCell> cells = [];
+    DataRow rowData = DataRow(cells: cells);
+
+    for (int row = 0; row < this.rows; row++) {
+      for (int i = 0; i < 6; i++) {
+        cells.add(DataCell(TextField(onChanged: (value){ this.datas[row][i] = value; },)));
+      }
+
+      rowsData.add(rowData);
+      cells = [];
+      rowData = DataRow(cells: cells);
+    }
+
     return Container(
       margin: EdgeInsets.only(top: 25.0, bottom: 25.0, left: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(left: 25.0),
-              child: Text(this.name,
-                style: TextStyle(fontSize: 20.0),)
+              margin: EdgeInsets.only(left: 25.0),
+              child: Text(this.name)
           ),
 
           SingleChildScrollView(
@@ -88,13 +97,61 @@ class Workout extends StatelessWidget {
                 DataColumn(label: Text('Notes'))
               ],
 
-              rows: this.rowsData,
+              rows: rowsData,
             ),
           )
         ],
       ),
     );
   }
+
+
+  Widget trainer(){
+    List<DataRow> rowsData = [];
+    List<DataCell> cells = [];
+    DataRow rowData = DataRow(cells: cells);
+
+    for (int row = 0; row < this.rows; row++) {
+      for (int i = 0; i < 6; i++) {
+        cells.add(DataCell(TextField(onChanged: (value){ this.datas[row][i] = value; },)));
+      }
+
+      rowsData.add(rowData);
+      cells = [];
+      rowData = DataRow(cells: cells);
+    }
+
+    return Container(
+      margin: EdgeInsets.only(top: 25.0, bottom: 25.0, left: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+              margin: EdgeInsets.only(left: 25.0),
+              child: TextField(decoration: InputDecoration(labelText: 'Workout Title'),
+                onChanged: (value){ this.name = value; },)
+          ),
+
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              columns: [
+                DataColumn(label: Text('Exercise')),
+                DataColumn(label: Text('Reps')),
+                DataColumn(label: Text('Sets')),
+                DataColumn(label: Text('Rest (Mins)')),
+                DataColumn(label: Text('RPE')),
+                DataColumn(label: Text('Notes'))
+              ],
+
+              rows: rowsData,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
 }
 
 

@@ -128,14 +128,17 @@ class _TrainerPageState extends State<TrainerPage> {
               ),
             ),
           ),
-          leading: InkWell(
-            child: CircleAvatar(backgroundImage: this.user.photo, radius: 25,),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SettingsPage(this.user)));
-            },
+          leading: Container(
+            margin: EdgeInsets.only(left: 5.0, top: 5.0),
+            child: InkWell(
+              child: CircleAvatar(backgroundImage: this.user.photo,),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SettingsPage(this.user)));
+              },
+            ),
           ),
           centerTitle: true,
           title: Text(
