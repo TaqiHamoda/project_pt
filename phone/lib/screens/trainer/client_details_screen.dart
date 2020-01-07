@@ -9,22 +9,20 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ClientDetails extends StatefulWidget {
   final Client user;
-  final String photo;
   final String name;
 
-  ClientDetails(this.user, this.name, this.photo);
+  ClientDetails(this.user, this.name);
 
   @override
   _ClientDetails createState() =>
-      _ClientDetails(this.user, this.name, this.photo);
+      _ClientDetails(this.user, this.name);
 }
 
 class _ClientDetails extends State<ClientDetails> {
   final String name;
-  final String photo;
   final Client client;
 
-  _ClientDetails(this.client, this.name, this.photo);
+  _ClientDetails(this.client, this.name);
 
   void delete() {}
 
@@ -75,7 +73,7 @@ class _ClientDetails extends State<ClientDetails> {
                   Expanded(
                     child: Container(
                         margin: EdgeInsets.only(top: 5.0, left: 5.0),
-                        child: Image.asset(this.photo)),
+                        child: SizedBox(width: 100, height: 100, child: this.client.photo)),
                   ),
                   Expanded(
                     flex: 2,

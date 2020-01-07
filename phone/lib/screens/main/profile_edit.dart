@@ -21,18 +21,17 @@ class _SettingsPageState extends State<SettingsPage> {
   String email = '';
   String number = '';
   bool _darkMode = false;
+  Widget _image;
 
   final RegExp nameExp = RegExp(r"^[a-z]+ [a-z]+$", caseSensitive: false);
   final RegExp phoneExp = RegExp(r"^[0-9]{10}$");
   // No regex for email cuz a7a bro there's .com, .ca, youssef.nafei@mail.utoronto.ca
 
-  var _image;
-
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {
-      _image = image;
+      this.user.pic = (image == null ? this.user.pic : Image.file(image));
     });
   }
 
@@ -150,11 +149,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ],
             ),
-              _image == null? Image.asset(
-                user.photo,
-                height: 100.0,
-                width: 100.0,
-              ) : Image.file(_image),
+              SizedBox(width: 100, height: 100, child: this.user.photo,),
             Divider(
               thickness: 1.1,
             ),

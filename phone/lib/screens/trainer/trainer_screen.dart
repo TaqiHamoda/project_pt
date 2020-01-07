@@ -128,9 +128,9 @@ class _TrainerPageState extends State<TrainerPage> {
               ),
             ),
           ),
-          leading: IconButton(
-            icon: Image.asset('images/profile.png'),
-            onPressed: () {
+          leading: InkWell(
+            child: this.user.photo,
+            onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(

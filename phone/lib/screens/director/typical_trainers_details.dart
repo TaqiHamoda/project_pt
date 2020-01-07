@@ -105,7 +105,7 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
             Expanded(
               child: Container(
                   margin: EdgeInsets.only(top: 5.0, left: 5.0),
-                  child: Image.asset(this.user.photo)),
+                  child: SizedBox(child: this.user.photo, width: 100, height: 100,)),
             ),
             Expanded(
               flex: 2,

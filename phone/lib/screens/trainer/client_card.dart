@@ -19,18 +19,14 @@ class ClientCard extends StatelessWidget {
             onPressed: (){
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) =>
-                      ClientDetails(this.client, this.name, client.photo),
+                      ClientDetails(this.client, this.name),
                   ),
               );
             },
 
             child: Column(
               children: <Widget>[
-                Image.asset(
-                  client.photo,
-                  height: 100.0,
-                  width: 100.0,
-                ),
+                SizedBox(width: 100, height: 100, child: this.client.photo),
                 Text(
                   this.name,
                   textAlign: TextAlign.center,

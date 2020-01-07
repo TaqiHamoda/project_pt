@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'paperwork.dart';
 import 'package:phone/screens/trainer/client_card.dart';
 import 'package:phone/screens/director/typical_card.dart';
@@ -8,8 +10,8 @@ class User {
   String email;
   String _password;
   String phoneNum;
-  String photo = 'images/profile.png';
   List<User> messageList = [];
+  Image pic = Image.asset('images/profile.png');
 
   User(firstName, lastName, email, password, cellNum) {
     this.firstName = firstName;
@@ -17,6 +19,10 @@ class User {
     this.email = email;
     this._password = password;
     this.phoneNum = cellNum;
+  }
+
+  Widget get photo{
+    return CircleAvatar(child: this.pic, backgroundColor: Colors.transparent,);
   }
 
   bool signIn(String password) {
