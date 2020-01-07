@@ -38,6 +38,10 @@ class User{
     this.phoneNum = number;
   }
 
+  void setPassword(String password){
+    this._password = password;
+  }
+
 
 
 }
@@ -155,8 +159,8 @@ class Director extends Trainer{
 
 
 List<User> localUsers(){
-  Director director = Director('Youssef', 'Nafei', 'you@app.com', 'Bebop', '123456789');
-  Director mo = Director('Mo', 'Momo', 'mo@app.com', 'Bebop', '123456789');
+  Director director = Director('Youssef', 'Nafei', 'you@app.com', 'Bebop', '1234567890');
+  Director mo = Director('Mo', 'Momo', 'mo@app.com', 'Bebop', '1234567890');
 
   Trainer mozza = Trainer('Mozza', 'Hamoda', 'mozza@app.com', 'Bebop', '1234567890');
   Client khalid = Client('Khalid', 'Bob', 'james@app.com', 'Bebop', '1234567890', mozza);

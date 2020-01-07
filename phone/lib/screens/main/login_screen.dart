@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../director/director_screen.dart';
 import '../trainer/trainer_screen.dart';
 import '../trainer/client_screen.dart';
-import 'forgot_password_screen.dart';
+import 'typical_submit_info_screen.dart';
 import '../../components/users.dart';
 
 class LoginPage extends StatefulWidget {
@@ -146,7 +146,8 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ForgotPwPage()));
+                                  builder: (context) => SubmitInfoPage(
+                                    'Forgot Password', 'Enter your email', Icon(Icons.mail))));
                         },
                         child: Text(
                           'Forgot Password?',
@@ -172,6 +173,37 @@ class _LoginPageState extends State<LoginPage> {
                     child: Center(
                       child: Text(
                         'Log-in',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'RobotoCondensed',
+                          color: Colors.white,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SubmitInfoPage(
+                              'Register', 'Registration Key', Icon(Icons.vpn_key))));
+                  },
+                  child: Container(
+                    width: 250.0,
+                    height: 50.0,
+                    decoration: BoxDecoration(
+                      color: Colors.lightBlue[50].withOpacity(0.1),
+                      border: Border.all( width: 2.0, color: Colors.lightBlue.shade50 ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Register',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'RobotoCondensed',

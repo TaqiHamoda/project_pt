@@ -50,8 +50,7 @@ class _UserPageState extends State<UserPage> {
       setState(() {
         if(this.screenType == 'Trainer') {
           Director director = this.user;
-          director.addTrainer(
-              Trainer(firstName, lastName, email, 'Bebop', phone));
+          director.addTrainer(Trainer(firstName, lastName, email, 'Bebop', phone));
         }
 
         else if(this.screenType == 'Director') {
