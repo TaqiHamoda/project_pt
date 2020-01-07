@@ -68,6 +68,7 @@ class Group extends User{
   Trainer trainer;
   List<Program> programs = [];
   List<Client> clients = [];
+  List<Goal> goals = [];
 
   Group(String name, Trainer trainer, ) :
   super(null, null, null, null, null){
@@ -82,6 +83,7 @@ class Group extends User{
 
   void addClient(Client client){
     this.clients.add(client);
+    this.goals.addAll(client.goals);
   }
 
   void addProgram(Program program){
