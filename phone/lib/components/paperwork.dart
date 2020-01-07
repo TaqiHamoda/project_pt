@@ -13,6 +13,26 @@ class Program extends StatelessWidget {
   Program(this.name, List<Goal> goals){
     this.goals.addAll(goals);
   }
+
+  List<Widget> getWorkout(String user){
+    List<Widget> workoutWidgets = [];
+
+    if(user == 'Trainer'){
+
+      for(Workout workout in this.workouts){
+        workoutWidgets.add(workout.trainer());
+      }
+
+    } else{
+
+      for(Workout workout in this.workouts){
+        workoutWidgets.add(workout.client());
+      }
+
+    }
+
+    return workoutWidgets;
+  }
   
   void addWorkout(Workout workout){
     this.workouts.add(workout);
@@ -49,7 +69,7 @@ class Workout{
   bool edit = true;
   String name;
 
-  Workout(this.name, this.rows){
+  Workout(this.rows){
     for (int row = 0; row < this.rows; row++) {
       List<String> data = [];
 
@@ -67,7 +87,7 @@ class Workout{
 
     for (int row = 0; row < this.rows; row++) {
       for (int i = 0; i < 6; i++) {
-        cells.add(DataCell(TextField(onChanged: (value){ this.datas[row][i] = value; },)));
+        cells.add(DataCell(Text(this.datas[row][i])));
       }
 
       rowsData.add(rowData);
@@ -82,7 +102,7 @@ class Workout{
         children: <Widget>[
           Container(
               margin: EdgeInsets.only(left: 25.0),
-              child: Text(this.name)
+              child: Text(this.name, style: TextStyle(fontSize: 20.0))
           ),
 
           SingleChildScrollView(
@@ -128,7 +148,11 @@ class Workout{
         children: <Widget>[
           Container(
               margin: EdgeInsets.only(left: 25.0),
-              child: TextField(decoration: InputDecoration(labelText: 'Workout Title'),
+              child: TextField(
+                decoration: InputDecoration(
+                  labelText: 'Workout Title',
+                  labelStyle: TextStyle(fontSize: 20)),
+                style: TextStyle(fontSize: 20),
                 onChanged: (value){ this.name = value; },)
           ),
 

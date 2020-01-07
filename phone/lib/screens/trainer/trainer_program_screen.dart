@@ -3,6 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:share_extend/share_extend.dart';
 import 'package:phone/components/paperwork.dart';
+import 'package:phone/components/users.dart';
 import 'package:phone/screens/main/dialog.dart';
 
 
@@ -88,21 +89,12 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
 
   void addWorkout(BuildContext context) {
     int rows;
-    String name;
 
-    SpecialDialog(context, 'Create a Workout',
+    SpecialDialog(context, 'Create a Workout Table',
             (){ setState(() {
-              this.program.addWorkout(Workout(name, rows));
+              this.program.addWorkout(Workout(rows));
             });},
         [TextField(
-          onChanged: (value){ name = value; },
-          decoration: InputDecoration(
-            labelText: 'Workout Name',
-            contentPadding: EdgeInsets.all(10.0),
-          ),
-        ),
-
-          TextField(
             onChanged: (value){ rows = int.parse(value); },
             decoration: InputDecoration(
                 labelText: 'Rows',
@@ -171,7 +163,7 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
               ),
             ],
           ),
-        ] + this.program.goals + this.program.workouts,
+        ] + this.program.goals + this.program.getWorkout('Trainer'),
       ),
     );
   }
