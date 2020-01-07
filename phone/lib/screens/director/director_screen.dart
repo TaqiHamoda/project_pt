@@ -7,7 +7,6 @@ import 'typical_screen.dart';
 import 'package:phone/screens/main/dialog.dart';
 import 'package:phone/components/users.dart';
 import 'package:flutter/services.dart';
-import 'typical_screen.dart';
 
 class DirectorPage extends StatefulWidget {
   final Director user;
