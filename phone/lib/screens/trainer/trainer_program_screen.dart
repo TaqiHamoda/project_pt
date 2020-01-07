@@ -3,7 +3,6 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:share_extend/share_extend.dart';
 import 'package:phone/components/paperwork.dart';
-import 'package:phone/components/users.dart';
 import 'package:phone/screens/main/dialog.dart';
 
 
@@ -36,10 +35,6 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
 
     ShareExtend.share(testFile.path, 'file');
   }
-
-
-  void delete(){}
-
 
   Future<void> rpeDialog() async {
     return showDialog<void>(
@@ -119,16 +114,6 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
               icon: Icon(Icons.share),
               onPressed: (){ ShareExtend.share('Hi', 'bye'); }
           ),
-
-          PopupMenuButton<Choices>(
-            onSelected: (Choices result) { setState(() { this.delete(); }); },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<Choices>>[
-              PopupMenuItem<Choices>(
-                value: Choices.delete,
-                child: Text('Delete'),
-              ),
-            ],
-          )
         ],
       ),
 
@@ -168,6 +153,3 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
     );
   }
 }
-
-
-enum Choices{delete}

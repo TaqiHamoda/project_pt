@@ -1,57 +1,51 @@
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.00 : STATUS : InProgress
-NAME     : Log-In
-OWNER    : Youssef
+NAME     : Client Main Page
+OWNER    : (1,2,3)
 PRIORITY : 2
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Create the login page. There should be a e-mail field, a password field, a forgot password field,
-a register button. The current username and password it accepts are "username@gmail.com" and "password".
+ISSUE    : The Client main page will have a progress circle, two buttons (Exercise Programs and Par-Q), and a weight
+graph.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.01 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Trainer Application
+NAME     : Client Goal Page
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : The main interface of the app. It should display profile pic with "Hi $User" next to it
-at the top-right, with an add client button, the current clients in the body. It shows
-the clients in the most-recent order and the trainer can change the sort order to be A -> Z or Z -> A
-by last name, and status (Active/InActive).
+ISSUE    : Create a client goal page where they can modify and adjust their goals. The client can have three goals at
+a time only.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.02 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Client Cards
+NAME     : Client Weight Graph
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : The clients card has a random color assigned to the theme of the card. The cards will be
-displayed in the main application. Each client card displays the name of the client, their most recent
-weight measurement, their three goals listed, and the date they started.
+ISSUE    : Implement the client weight graph functionality. It should have an option to change the weight unit
+and to choose the time to show their progress: 1 week, 1 month, 6 months, 1 year, Since beginning.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.03 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Client Class
+NAME     : Retain Information
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : When a client card is clicked, the screen shows the client application. The profile part
-is the same but the new client button switched to new assessement. If an assessment has been done,
-the button shows new Workout Program instead. The body will display workout program cards and an
-assessement card. If a workout program is swiped left, it is deleted. A client's info also includes
-trainer, phone number, e-mail, and whether a client is Active or not.
+ISSUE    : Do it so that when the train writes info in the warm-up or the workout table,
+the information is still displayed even when the page has been exited.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.04 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Assessment Cards
+NAME     : Director Analytics
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : The assessment cards will show the different tests and their scores, along with
-the date the assessment has been done.
+ISSUE    : Add an analytics tab to the bottom navigation bar. The director will be able to choose a trainer from a
+dropdown menu and see different aspects of their performance.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.05 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Assessment Application
+NAME     : Group
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
@@ -60,38 +54,32 @@ I will provide a custom template.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.06 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Workout Program Cards
+NAME     : Keep User logged in
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : The workout program cards shows the workout split (e.g. upperbody-lowerbody),
-the number of the workout program (e.g. Workout Program 2), and the frequency per week (e.g. 2 times a week,
-3 times a week).
+ISSUE    : Implement a switch to keep the user logged in.
+Helpful Guide: https://stackoverflow.com/questions/54377188/how-to-use-shared-preferences-to-keep-user-logged-in-flutter
+Helpful Library: https://pub.dev/packages/shared_preferences
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.07 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Workout Program Application
+NAME     : Assessment
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : The workout program has a new workout button at the top and it fully shows the workouts added
-in the body. The warm-up is written by the trainer. There is a standard warm-up button which will display walking
-on the treadmill at incline of 9 and a speed of 3. The workouts are like an excel table. The columns go as such:
-Exercise, Reps, Sets, Rest (min), RPE, Tempo, Notes.
-The rows are set by the trainer. The notes column has only 1 row. There is a share button
-at the bottom right corner. When clicked, it shows: it sends a pdf file to the email of the client that contains
-the workout program.
+ISSUE    : Create a fitness assessment page based on the UTM outline.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.08 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : PDF
+NAME     : PDF Parser
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : The pdf produced by the workout program will have the trainer's name at the top left,
 the client's name under it, the title will be the number of the workout program with the split in
 parantheses. The body will include definition of RPE and a standard warm-up. The body will include
- the workout name (e.g. Upper-Body) with the exercise table under it.
+the workout name (e.g. Upper-Body) with the exercise table under it.
 
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
@@ -101,63 +89,48 @@ OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : When a new client is initiated, the client must sign the PAR-Q document in order
-to be accessible and start adding assessments and so on. The PARQ document signed will be available
+to be accessible and start adding assessments and so on. The PAR-Q document signed will be available
 to see but not to edit. A client cannot be deleted.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.10 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Access Tree
+NAME     : Delete
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Directors have access to edit/add/remove directors, supervisors, trainers and to edit/add all clients.
-Supervisors have access to edit/add/remove supervisors, trainers and to edit/add all clients. Trainers have access to
-edit/add their own clients.
-
-Supervisors and directors extend trainers. Each of the classes has its own application.
+ISSUE    : Add the delete functionality for all classes.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.11 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Trainers
+NAME     : Warmup
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Create a trainers class. Basically same functionality as the main application.
+ISSUE    : Make the warmup textfield wrap after a set number of characters.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.12 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Director Class
+NAME     : Register Page
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : A directors application will show the following cards: directors, supervisor, trainers,
-and clients. The directors will show cards for the directors with an add directors button, the supervisors
-will show supervisors with an add supervisors button, the trainers will show the trainers with an add
-trainers button. The clients will show all clients with an add clients button. When the add client button
-is clicked, the director will have to choose a director, a supervisor, or a trainer to train that client. The client will
-appear to the supervisor/trainer chosen in their client list.
+ISSUE    : The register page should ask for a code to activate the application.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.13 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Supervisor Class
+NAME     : Client Sessions
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : A supervisors application will show the following cards: supervisors, trainers, and clients.
-It will be the same functionality as the directors. The supervisors client application can allow them to
-choose to preview their own clients or all clients.
+ISSUE    : Add a sessions attribute and configure it.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.14 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
-NAME     : Save [End of version 1.0]
+NAME     : Fix the add Button [End of offline version]
 OWNER    :
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Everytime a new action happens, it is saved in a file. Every company has it's own
-folder. Inside the company folder, there is a clients folder, a trainers folder, a supervisors folder,
-a directors folder. Inside of each folder is a file with the respective person's name, except for the
-clients. The clients folder has a folder for each client. Each client folder has a file for workout programs,
-assessment, and the PAR-Q pdf.
+ISSUE    : The add button isn't working in the director class. Fix it.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.15 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)

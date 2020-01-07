@@ -54,6 +54,7 @@ class Client extends User{
   List<Program> programs = [];
   Trainer trainer;
   List<Goal> goals = [];
+  int sessions;
 
   Client(String firstName, String lastName, String email, String password, String cellNum, Trainer trainer) :
         super(firstName, lastName, email, password, cellNum){
@@ -67,6 +68,10 @@ class Client extends User{
 
   void addGoal(String goal){
     this.goals.add(Goal(goal));
+  }
+
+  void addSessions(int sessionsNum){
+    this.sessions = sessionsNum;
   }
 
 }

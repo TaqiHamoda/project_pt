@@ -91,7 +91,7 @@ class _SettingsPageState extends State<SettingsPage> {
               _showDialog();
             },
             child: Text(
-              'Log Out?',
+              'Log Out',
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -106,25 +106,6 @@ class _SettingsPageState extends State<SettingsPage> {
         padding: EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  'Dark Mode',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
-                ),
-                CupertinoSwitch(
-                  value: _darkMode,
-                  onChanged: (bool value){
-                    setState(() {
-                      _darkMode = value;
-                    });
-                  },
-                ),
-              ],
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
