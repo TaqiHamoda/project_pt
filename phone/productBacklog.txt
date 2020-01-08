@@ -27,12 +27,11 @@ and to choose the time to show their progress: 1 week, 1 month, 6 months, 1 year
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.03 : STATUS : NotStarted Complete
-NAME     : Retain Information
+NAME     : Exercise Card
 OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Do it so that when the train writes info in the warm-up or the workout table,
-the information is still displayed even when the page has been exited.
+ISSUE    : Implement the exercise card
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.04 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
@@ -102,11 +101,11 @@ ISSUE    : Add the delete functionality for all classes.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.11 : STATUS : Complete
-NAME     : Warmup
+NAME     : Warmup and Superset
 OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
-ISSUE    : Make the warmup textfield wrap after a set number of characters.
+ISSUE    : Implement the warm-up and super-set classes.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.12 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)

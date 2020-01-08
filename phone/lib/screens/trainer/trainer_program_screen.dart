@@ -90,9 +90,9 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
   void addWorkout(BuildContext context) {
     int rows;
 
-    SpecialDialog(context, 'Create a Workout Table',
+    SpecialDialog(context, 'Create a new Exercise',
             (){ setState(() {
-              this.program.addWorkout(Workout(rows));
+              this.program.addExercise(Exercise());
             });},
         [TextField(
             onChanged: (value){ rows = int.parse(value); },
@@ -110,7 +110,9 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
   Widget build(BuildContext context) {
     return Scaffold(floatingActionButton: FloatingActionButton(
       child: Icon(Icons.add),
-      onPressed: (){ this.addWorkout(context); },
+      onPressed: (){ setState(() {
+    this.program.addExercise(Exercise());
+    }); },
     ),
 
       appBar: AppBar(

@@ -3,45 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:phone/screens/trainer/trainer_program_screen.dart';
 
-
 class Program extends StatelessWidget {
-  List<Workout> workouts = [];
+  List<Exercise> exercises = [];
   String warmup;
   String name;
   List<Goal> goals = [];
-  
-  Program(this.name, List<Goal> goals){
+
+  Program(this.name, List<Goal> goals) {
     this.goals.addAll(goals);
   }
 
-  List<Widget> getWorkout(String user){
+  List<Widget> getWorkout(String user) {
     List<Widget> workoutWidgets = [];
 
-    if(user == 'Trainer'){
-
-      for(Workout workout in this.workouts){
-        workoutWidgets.add(workout.trainer());
+    if (user == 'Trainer') {
+      for (Exercise exercise in this.exercises) {
+        workoutWidgets.add(exercise.trainer());
       }
-
-    } else{
-
-      for(Workout workout in this.workouts){
-        workoutWidgets.add(workout.client());
+    } else {
+      for (Exercise exercise in this.exercises) {
+        workoutWidgets.add(exercise.client());
       }
-
     }
 
     return workoutWidgets;
   }
-  
-  void addWorkout(Workout workout){
-    this.workouts.add(workout);
-  }
 
-  void changeAccess(bool access){
-    for(Workout workout in this.workouts){
-      workout.edit = access;
-    }
+  void addExercise(Exercise exercise) {
+    this.exercises.add(exercise);
   }
 
   @override
@@ -49,155 +38,124 @@ class Program extends StatelessWidget {
     return ListTile(
         leading: Icon(Icons.table_chart),
         trailing: IconButton(
-          onPressed: (){},
-          icon: Icon(Icons.delete, color: Colors.red,),
+          onPressed: () {},
+          icon: Icon(
+            Icons.delete,
+            color: Colors.red,
+          ),
         ),
-        onTap: (){
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => TrainerProgramPage(this)));
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => TrainerProgramPage(this)));
         },
-
-        title: Text(this.name, textAlign: TextAlign.left,)
-    );
+        title: Text(
+          this.name,
+          textAlign: TextAlign.left,
+        ));
   }
 }
 
+class Exercise {
+  String name = '';
+  String sets = '';
+  String reps = '';
+  String rest = '';
+  String rpe = '';
+  String notes = '';
+  bool completed = false;
 
-class Workout{
-  List<List<String>> datas = [];
-  int rows;
-  bool edit = true;
-  String name;
-
-  Workout(this.rows){
-    for (int row = 0; row < this.rows; row++) {
-      List<String> data = [];
-
-      for (int i = 0; i < 6; i++) {
-        data.add('');
-      }
-
-      this.datas.add(data);
-    }
-  }
-
-
-  Widget client(){
-    List<DataRow> rowsData = [];
-    List<DataCell> cells = [];
-    DataRow rowData = DataRow(cells: cells);
-
-    for (int row = 0; row < this.rows; row++) {
-      for (int i = 0; i < 6; i++) {
-        cells.add(DataCell(Text(this.datas[row][i])));
-      }
-
-      rowsData.add(rowData);
-      cells = [];
-      rowData = DataRow(cells: cells);
-    }
-
+  Widget trainer() {
     return Container(
-      margin: EdgeInsets.only(top: 25.0, bottom: 25.0, left: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(left: 25.0),
-              child: Text(this.name, style: TextStyle(fontSize: 20.0))
-          ),
+      margin: EdgeInsets.symmetric(vertical: 10.0),
+      child: Card(
+        color: Colors.grey,
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: Row(children: <Widget>[
+                Expanded(
+                  flex: 5,
+                    child: Container(child: TextField(
+                      decoration: InputDecoration(labelText: 'Exercise Title', contentPadding: EdgeInsets.all(10)),
+                    ), alignment: Alignment(0, -1),)
+                ),
 
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              columns: [
-                DataColumn(label: Text('Exercise')),
-                DataColumn(label: Text('Reps')),
-                DataColumn(label: Text('Sets')),
-                DataColumn(label: Text('Rest (Mins)')),
-                DataColumn(label: Text('RPE')),
-                DataColumn(label: Text('Notes'))
-              ],
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    alignment: Alignment(0, 1),
+                      child: Icon(Icons.trip_origin, color: this.completed ? Colors.green : null,)
+                  ),
+                )
 
-              rows: rowsData,
+
+              ],),
             ),
-          )
-        ],
-      ),
-    );
-  }
 
+            Row(children: <Widget>[
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text('Sets'),
 
-  Widget trainer(){
-    List<DataRow> rowsData = [];
-    List<DataCell> cells = [];
-    DataRow rowData = DataRow(cells: cells);
+                  TextField(
+                    decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
+                  )
+                ],),
+              ),
 
-    for (int row = 0; row < this.rows; row++) {
-      for (int i = 0; i < 5; i++) {
-        cells.add(DataCell(TextField(
-          controller: TextEditingController(text: datas[row][i]),
-          onChanged: (value){ this.datas[row][i] = value; },
-          textAlign: TextAlign.center,
-        )));
-      }
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text('Reps'),
 
-      cells.add(DataCell(SizedBox(
-        height: 300,
-        width: 300,
-        child: TextField(
-          controller: TextEditingController(text: datas[row][5]),
-          maxLines: 3,
-          onChanged: (value){ this.datas[row][5] = value; },
-          textAlign: TextAlign.center,
-        ),
-      )));
+                  TextField(
+                    decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
+                  )
+                ],),
+              ),
 
-      rowsData.add(rowData);
-      cells = [];
-      rowData = DataRow(cells: cells);
-    }
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text('Rest (Min)'),
 
+                  TextField(
+                    decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
+                  )
+                ],),
+              ),
 
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text('RPE'),
 
-    return Container(
-      margin: EdgeInsets.only(top: 25.0, bottom: 25.0, left: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(left: 25.0),
+                  TextField(
+                    decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
+                  )
+                ],),
+              )
+            ],),
+
+            Container(
+              margin: EdgeInsets.only(top: 20),
               child: TextField(
-                controller: TextEditingController(text: this.name),
-                decoration: InputDecoration(
-                  labelText: 'Workout Title',
-                  labelStyle: TextStyle(fontSize: 20)),
-                style: TextStyle(fontSize: 20),
-                onChanged: (value){ this.name = value; },)
-          ),
-
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              columns: [
-                DataColumn(label: Text('Exercise')),
-                DataColumn(label: Text('Reps')),
-                DataColumn(label: Text('Sets')),
-                DataColumn(label: Text('Rest (Mins)')),
-                DataColumn(label: Text('RPE')),
-                DataColumn(label: Text('Notes'))
-              ],
-
-              rows: rowsData,
-            ),
-          )
-        ],
+                maxLines: 2,
+                decoration: InputDecoration(labelText: 'Notes', contentPadding: EdgeInsets.all(10)),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
+  Widget client() {}
 }
 
+class WarmUp {}
+
+class SuperSet extends Exercise {}
 
 class Goal extends StatelessWidget {
   String goal;
@@ -205,7 +163,7 @@ class Goal extends StatelessWidget {
 
   Goal(this.goal);
 
-  void reachedGoal(){
+  void reachedGoal() {
     this.reached = true;
   }
 
@@ -214,11 +172,15 @@ class Goal extends StatelessWidget {
     return Column(
       children: <Widget>[
         ListTile(
-          leading: Icon(Icons.trip_origin,
-            color: reached ? Colors.green : null,),
+          leading: Icon(
+            Icons.trip_origin,
+            color: reached ? Colors.green : null,
+          ),
           title: Text('Goal: ' + this.goal),
         ),
-        Divider(thickness: 1.5,)
+        Divider(
+          thickness: 1.5,
+        )
       ],
     );
   }

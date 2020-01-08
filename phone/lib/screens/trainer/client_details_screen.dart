@@ -29,7 +29,7 @@ class _ClientDetails extends State<ClientDetails> {
   void addProgram(BuildContext context) {
     String programName = '';
 
-    SpecialDialog(context, 'Create a new program',
+    SpecialDialog(context, 'Create a new workout',
             (){setState(() {
               this.client.addProgram(Program(programName, this.client.goals));
             });},
