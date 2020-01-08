@@ -15,11 +15,12 @@ class _LoginPageState extends State<LoginPage> {
   String _userEmail = '';
   String _userPassword = '';
   bool error = false;
+  final List<User> users = userCreator();
 
   void logIn() {
     bool success = false;
 
-    for (User user in userCreator()) {
+    for (User user in this.users) {
       if ((user.email == this._userEmail) && user.signIn(this._userPassword)) {
 
         if (user is Client) {
