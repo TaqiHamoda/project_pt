@@ -34,6 +34,7 @@ class _ClientDetails extends State<ClientDetails> {
               this.client.addProgram(Program(programName, this.client.goals));
             });},
         [TextField(
+          autofocus: true,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 10.0),
             labelText: 'Program Name',

@@ -72,11 +72,16 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
     SpecialDialog(context, 'Create Warmup',
             (){ this.program.warmup = warmup;
             print(this.program.warmup);},
-        [TextField(
-          onChanged: (value){ warmup = value; },
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(10.0),
-            labelText: 'Warmup'
+        [SizedBox(
+          child: TextField(
+            controller: TextEditingController(text: this.program.warmup),
+            onChanged: (value){ warmup = value; },
+            maxLines: 3,
+            autofocus: true,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(10.0),
+              labelText: 'Warmup'
+            ),
           ),
         )]);
   }
@@ -91,6 +96,7 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
             });},
         [TextField(
             onChanged: (value){ rows = int.parse(value); },
+          autofocus: true,
             decoration: InputDecoration(
                 labelText: 'Rows',
                 contentPadding: EdgeInsets.all(10.0)

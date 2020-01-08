@@ -76,6 +76,8 @@ class Workout{
       for (int i = 0; i < 6; i++) {
         data.add('');
       }
+
+      this.datas.add(data);
     }
   }
 
@@ -132,14 +134,31 @@ class Workout{
     DataRow rowData = DataRow(cells: cells);
 
     for (int row = 0; row < this.rows; row++) {
-      for (int i = 0; i < 6; i++) {
-        cells.add(DataCell(TextField(onChanged: (value){ this.datas[row][i] = value; },)));
+      for (int i = 0; i < 5; i++) {
+        cells.add(DataCell(TextField(
+          controller: TextEditingController(text: datas[row][i]),
+          onChanged: (value){ this.datas[row][i] = value; },
+          textAlign: TextAlign.center,
+        )));
       }
+
+      cells.add(DataCell(SizedBox(
+        height: 300,
+        width: 300,
+        child: TextField(
+          controller: TextEditingController(text: datas[row][5]),
+          maxLines: 3,
+          onChanged: (value){ this.datas[row][5] = value; },
+          textAlign: TextAlign.center,
+        ),
+      )));
 
       rowsData.add(rowData);
       cells = [];
       rowData = DataRow(cells: cells);
     }
+
+
 
     return Container(
       margin: EdgeInsets.only(top: 25.0, bottom: 25.0, left: 10.0),
@@ -149,6 +168,7 @@ class Workout{
           Container(
               margin: EdgeInsets.only(left: 25.0),
               child: TextField(
+                controller: TextEditingController(text: this.name),
                 decoration: InputDecoration(
                   labelText: 'Workout Title',
                   labelStyle: TextStyle(fontSize: 20)),
