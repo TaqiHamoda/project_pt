@@ -2,7 +2,7 @@
 TYPE     : USER STORY 1.00 : STATUS : InProgress
 NAME     : Client Main Page
 OWNER    : (1,2,3)
-PRIORITY : 2
+PRIORITY :
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : The Client main page will have a progress circle, two buttons (Exercise Programs and Par-Q), and a weight
 graph.
@@ -26,9 +26,9 @@ ISSUE    : Implement the client weight graph functionality. It should have an op
 and to choose the time to show their progress: 1 week, 1 month, 6 months, 1 year, Since beginning.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
-TYPE     : USER STORY 1.03 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+TYPE     : USER STORY 1.03 : STATUS : NotStarted Complete
 NAME     : Retain Information
-OWNER    :
+OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Do it so that when the train writes info in the warm-up or the workout table,
@@ -101,9 +101,9 @@ ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Add the delete functionality for all classes.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
-TYPE     : USER STORY 1.11 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+TYPE     : USER STORY 1.11 : STATUS : Complete
 NAME     : Warmup
-OWNER    :
+OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Make the warmup textfield wrap after a set number of characters.
@@ -125,9 +125,9 @@ ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Add a sessions attribute and configure it.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
-TYPE     : USER STORY 1.14 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+TYPE     : USER STORY 1.14 : STATUS : Complete
 NAME     : Fix the add Button [End of offline version]
-OWNER    :
+OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : The add button isn't working in the director class. Fix it.

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'paperwork.dart';
 import 'package:phone/screens/trainer/client_card.dart';
 import 'package:phone/screens/director/typical_card.dart';
+import 'dart:math';
 
 class User {
   String firstName;
@@ -56,10 +57,13 @@ class Client extends User{
   List<Goal> goals = [];
   int sessions;
 
-  Client(String firstName, String lastName, String email, String password, String cellNum, Trainer trainer) :
-        super(firstName, lastName, email, password, cellNum){
+  Client(String firstName, String lastName, String email, String password, String cellNum) :
+        super(firstName, lastName, email, password, cellNum);
+
+  void assignTrainer(Trainer trainer){
     this.trainer = trainer;
     this.messageList.add(trainer);
+
   }
 
   void addProgram(Program program){
@@ -85,7 +89,6 @@ class Group extends User{
 
   Group(String name, Trainer trainer, ) :
   super(null, null, null, null, null){
-    this.trainer = trainer;
     this.messageList.add(trainer);
   }
 
@@ -97,6 +100,7 @@ class Group extends User{
   void addClient(Client client){
     this.clients.add(client);
     this.goals.addAll(client.goals);
+    this.trainer = client.trainer;
   }
 
   void addProgram(Program program){
@@ -111,16 +115,23 @@ class Group extends User{
 
 class Trainer extends User{
   List<Client> _clients = [];
+  Director director;
 
   Trainer(String firstName, String lastName, String email, String password, String cellNum) :
         super(firstName, lastName, email, password, cellNum);
 
   void addClient(Client client){
     this._clients.add(client);
+    client.assignTrainer(this);
   }
 
   void addClientMessage(Client client){
     this.messageList.add(client);
+  }
+
+  void assignDirector(Director director){
+    this.director = director;
+    this.messageList.add(director);
   }
 
   List<Client> getClients(User user){
@@ -164,10 +175,14 @@ class Director extends Trainer{
 
   void addTrainer(Trainer trainer){
     this._trainers.add(trainer);
+    trainer.assignDirector(this);
   }
 
-  void addDirector(Director director){
-    this._directors.add(director);
+  @override
+  void assignDirector(Director director);
+
+  void addDirector(Director dir){
+    this._directors.add(dir);
   }
 
 
@@ -204,59 +219,89 @@ class Director extends Trainer{
     return cards;
   }
 
-
-
 }
 
 
-List<User> localUsers(){
-  Director director = Director('Youssef', 'Nafei', 'you@app.com', 'Bebop', '1234567890');
-  Director mo = Director('Mo', 'Momo', 'mo@app.com', 'Bebop', '1234567890');
+String phoneNumberGenerator(){
+  Random generator = Random();
+  String phoneNum = '';
 
-  Trainer mozza = Trainer('Mozza', 'Hamoda', 'mozza@app.com', 'Bebop', '1234567890');
-  Client khalid = Client('Khalid', 'Bob', 'james@app.com', 'Bebop', '1234567890', mozza);
-  Client adel = Client('Adel', 'Martinez', 'juan@app.com', 'Bebop', '1234567890', mozza);
-  Client ahmed = Client('Ahmed', 'Austaralia', 'sidney@app.com', 'Bebop', '1234567890', mozza);
+  for(int i = 0; i < 10; i++){
+    phoneNum += generator.nextInt(10).toString();
+  }
 
-  Trainer trainer = Trainer('Taqi', 'Hamoda', 'taqi@app.com', 'Bebop', '1234567890');
-  Client james = Client('James', 'Bob', 'james@app.com', 'Bebop', '1234567890', trainer);
-  Client juan = Client('Juan', 'Martinez', 'juan@app.com', 'Bebop', '1234567890', trainer);
-  Client sidney = Client('Sidney', 'Austaralia', 'sidney@app.com', 'Bebop', '1234567890', trainer);
-  Client richard = Client('Richard', 'Henry', 'richard@app.com', 'Bebop', '1234567890', trainer);
-  Client jonathan = Client('Jonathan', 'Joestar', 'jonathan@app.com', 'Bebop', '1234567890', trainer);
-  Client dio = Client('Dio', 'Brando', 'dio@app.com', 'Bebop', '1234567890', trainer);
-  Client joseph = Client('Joseph', 'Joestar', 'joseph@app.com', 'Bebop', '1234567890', trainer);
-  Client jotaro = Client('Jotaro', 'Kujo', 'jotaro@app.com', 'Bebop', '1234567890', trainer);
-  Client johnny = Client('Johnny', 'Joestar', 'johnny@app.com', 'Bebop', '1234567890', trainer);
-
-  mozza.addClient(khalid);
-  mozza.addClient(adel);
-  mozza.addClient(ahmed);
-
-  trainer.addClient(james);
-  trainer.addClient(juan);
-  trainer.addClient(sidney);
-  trainer.addClient(richard);
-  trainer.addClient(jonathan);
-  trainer.addClient(joseph);
-  trainer.addClient(dio);
-  trainer.addClient(jotaro);
-  trainer.addClient(johnny);
-  trainer.messageList.addAll(trainer._clients); // for now.
-
-  director.addTrainer(trainer);
-  director.addTrainer(mozza);
-  director.addDirector(mo);
-  director.addClient(richard);
-  director.addClient(dio);
+  return phoneNum;
+}
 
 
+List<User> userCreator(){
+  Random generator = Random();
+
+  List<String> firstNames = ['Ahmed', 'Jotaro', 'Dio', 'Joe', 'James', 'Juan', 'Richard', 'Ahsan', 'Moaz', 'Mohammed'];
+  List<String> lastNames = ['Mo', 'Kujo', 'Martinez', 'Brando', 'Joestar', 'Bob', 'Henry', 'Waheed', 'Mohammed', 'Smith'];
+  List<String> goals = ['Lose 15 lbs', 'Get shredded', 'Get deezed', 'Run a marathon', 'Become a beast',
+    'Get pussy', 'Bench 3 plates', 'Sqaut 4 plates', 'Gain weight'];
+
+  List<Client> clients = [];
+
+  Director hiro = Director('Hiro', 'Diver', 'hiro@app.com', 'Bebop', phoneNumberGenerator());
+  Director youssef = Director('Youssef', 'Nafei', 'you@app.com', 'Bebop', phoneNumberGenerator());
+
+  Trainer taqi = Trainer('Taqi', 'Hamoda', 'taqi@app.com', 'Bebop', phoneNumberGenerator());
+  Trainer samy = Trainer('Samy', 'Hamoda', 'samy@app.com', 'Bebop', phoneNumberGenerator());
+
+  hiro.addTrainer(taqi);
+  hiro.addTrainer(samy);
+  youssef.addTrainer(taqi);
+  youssef.addTrainer(samy);
+  hiro.addDirector(youssef);
+  youssef.addDirector(hiro);
+
+  for(int i = 0; i < 30; i++){
+    String firstName = firstNames[generator.nextInt(firstNames.length)];
+    String lastName = firstNames[generator.nextInt(lastNames.length)];
+    String goal1 = goals[generator.nextInt(goals.length)];
+    String goal2 = goals[generator.nextInt(goals.length)];
+    String goal3 = goals[generator.nextInt(goals.length)];
+
+    int number = generator.nextInt(4);
+
+    if(number == 0){
+      Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', phoneNumberGenerator());
+      hiro.addClient(client);
+      client.addGoal(goal1);
+      client.addGoal(goal2);
+      client.addGoal(goal3);
+    }
+
+    else if(number == 1){
+      Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', phoneNumberGenerator());
+      youssef.addClient(client);
+      client.addGoal(goal1);
+      client.addGoal(goal2);
+      client.addGoal(goal3);
+    }
+
+    else if(number == 2){
+      Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', phoneNumberGenerator());
+      taqi.addClient(client);
+      client.addGoal(goal1);
+      client.addGoal(goal2);
+      client.addGoal(goal3);
+    }
+
+    else{
+      Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', phoneNumberGenerator());
+      samy.addClient(client);
+      client.addGoal(goal1);
+      client.addGoal(goal2);
+      client.addGoal(goal3);
+    }
+  }
 
 
-  james.addGoal("Lose 15 lbs before break");
-  james.addGoal("Run a marathon in January");
-  james.addGoal("Bench 2 plates by the end of the semester");
+  List<User> users = [hiro, youssef, taqi, samy];
+  users.addAll(clients);
 
-
-  return [director, mo, khalid, adel, ahmed, trainer, james, juan, sidney, richard, jonathan, dio, joseph, jotaro, johnny];
+  return users;
 }

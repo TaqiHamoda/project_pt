@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   void logIn() {
     bool success = false;
 
-    for (User user in localUsers()) {
+    for (User user in userCreator()) {
       if ((user.email == this._userEmail) && user.signIn(this._userPassword)) {
 
         if (user is Client) {

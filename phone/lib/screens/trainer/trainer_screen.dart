@@ -45,7 +45,7 @@ class _TrainerPageState extends State<TrainerPage> {
     SpecialDialog(context, 'Create a client', () {
       setState(() {
         this.user.addClient(
-            Client(firstName, lastName, email, 'Bebop', phone, this.user));
+            Client(firstName, lastName, email, 'Bebop', phone));
       });
     }, <Widget>[
       Row(
@@ -108,7 +108,7 @@ class _TrainerPageState extends State<TrainerPage> {
         ),
         appBar: AppBar(
           bottom: PreferredSize(
-            preferredSize: Size(100, 50),
+            preferredSize: Size(0, 55),
             child: Container(
               margin: EdgeInsets.only(top: 5.0),
               child: TextField(

@@ -46,7 +46,7 @@ class _DirectorPageState extends State<DirectorPage> {
     SpecialDialog(context, 'Create a client', () {
       setState(() {
         this.user.addClient(
-            Client(firstName, lastName, email, 'Bebop', phone, this.user));
+            Client(firstName, lastName, email, 'Bebop', phone));
       });
     }, <Widget>[
       Row(
@@ -109,7 +109,7 @@ class _DirectorPageState extends State<DirectorPage> {
         ),
         appBar: AppBar(
           bottom: PreferredSize(
-            preferredSize: Size(100, 50),
+            preferredSize: Size(0, 55),
             child: Container(
               margin: EdgeInsets.only(top: 5.0),
               child: TextField(
@@ -210,6 +210,8 @@ class _DirectorPageState extends State<DirectorPage> {
                 Icons.calendar_today,
               ),
             ),
+            BottomNavigationBarItem(icon: Icon(Icons.insert_chart),
+            title: Text('Analytics'))
           ],
         ),
       ),

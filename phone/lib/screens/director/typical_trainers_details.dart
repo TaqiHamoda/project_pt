@@ -47,7 +47,7 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
     SpecialDialog(context, 'Create a client', () {
       setState(() {
         this.user.addClient(
-            Client(firstName, lastName, email, 'Bebop', phone, this.user));
+            Client(firstName, lastName, email, 'Bebop', phone));
         this.cards = this.user.viewClientCards();
       });
     }, <Widget>[
