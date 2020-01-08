@@ -143,6 +143,16 @@ class Trainer extends User{
     return cards;
   }
 
+  List<UserCard> viewClientCards(){
+    List<UserCard> cards = [];
+
+    for(Client client in this._clients){
+      cards.add(UserCard(client, client.firstName + " " + client.lastName));
+    }
+
+    return cards;
+  }
+
 }
 
 class Director extends Trainer{

@@ -22,6 +22,8 @@ class _UserPageState extends State<UserPage> {
   String screenType;
   List<UserCard> cards;
   String search = '';
+  Widget floatingButton;
+
 
   _UserPageState(this.user, this.screenType, this.cards);
 
@@ -47,22 +49,20 @@ class _UserPageState extends State<UserPage> {
     String phone;
 
     SpecialDialog(context, 'Create a ' + this.screenType, () {
-      setState(() {
-        if(this.screenType == 'Trainer') {
+        setState(() {
           Director director = this.user;
-          director.addTrainer(Trainer(firstName, lastName, email, 'Bebop', phone));
-        }
 
-        else if(this.screenType == 'Director') {
-          Director director = this.user;
-          director.addDirector(Director(firstName, lastName, email, 'Bebop', phone));
-        }
+          if(this.screenType == 'Trainer') {
+            director.addTrainer(Trainer(firstName, lastName, email, 'Bebop', phone));
+            this.cards = director.trainerCards();
+          }
 
-        else{
-          Trainer trainer = this.user;
-          trainer.addClient(Client(firstName, lastName, email, 'Bebop', phone, this.user));
-        }
-      });
+          else if(this.screenType == 'Director') {
+            director.addDirector(Director(firstName, lastName, email, 'Bebop', phone));
+            this.cards = director.directorCards();
+          }
+        });
+
     }, <Widget>[
       Row(
         children: <Widget>[
@@ -114,7 +114,7 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: this.screenType == 'Client' ? null :  FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
           this.add(context);

@@ -35,34 +35,6 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
-  void _showDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Text('Are you sure you want to log out?'),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Back'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            FlatButton(
-              child: Text('Ok'),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => LoginPage()));
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   _SettingsPageState(this.user);
 
   @override
@@ -88,12 +60,16 @@ class _SettingsPageState extends State<SettingsPage> {
         actions: <Widget>[
           FlatButton(
             onPressed: (){
-              _showDialog();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LoginPage()));
             },
             child: Text(
               'Log Out',
               style: TextStyle(
                 color: Colors.white,
+                fontSize: 20
               ),
             ),
           ),
@@ -106,16 +82,11 @@ class _SettingsPageState extends State<SettingsPage> {
         padding: EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                  'Profile Picture',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                CircleAvatar(backgroundImage: this.user.photo, backgroundColor: Colors.transparent, radius: 100,),
+
                 FlatButton(
                   onPressed: (){
                     getImage();
@@ -130,7 +101,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ],
             ),
-              CircleAvatar(backgroundImage: this.user.photo, backgroundColor: Colors.transparent, radius: 80,),
             Divider(
               thickness: 1.1,
             ),

@@ -3,15 +3,17 @@ import 'package:phone/components/users.dart';
 import 'package:phone/screens/director/typical_card.dart';
 import 'package:phone/screens/main/custom_button.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:phone/screens/main/dialog.dart';
 
 class TypicalTrainerDetails extends StatefulWidget {
   final Trainer user;
   final String name;
+  List<UserCard> cards;
 
-  TypicalTrainerDetails(this.user, this.name);
+  TypicalTrainerDetails(this.user, this.name, this.cards);
 
   @override
-  _TypicalTrainerDetails createState() => _TypicalTrainerDetails(this.user, this.name);
+  _TypicalTrainerDetails createState() => _TypicalTrainerDetails(this.user, this.name, this.cards);
 }
 
 class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
@@ -20,26 +22,7 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
   List<UserCard> cards;
   String search = '';
 
-  _TypicalTrainerDetails(this.user, this.name) {
-    if (this.user is Trainer) {
-      Trainer trainer = this.user;
-      this.cards = [];
-
-      for (Client client in trainer.getClients(trainer)) {
-        cards.add(UserCard(client, client.firstName + " " + client.lastName));
-      }
-
-    } else {
-      Row(
-        children: <Widget>[
-          Expanded(
-            child: CustomButton(() {}, 'Par-Q'),
-          ),
-          Expanded(child: CustomButton(() {}, 'Assessment'))
-        ],
-      );
-    }
-  }
+  _TypicalTrainerDetails(this.user, this.name, this.cards);
 
   List<Widget> filter(String filterText) {
     if (filterText == '') {
@@ -55,11 +38,79 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
     return filteredUsers;
   }
 
+  void addClient(BuildContext context) {
+    String firstName;
+    String lastName;
+    String email;
+    String phone;
+
+    SpecialDialog(context, 'Create a client', () {
+      setState(() {
+        this.user.addClient(
+            Client(firstName, lastName, email, 'Bebop', phone, this.user));
+        this.cards = this.user.viewClientCards();
+      });
+    }, <Widget>[
+      Row(
+        children: <Widget>[
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 10.0),
+                labelText: 'First Name',
+              ),
+              onChanged: (value) {
+                firstName = value;
+              },
+            ),
+          ),
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 10.0),
+                labelText: 'Last Name',
+              ),
+              onChanged: (value) {
+                lastName = value;
+              },
+            ),
+          ),
+        ],
+      ),
+      TextField(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(left: 10.0),
+          labelText: 'Email',
+        ),
+        onChanged: (value) {
+          email = value;
+        },
+      ),
+      TextField(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(left: 10.0),
+          labelText: 'Phone Number',
+        ),
+        onChanged: (value) {
+          phone = value;
+        },
+      ),
+    ]);
+  }
+
+
   void delete() {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          addClient(context);
+        },
+      ),
+
       appBar: AppBar(
         bottom: PreferredSize(
           preferredSize: Size(100.0, 50.0),
@@ -105,7 +156,7 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
             Expanded(
               child: Container(
                   margin: EdgeInsets.only(top: 5.0, left: 5.0),
-                  child: CircleAvatar(backgroundImage: this.user.photo, radius: 50,)),
+                  child: CircleAvatar(backgroundImage: this.user.photo, radius: 65,)),
             ),
             Expanded(
               flex: 2,

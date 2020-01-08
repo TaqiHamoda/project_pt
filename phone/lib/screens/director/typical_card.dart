@@ -39,6 +39,7 @@ class UserCard extends StatelessWidget {
     }
   }
   void delete() {}
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -46,11 +47,13 @@ class UserCard extends StatelessWidget {
       splashColor: Colors.transparent,
       onTap: () {
         if (this.user is Trainer) {
+          Trainer trainer = this.user;
+
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      TypicalTrainerDetails(this.user, this.name)));
+                      TypicalTrainerDetails(trainer, this.name, trainer.viewClientCards())));
         }
       },
       child: Card(
@@ -102,55 +105,6 @@ Future<void> _launchURL(String url) async {
     await launch(url);
   } else {
     print('Could not launch $url');
-  }
-}
-
-class PressableInfo extends StatelessWidget {
-  String label;
-  String info;
-  String ext;
-
-  PressableInfo(this.label, this.info, this.ext) {
-    if (this.ext == 'mailto:') {
-      this.ext = 'mailto:' + this.info + '?subject=Training&body= ';
-    } else if (this.ext == 'tel:') {
-      if (this.info.length == 10) {
-        this.ext = 'tel:+1' + this.info;
-      }
-    }
-  }
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5.0),
-      child: Row(
-        children: <Widget>[
-          Text(
-            this.label,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-          InkWell(
-            splashColor: Colors.transparent,
-            enableFeedback: false,
-            onTap: () {
-              _launchURL(this.ext);
-            },
-            child: Text(
-              this.info,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-            ),
-          )
-        ],
-      ),
-      alignment: Alignment(-1, 0),
-    );
   }
 }
 
