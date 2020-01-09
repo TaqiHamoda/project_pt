@@ -257,7 +257,7 @@ List<User> userCreator(){
 
   for(int i = 0; i < 30; i++){
     String firstName = firstNames[generator.nextInt(firstNames.length)];
-    String lastName = firstNames[generator.nextInt(lastNames.length)];
+    String lastName = lastNames[generator.nextInt(lastNames.length)];
     String goal1 = goals[generator.nextInt(goals.length)];
     String goal2 = goals[generator.nextInt(goals.length)];
     String goal3 = goals[generator.nextInt(goals.length)];

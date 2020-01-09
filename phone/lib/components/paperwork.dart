@@ -80,6 +80,7 @@ class Exercise {
                   flex: 5,
                     child: Container(child: TextField(
                       onChanged: (value){ this.name = value; },
+                      controller: TextEditingController(text: this.name),
                       decoration: InputDecoration(labelText: 'Exercise Title', contentPadding: EdgeInsets.all(10)),
                     ), alignment: Alignment(0, -1),)
                 ),
@@ -102,7 +103,9 @@ class Exercise {
                   Text('Sets'),
 
                   TextField(
+                    textAlign: TextAlign.center,
                     onChanged: (value){ this.sets = value; },
+                    controller: TextEditingController(text: this.sets),
                     decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
                   )
                 ],),
@@ -113,7 +116,9 @@ class Exercise {
                   Text('Reps'),
 
                   TextField(
+                    textAlign: TextAlign.center,
                     onChanged: (value){ this.reps = value; },
+                    controller: TextEditingController(text: this.reps),
                     decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
                   )
                 ],),
@@ -124,7 +129,9 @@ class Exercise {
                   Text('Rest (Min)'),
 
                   TextField(
+                    textAlign: TextAlign.center,
                     onChanged: (value){ this.rest = value; },
+                    controller: TextEditingController(text: this.rest),
                     decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
                   )
                 ],),
@@ -135,7 +142,9 @@ class Exercise {
                   Text('RPE'),
 
                   TextField(
+                    textAlign: TextAlign.center,
                     onChanged: (value){ this.rpe = value; },
+                    controller: TextEditingController(text: this.rpe),
                     decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
                   )
                 ],),
@@ -143,13 +152,14 @@ class Exercise {
             ],),
 
             Container(
-              margin: EdgeInsets.only(top: 20),
-              child: TextField(
-                onChanged: (value){ this.notes = value; },
-                maxLines: 2,
-                decoration: InputDecoration(labelText: 'Notes', contentPadding: EdgeInsets.all(10)),
-              ),
-            )
+                margin: EdgeInsets.only(top: 20),
+                child: TextField(
+                  controller: TextEditingController(text: this.notes),
+                  onChanged: (value){ this.notes = value; },
+                  maxLines: 3,
+                  decoration: InputDecoration(contentPadding: EdgeInsets.all(10), labelText: 'Notes'),
+                )
+            ),
           ],
         ),
       ),
@@ -171,7 +181,8 @@ class Exercise {
                     child: Container(
                       margin: EdgeInsets.all(15.0),
                         child: Text(this.name, style: TextStyle(fontSize: 20),)
-                )),
+                    )
+                ),
 
                 Expanded(
                   flex: 1,
