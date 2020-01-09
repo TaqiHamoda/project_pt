@@ -3,6 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:share_extend/share_extend.dart';
 import 'package:phone/components/paperwork.dart';
+import 'package:phone/screens/main/custom_button.dart';
 import 'package:phone/screens/main/dialog.dart';
 
 
@@ -16,11 +17,39 @@ class TrainerProgramPage extends StatefulWidget {
 }
 
 class _TrainerProgramPageState extends State<TrainerProgramPage> {
-  Program program;
+  final Program program;
   final String rpe = "\n";
+  IconButton currentButton;
+  List<Widget> exercises;
+  String type = 'Client';
 
 
-  _TrainerProgramPageState(this.program);
+  _TrainerProgramPageState(this.program){
+    this.exercises = this.program.getWorkout('Client');
+
+    IconButton firstButton;
+    IconButton secondButton;
+
+    firstButton = IconButton(icon: Icon(Icons.edit),
+        onPressed: (){
+          setState(() {
+            this.type = 'Trainer';
+            this.exercises = this.program.getWorkout(this.type);
+            this.currentButton = secondButton;
+          });
+        });
+
+    secondButton = IconButton(icon: Icon(Icons.check),
+        onPressed: (){
+          setState(() {
+            this.type = 'Client';
+            this.exercises = this.program.getWorkout(this.type);
+            this.currentButton = firstButton;
+          });
+        });
+
+    currentButton = firstButton;
+  }
 
 
   void get share async {
@@ -108,13 +137,7 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(floatingActionButton: FloatingActionButton(
-      child: Icon(Icons.add),
-      onPressed: (){ setState(() {
-    this.program.addExercise(Exercise());
-    }); },
-    ),
-
+    return Scaffold(
       appBar: AppBar(
         title: Text(this.program.name),
         actions: <Widget>[
@@ -122,6 +145,8 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
               icon: Icon(Icons.share),
               onPressed: (){ ShareExtend.share('Hi', 'bye'); }
           ),
+          
+          this.currentButton
         ],
       ),
 
@@ -156,7 +181,10 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
               ),
             ],
           ),
-        ] + this.program.goals + this.program.getWorkout('Trainer'),
+        ] + this.program.goals + this.exercises + [CustomButton((){setState(() {
+          this.program.addExercise(Exercise());
+          this.exercises = this.program.getWorkout(this.type);
+        });}, 'Add an Exercise'), SizedBox(height: 70.0,)],
       ),
     );
   }
