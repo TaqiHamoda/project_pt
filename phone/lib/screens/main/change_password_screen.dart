@@ -56,7 +56,7 @@ class _ChangePwPageState extends State<ChangePwPage> {
             TextFormField(
               autovalidate: true,
               validator: (String value){
-                return user.signIn(value)? null : 'Password does not match';
+                return user.signIn(this.user.email, value)? null : 'Password does not match';
               },
               decoration: InputDecoration(
                 icon: Icon(Icons.lock),

@@ -22,8 +22,8 @@ class User {
     this.phoneNum = cellNum;
   }
 
-  bool signIn(String password) {
-    return this._password == password;
+  bool signIn(String email, String password) {
+    return (this.email == email) && (this._password == password);
   }
 
   void setName(String name) {
@@ -91,7 +91,7 @@ class Group extends User{
   }
 
   @override
-  bool signIn(String password){
+  bool signIn(String email, String password){
     return false;
   }
 
@@ -247,6 +247,11 @@ List<User> userCreator(){
 
   Trainer taqi = Trainer('Taqi', 'Hamoda', 'taqi@app.com', 'Bebop', phoneNumberGenerator());
   Trainer samy = Trainer('Samy', 'Hamoda', 'samy@app.com', 'Bebop', phoneNumberGenerator());
+
+  Client andrew = Client('Andrew', 'Petersen', 'andrew@app.com', 'Bebop', '1234567890');
+
+  samy.addClient(andrew);
+  clients.add(andrew);
 
   hiro.addTrainer(taqi);
   hiro.addTrainer(samy);

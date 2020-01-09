@@ -167,102 +167,100 @@ class Exercise {
   }
 
   Widget client() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      child: Card(
-        color: Colors.grey,
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(bottom: 20),
-              child: Row(children: <Widget>[
-                Expanded(
-                    flex: 5,
-                    child: Container(
-                      margin: EdgeInsets.all(15.0),
-                        child: Text(this.name, style: TextStyle(fontSize: 20),)
-                    )
-                ),
-
-                Expanded(
-                  flex: 1,
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      color: Colors.grey,
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(bottom: 20),
+            child: Row(children: <Widget>[
+              Expanded(
+                  flex: 5,
                   child: Container(
-                      alignment: Alignment(0, 1),
-                      child: IconButton(
-                          icon: Icon(Icons.trip_origin, color: this.completed ? Colors.green : null,),
-                        onPressed: (){ this.completed = !this.completed; },)
-                  ),
+                    margin: EdgeInsets.all(15.0),
+                      child: Text(this.name, style: TextStyle(fontSize: 20),)
+                  )
+              ),
+
+              Expanded(
+                flex: 1,
+                child: Container(
+                    alignment: Alignment(0, 1),
+                    child: IconButton(
+                        icon: Icon(Icons.trip_origin, color: this.completed ? Colors.green : null,),
+                      onPressed: (){ this.completed = !this.completed; },)
+                ),
+              )
+
+
+            ],),
+          ),
+
+          Row(children: <Widget>[
+            Expanded(
+              child: Column(children: <Widget>[
+                Text('Sets'),
+
+                TextField(
+                  textAlign: TextAlign.center,
+                  controller: TextEditingController(text: this.sets),
+                  enabled: false,
+                  decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
                 )
-
-
               ],),
             ),
 
-            Row(children: <Widget>[
-              Expanded(
-                child: Column(children: <Widget>[
-                  Text('Sets'),
+            Expanded(
+              child: Column(children: <Widget>[
+                Text('Reps'),
 
-                  TextField(
-                    textAlign: TextAlign.center,
-                    controller: TextEditingController(text: this.sets),
-                    enabled: false,
-                    decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
-                  )
-                ],),
-              ),
+                TextField(
+                  textAlign: TextAlign.center,
+                  controller: TextEditingController(text: this.reps),
+                  enabled: false,
+                  decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
+                )
+              ],),
+            ),
 
-              Expanded(
-                child: Column(children: <Widget>[
-                  Text('Reps'),
+            Expanded(
+              child: Column(children: <Widget>[
+                Text('Rest (Min)'),
 
-                  TextField(
-                    textAlign: TextAlign.center,
-                    controller: TextEditingController(text: this.reps),
-                    enabled: false,
-                    decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
-                  )
-                ],),
-              ),
+                TextField(
+                  textAlign: TextAlign.center,
+                  controller: TextEditingController(text: this.rest),
+                  enabled: false,
+                  decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
+                )
+              ],),
+            ),
 
-              Expanded(
-                child: Column(children: <Widget>[
-                  Text('Rest (Min)'),
+            Expanded(
+              child: Column(children: <Widget>[
+                Text('RPE'),
 
-                  TextField(
-                    textAlign: TextAlign.center,
-                    controller: TextEditingController(text: this.rest),
-                    enabled: false,
-                    decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
-                  )
-                ],),
-              ),
+                TextField(
+                  textAlign: TextAlign.center,
+                  controller: TextEditingController(text: this.rpe),
+                  enabled: false,
+                  decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
+                )
+              ],),
+            )
+          ],),
 
-              Expanded(
-                child: Column(children: <Widget>[
-                  Text('RPE'),
-
-                  TextField(
-                    textAlign: TextAlign.center,
-                    controller: TextEditingController(text: this.rpe),
-                    enabled: false,
-                    decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
-                  )
-                ],),
-              )
-            ],),
-
-            Container(
-              margin: EdgeInsets.only(top: 20),
-              child: TextField(
-                controller: TextEditingController(text: this.notes),
-                enabled: false,
-                maxLines: 3,
-                decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
-              )
-              ),
-          ],
-        ),
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            child: TextField(
+              controller: TextEditingController(text: this.notes),
+              enabled: false,
+              maxLines: 3,
+              decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
+            )
+            ),
+        ],
       ),
     );
   }
@@ -270,7 +268,7 @@ class Exercise {
 
 class WarmUp {}
 
-class SuperSet extends Exercise {}
+class Circuit extends Exercise {}
 
 class Goal extends StatelessWidget {
   String goal;

@@ -5,6 +5,7 @@ import 'package:phone/screens/main/profile_edit.dart';
 import 'client_card.dart';
 import 'package:phone/screens/main/dialog.dart';
 import '../../components/users.dart';
+import 'package:phone/screens/main/profile_button.dart';
 import 'package:flutter/services.dart';
 
 class TrainerPage extends StatefulWidget {
@@ -128,18 +129,7 @@ class _TrainerPageState extends State<TrainerPage> {
               ),
             ),
           ),
-          leading: Container(
-            margin: EdgeInsets.only(left: 5.0, top: 5.0),
-            child: InkWell(
-              child: CircleAvatar(backgroundImage: this.user.photo,),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SettingsPage(this.user)));
-              },
-            ),
-          ),
+          leading: ProfileButton(this.user),
           centerTitle: true,
           title: Text(
             'Trainer ' + this.user.firstName,

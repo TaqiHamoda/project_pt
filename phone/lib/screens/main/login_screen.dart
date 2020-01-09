@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     bool success = false;
 
     for (User user in this.users) {
-      if ((user.email == this._userEmail) && user.signIn(this._userPassword)) {
+      if (user.signIn(this._userEmail, this._userPassword)) {
 
         if (user is Client) {
           success = true;

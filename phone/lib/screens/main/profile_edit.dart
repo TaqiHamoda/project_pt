@@ -78,72 +78,75 @@ class _SettingsPageState extends State<SettingsPage> {
           'Edit Profile',
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                CircleAvatar(backgroundImage: this.user.photo, backgroundColor: Colors.transparent, radius: 100,),
+      body: ListView(
+        children: <Widget>[Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  CircleAvatar(backgroundImage: this.user.photo, backgroundColor: Colors.transparent, radius: 100,),
 
-                FlatButton(
-                  onPressed: (){
-                    getImage();
-                  },
-                  child: Text(
-                    'Edit',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.lightBlue,
+                  FlatButton(
+                    onPressed: (){
+                      getImage();
+                    },
+                    child: Text(
+                      'Edit',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.lightBlue,
+                      ),
                     ),
                   ),
+                ],
+              ),
+              Divider(
+                thickness: 1.1,
+              ),
+              TextFormField(
+                autovalidate: true,
+                initialValue: user.firstName + ' ' + user.lastName,
+                validator: (String value){
+                  return nameExp.hasMatch(value.trim()) ? null : 'Enter valid name';
+                },
+                onFieldSubmitted: (String value){
+                  this.user.setName(value);
+                },
+                decoration: InputDecoration(
+                  icon: Icon(Icons.person),
+                  labelText: 'Name',
                 ),
-              ],
-            ),
-            Divider(
-              thickness: 1.1,
-            ),
-            TextFormField(
-              autovalidate: true,
-              initialValue: user.firstName + ' ' + user.lastName,
-              validator: (String value){
-                return nameExp.hasMatch(value.trim()) ? null : 'Enter valid name';
-              },
-              onFieldSubmitted: (String value){
-                this.user.setName(value);
-              },
-              decoration: InputDecoration(
-                icon: Icon(Icons.person),
-                labelText: 'Name',
               ),
-            ),
-            TextFormField(
-              initialValue: user.email,
-              onFieldSubmitted: (String value){
-                this.user.setEmail(value);
-              },
-              decoration: InputDecoration(
-                icon: Icon(Icons.mail),
-                labelText: 'Email',
+              TextFormField(
+                initialValue: user.email,
+                onFieldSubmitted: (String value){
+                  this.user.setEmail(value);
+                },
+                decoration: InputDecoration(
+                  icon: Icon(Icons.mail),
+                  labelText: 'Email',
+                ),
               ),
-            ),
-            TextFormField(
-              autovalidate: true,
-              initialValue: user.phoneNum,
-              validator: (String value){
-                return phoneExp.hasMatch(value.trim()) ? null : 'Enter valid phone number';
-              },
-              onFieldSubmitted: (String value){
-                this.user.setNumber(value);
-              },
-              decoration: InputDecoration(
-                icon: Icon(Icons.phone),
-                labelText: 'Phone Number',
+              TextFormField(
+                autovalidate: true,
+                initialValue: user.phoneNum,
+                validator: (String value){
+                  return phoneExp.hasMatch(value.trim()) ? null : 'Enter valid phone number';
+                },
+                onFieldSubmitted: (String value){
+                  this.user.setNumber(value);
+                },
+                decoration: InputDecoration(
+                  icon: Icon(Icons.phone),
+                  labelText: 'Phone Number',
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
+        ]
       ),
     );
   }
