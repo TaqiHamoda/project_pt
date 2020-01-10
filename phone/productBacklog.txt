@@ -1,8 +1,8 @@
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.00 : STATUS : InProgress
 NAME     : Client Main Page
-OWNER    : (1,2,3)
-PRIORITY :
+OWNER    : Taqi
+PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : The Client main page will have a progress circle, two buttons (Exercise Programs and Par-Q), and a weight
 graph.
@@ -10,7 +10,7 @@ graph.
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.01 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
 NAME     : Client Goal Page
-OWNER    :
+OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Create a client goal page where they can modify and adjust their goals. The client can have three goals at
@@ -19,7 +19,7 @@ a time only.
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.02 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
 NAME     : Client Weight Graph
-OWNER    :
+OWNER    : Youssef
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Implement the client weight graph functionality. It should have an option to change the weight unit
@@ -36,7 +36,7 @@ ISSUE    : Implement the exercise card
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.04 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
 NAME     : Director Analytics
-OWNER    :
+OWNER    : Youssef
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Add an analytics tab to the bottom navigation bar. The director will be able to choose a trainer from a
@@ -45,7 +45,7 @@ dropdown menu and see different aspects of their performance.
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.05 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
 NAME     : Group
-OWNER    :
+OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : The assessment application will be created by the supervisors. For now,
@@ -54,7 +54,7 @@ I will provide a custom template.
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.06 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
 NAME     : Keep User logged in
-OWNER    :
+OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Implement a switch to keep the user logged in.
@@ -64,7 +64,7 @@ Helpful Library: https://pub.dev/packages/shared_preferences
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.07 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
 NAME     : Assessment
-OWNER    :
+OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Create a fitness assessment page based on the UTM outline.
@@ -72,7 +72,7 @@ ISSUE    : Create a fitness assessment page based on the UTM outline.
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.08 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
 NAME     : PDF Parser
-OWNER    :
+OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : The pdf produced by the workout program will have the trainer's name at the top left,
@@ -84,7 +84,7 @@ the workout name (e.g. Upper-Body) with the exercise table under it.
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.09 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
 NAME     : PAR-Q
-OWNER    :
+OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : When a new client is initiated, the client must sign the PAR-Q document in order
@@ -94,7 +94,7 @@ to see but not to edit. A client cannot be deleted.
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.10 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
 NAME     : Delete
-OWNER    :
+OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Add the delete functionality for all classes.
@@ -108,9 +108,9 @@ ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Implement the warm-up and super-set classes.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
-TYPE     : USER STORY 1.12 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
+TYPE     : USER STORY 1.12 : STATUS : Complete
 NAME     : Register Page
-OWNER    :
+OWNER    : Youssef
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : The register page should ask for a code to activate the application.
@@ -118,7 +118,7 @@ ISSUE    : The register page should ask for a code to activate the application.
 --------------------------------------------------------------------------
 TYPE     : USER STORY 1.13 : STATUS : NotStarted (NotStarted,InProgress, Incomplete,Complete)
 NAME     : Client Sessions
-OWNER    :
+OWNER    : Taqi
 PRIORITY : (1,2,3)
 ESTIMATE : (1 hour, 2 hours, 4 hours, 1 day, 2 days, 4 days)    ACTUAL :
 ISSUE    : Add a sessions attribute and configure it.

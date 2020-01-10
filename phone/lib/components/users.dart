@@ -249,6 +249,9 @@ List<User> userCreator(){
   Trainer samy = Trainer('Samy', 'Hamoda', 'samy@app.com', 'Bebop', phoneNumberGenerator());
 
   Client andrew = Client('Andrew', 'Petersen', 'andrew@app.com', 'Bebop', '1234567890');
+  andrew.addGoal('OverHead Press 2 Plates');
+  andrew.addGoal('Bench 3 Plates');
+  andrew.addGoal('Squat 4 Plates');
 
   samy.addClient(andrew);
   clients.add(andrew);

@@ -5,7 +5,8 @@ import 'package:percent_indicator/percent_indicator.dart';
 import '../../components/users.dart';
 import 'package:phone/screens/main/profile_button.dart';
 import 'package:flutter/services.dart';
-import 'package:charts_flutter/flutter.dart';
+import 'package:flutter/animation.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class ClientPage extends StatefulWidget {
   final Client user;
@@ -19,8 +20,51 @@ class ClientPage extends StatefulWidget {
 class _ClientPageState extends State<ClientPage> {
   Client user;
   String search = '';
+  int rotations = 0;
+  Widget circles;
 
-  _ClientPageState(this.user);
+  _ClientPageState(this.user){
+    this.circles = CircularPercentIndicator(
+      radius: 250.0,
+      lineWidth: 13.0,
+      animation: true,
+      percent: 0.33,
+      center: CircularPercentIndicator(
+        radius: 200.0,
+        lineWidth: 13.0,
+        animation: true,
+        percent: 0.33,
+        center: CircularPercentIndicator(
+          radius: 150.0,
+          lineWidth: 13.0,
+          animation: true,
+          percent: 0.33,
+          center: CircularPercentIndicator(
+            radius: 100.0,
+            lineWidth: 13.0,
+            animation: true,
+            percent: 0.33,
+            center: CircularPercentIndicator(
+              radius: 50.0,
+              lineWidth: 13.0,
+              animation: true,
+              percent: 0.33,
+              circularStrokeCap: CircularStrokeCap.round,
+              progressColor: Colors.green,
+            ),
+            circularStrokeCap: CircularStrokeCap.round,
+            progressColor: Colors.green,
+          ),
+          circularStrokeCap: CircularStrokeCap.round,
+          progressColor: Colors.green,
+        ),
+        circularStrokeCap: CircularStrokeCap.round,
+        progressColor: Colors.green,
+      ),
+      circularStrokeCap: CircularStrokeCap.round,
+      progressColor: Colors.green,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +97,12 @@ class _ClientPageState extends State<ClientPage> {
         body: Center(
           child: Column(
             children: <Widget>[
-            CircularPercentIndicator(
-              radius: 250.0,
-              lineWidth: 13.0,
-              animation: true,
-              percent: 0.33,
-              center: new Text(
-                "Goals Achieved",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-              ),
-              circularStrokeCap: CircularStrokeCap.round,
-              progressColor: Colors.green,
+            InkWell(
+              onTap: (){},
+              enableFeedback: false,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              child: this.circles,
             ),
 
               Row(
