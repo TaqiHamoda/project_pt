@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:phone/screens/main/messages_screen.dart';
 import 'package:phone/screens/main/custom_button.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import '../../components/users.dart';
 import 'package:phone/screens/main/profile_button.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/animation.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class ClientPage extends StatefulWidget {
@@ -21,50 +21,10 @@ class _ClientPageState extends State<ClientPage> {
   Client user;
   String search = '';
   int rotations = 0;
-  Widget circles;
+  int touchedIndex;
+  String goal = 'Be able to do five push-ups';
 
-  _ClientPageState(this.user){
-    this.circles = CircularPercentIndicator(
-      radius: 250.0,
-      lineWidth: 13.0,
-      animation: true,
-      percent: 0.33,
-      center: CircularPercentIndicator(
-        radius: 200.0,
-        lineWidth: 13.0,
-        animation: true,
-        percent: 0.33,
-        center: CircularPercentIndicator(
-          radius: 150.0,
-          lineWidth: 13.0,
-          animation: true,
-          percent: 0.33,
-          center: CircularPercentIndicator(
-            radius: 100.0,
-            lineWidth: 13.0,
-            animation: true,
-            percent: 0.33,
-            center: CircularPercentIndicator(
-              radius: 50.0,
-              lineWidth: 13.0,
-              animation: true,
-              percent: 0.33,
-              circularStrokeCap: CircularStrokeCap.round,
-              progressColor: Colors.green,
-            ),
-            circularStrokeCap: CircularStrokeCap.round,
-            progressColor: Colors.green,
-          ),
-          circularStrokeCap: CircularStrokeCap.round,
-          progressColor: Colors.green,
-        ),
-        circularStrokeCap: CircularStrokeCap.round,
-        progressColor: Colors.green,
-      ),
-      circularStrokeCap: CircularStrokeCap.round,
-      progressColor: Colors.green,
-    );
-  }
+  _ClientPageState(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -97,13 +57,51 @@ class _ClientPageState extends State<ClientPage> {
         body: Center(
           child: Column(
             children: <Widget>[
-            InkWell(
-              onTap: (){},
-              enableFeedback: false,
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              child: this.circles,
-            ),
+              CircularPercentIndicator(
+                radius: 250.0,
+                startAngle: 0,
+                animation: true,
+                animationDuration: 1200,
+                lineWidth: 15.0,
+                percent: 0.33,
+                center: CircularPercentIndicator(
+                  radius: 250.0,
+                  startAngle: 120,
+                  animation: true,
+                  animationDuration: 1200,
+                  lineWidth: 15.0,
+                  percent: 0.33,
+                  center: CircularPercentIndicator(
+                    radius: 250.0,
+                    startAngle: 240,
+                    animation: true,
+                    animationDuration: 1200,
+                    lineWidth: 15.0,
+                    percent: 0.33,
+                    center: FlatButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onPressed: (){},
+                        child: SizedBox(
+                          width: 135,
+                            height: 135,
+                            child: Center(
+                                child: Text(this.goal, textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 25),)),
+                        )
+                    ),
+                    circularStrokeCap: CircularStrokeCap.round,
+                    backgroundColor: Colors.transparent,
+                    progressColor: Colors.red,
+                  ),
+                  circularStrokeCap: CircularStrokeCap.round,
+                  backgroundColor: Colors.transparent,
+                  progressColor: Colors.green,
+                ),
+                circularStrokeCap: CircularStrokeCap.round,
+                backgroundColor: Colors.grey,
+                progressColor: Colors.blue,
+              ),
 
               Row(
                 children: <Widget>[
