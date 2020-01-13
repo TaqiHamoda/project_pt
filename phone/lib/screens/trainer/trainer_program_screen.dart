@@ -152,39 +152,15 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
 
       body: ListView(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-                    child: FlatButton(
-                        onPressed: rpeDialog,
-                        child: Text('What is RPE?',
-                          style: TextStyle(fontSize: 20.0,
-                              color: Colors.blue),
-                        ),
-                    ),
-                ),
-              ),
+          Container(
+            margin: const EdgeInsets.all(8.0),
+            child: FlatButton(onPressed: rpeDialog, child: Text('What is RPE?', style: TextStyle(color: Colors.blue, fontSize: 20),)),
+          )
 
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-                  child: FlatButton(
-                    onPressed: warmupDialog,
-                    child: Text('Warm-up',
-                      style: TextStyle(fontSize: 20.0,
-                          color: Colors.blue),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ] + this.program.goals + this.exercises + [CustomButton((){setState(() {
+        ] + this.program.goals + this.exercises + [CustomButton(onTap: (){setState(() {
           this.program.addExercise(Exercise());
           this.exercises = this.program.getWorkout(this.type);
-        });}, 'Add an Exercise'), SizedBox(height: 70.0,)],
+        });}, label: 'Add an Exercise'), SizedBox(height: 70.0,)],
       ),
     );
   }

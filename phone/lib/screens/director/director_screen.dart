@@ -34,13 +34,13 @@ class _DirectorPageState extends State<DirectorPage> {
         if(filterText == ''){
           return this.user.myClientCards().reversed.toList();
         }
-      for (ClientCard client in this.user.myClientCards()) {
-        String clientName = client.name.toLowerCase();
-        if (clientName.contains(filterText.toLowerCase())) {
-          filteredClients.add(client);
+        for (ClientCard client in this.user.myClientCards()) {
+          String clientName = client.name.toLowerCase();
+          if (clientName.contains(filterText.toLowerCase())) {
+            filteredClients.add(client);
+          }
         }
-      }
-      return filteredClients.reversed.toList();
+        return filteredClients.reversed.toList();
 
       }
       else if(dropValue == 'First Name (A-Z)'){
@@ -237,23 +237,23 @@ class _DirectorPageState extends State<DirectorPage> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Expanded(child: CustomButton((){Navigator.push(
+                Expanded(child: CustomButton(onTap: (){Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => UserPage(this.user, 'Director', this.user.directorCards())));
-                }, 'Directors')),
+                }, label: 'Directors')),
 
-                Expanded(child: CustomButton((){Navigator.push(
+                Expanded(child: CustomButton(onTap: (){Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => UserPage(this.user, 'Trainer', this.user.trainerCards())));
-                }, 'Trainers')),
+                }, label: 'Trainers')),
 
-                Expanded(child: CustomButton((){Navigator.push(
+                Expanded(child: CustomButton(onTap: (){Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => UserPage(this.user, 'Client', this.user.otherClientCards())));
-                }, 'Other Clients'))
+                }, label: 'Other Clients'))
 
               ],
             ),

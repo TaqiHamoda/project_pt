@@ -31,7 +31,7 @@ class _ClientDetails extends State<ClientDetails> {
 
     SpecialDialog(context, 'Create a new workout',
             (){setState(() {
-              this.client.addProgram(Program(programName, this.client.goals));
+              this.client.addProgram(Program(name: programName, goals: this.client.goals,));
             });},
         [TextField(
           autofocus: true,
@@ -101,16 +101,16 @@ class _ClientDetails extends State<ClientDetails> {
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: CustomButton((){}, 'Par-Q')
+                    child: CustomButton(onTap:(){}, label: 'Par-Q')
                   ),
                   Expanded(
-                    child: CustomButton((){}, 'Assessment')
+                    child: CustomButton(onTap: (){}, label: 'Assessment')
                   )
                 ],
               )
             ] +
             this.client.programs +
-            [CustomButton((){this.addProgram(context);}, 'Create Program')],
+            [CustomButton(onTap: (){this.addProgram(context);}, label: 'Create Program')],
       ),
     );
   }

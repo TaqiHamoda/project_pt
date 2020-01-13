@@ -23,48 +23,7 @@ class _ClientPageState extends State<ClientPage> {
   int rotations = 0;
   Widget circles;
 
-  _ClientPageState(this.user){
-    this.circles = CircularPercentIndicator(
-      radius: 250.0,
-      lineWidth: 13.0,
-      animation: true,
-      percent: 0.33,
-      center: CircularPercentIndicator(
-        radius: 200.0,
-        lineWidth: 13.0,
-        animation: true,
-        percent: 0.33,
-        center: CircularPercentIndicator(
-          radius: 150.0,
-          lineWidth: 13.0,
-          animation: true,
-          percent: 0.33,
-          center: CircularPercentIndicator(
-            radius: 100.0,
-            lineWidth: 13.0,
-            animation: true,
-            percent: 0.33,
-            center: CircularPercentIndicator(
-              radius: 50.0,
-              lineWidth: 13.0,
-              animation: true,
-              percent: 0.33,
-              circularStrokeCap: CircularStrokeCap.round,
-              progressColor: Colors.green,
-            ),
-            circularStrokeCap: CircularStrokeCap.round,
-            progressColor: Colors.green,
-          ),
-          circularStrokeCap: CircularStrokeCap.round,
-          progressColor: Colors.green,
-        ),
-        circularStrokeCap: CircularStrokeCap.round,
-        progressColor: Colors.green,
-      ),
-      circularStrokeCap: CircularStrokeCap.round,
-      progressColor: Colors.green,
-    );
-  }
+  _ClientPageState(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -96,19 +55,11 @@ class _ClientPageState extends State<ClientPage> {
         ),
         body: Center(
           child: Column(
-            children: <Widget>[
-            InkWell(
-              onTap: (){},
-              enableFeedback: false,
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              child: this.circles,
-            ),
-
+            children: <Widget>[SizedBox(height: 10,)] + this.user.goals + <Widget>[
               Row(
                 children: <Widget>[
-                  Expanded(child: CustomButton((){}, 'Programs')),
-                  Expanded(child: CustomButton((){}, 'Par-Q'))
+                  Expanded(child: CustomButton(onTap: (){}, label: 'Programs')),
+                  Expanded(child: CustomButton(onTap: (){}, label: 'Par-Q'))
                 ],
               ),
             ],
