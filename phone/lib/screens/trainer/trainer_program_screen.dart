@@ -95,46 +95,6 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
   }
 
 
-  Future<void> warmupDialog() async {
-    String warmup;
-
-    SpecialDialog(context, 'Create Warmup',
-            (){ this.program.warmup = warmup;
-            print(this.program.warmup);},
-        [SizedBox(
-          child: TextField(
-            controller: TextEditingController(text: this.program.warmup),
-            onChanged: (value){ warmup = value; },
-            maxLines: 3,
-            autofocus: true,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(10.0),
-              labelText: 'Warmup'
-            ),
-          ),
-        )]);
-  }
-
-
-  void addWorkout(BuildContext context) {
-    int rows;
-
-    SpecialDialog(context, 'Create a new Exercise',
-            (){ setState(() {
-              this.program.addExercise(Exercise());
-            });},
-        [TextField(
-            onChanged: (value){ rows = int.parse(value); },
-          autofocus: true,
-            decoration: InputDecoration(
-                labelText: 'Rows',
-                contentPadding: EdgeInsets.all(10.0)
-            ),
-          )
-        ]);
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

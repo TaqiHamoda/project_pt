@@ -9,7 +9,7 @@ class UserCard extends StatelessWidget {
   final User user;
   Widget preferredWidget;
 
-  UserCard(this.user, this.name){
+  UserCard({this.user, this.name}){
     if (this.user is Trainer) {
       preferredWidget = IconButton(
           icon: Icon(
@@ -53,7 +53,7 @@ class UserCard extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      TypicalTrainerDetails(trainer, this.name, trainer.viewClientCards())));
+                      TypicalTrainerDetails(trainer, this.name,)));
         }
       },
       child: Card(

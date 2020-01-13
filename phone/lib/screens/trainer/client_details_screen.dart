@@ -14,8 +14,7 @@ class ClientDetails extends StatefulWidget {
   ClientDetails(this.user, this.name);
 
   @override
-  _ClientDetails createState() =>
-      _ClientDetails(this.user, this.name);
+  _ClientDetails createState() => _ClientDetails(this.user, this.name);
 }
 
 class _ClientDetails extends State<ClientDetails> {
@@ -26,24 +25,32 @@ class _ClientDetails extends State<ClientDetails> {
 
   void delete() {}
 
-  void addProgram(BuildContext context) {
+  void addProgram() {
     String programName = '';
 
-    SpecialDialog(context, 'Create a new workout',
-            (){setState(() {
-              this.client.addProgram(Program(name: programName, goals: this.client.goals,));
-            });},
-        [TextField(
-          autofocus: true,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(left: 10.0),
-            labelText: 'Program Name',
+    SpecialDialog(
+        context: this.context,
+        title: 'Create a new workout',
+        onSubmit: () {
+          setState(() {
+            this.client.addProgram(Program(
+                  name: programName,
+                  goals: this.client.goals,
+                ));
+          });
+        },
+        children: <Widget>[
+          TextField(
+            autofocus: true,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Program Name',
+            ),
+            onChanged: (value) {
+              programName = value;
+            },
           ),
-          onChanged: (value) {
-            programName = value;
-          },
-        ),]);
-
+        ]);
   }
 
   @override
@@ -74,7 +81,10 @@ class _ClientDetails extends State<ClientDetails> {
                   Expanded(
                     child: Container(
                         margin: EdgeInsets.only(top: 5.0, left: 5.0),
-                        child: CircleAvatar(backgroundImage: this.client.photo, radius: 65,)),
+                        child: CircleAvatar(
+                          backgroundImage: this.client.photo,
+                          radius: 65,
+                        )),
                   ),
                   Expanded(
                     flex: 2,
@@ -89,10 +99,9 @@ class _ClientDetails extends State<ClientDetails> {
                           ),
                           alignment: Alignment(-1, 0),
                         ),
-
                         PressableInfo('Email: ', this.client.email, 'mailto:'),
-                        PressableInfo('Phone Number: ', this.client.phoneNum, 'tel:'),
-                        
+                        PressableInfo(
+                            'Phone Number: ', this.client.phoneNum, 'tel:'),
                       ],
                     ),
                   )
@@ -100,41 +109,41 @@ class _ClientDetails extends State<ClientDetails> {
               ),
               Row(
                 children: <Widget>[
+                  Expanded(child: CustomButton(onTap: () {}, label: 'Par-Q')),
                   Expanded(
-                    child: CustomButton(onTap:(){}, label: 'Par-Q')
-                  ),
-                  Expanded(
-                    child: CustomButton(onTap: (){}, label: 'Assessment')
-                  )
+                      child: CustomButton(onTap: () {}, label: 'Assessment'))
                 ],
               )
             ] +
             this.client.programs +
-            [CustomButton(onTap: (){this.addProgram(context);}, label: 'Create Program')],
+            [
+              CustomButton(
+                  onTap: () {
+                    this.addProgram();
+                  },
+                  label: 'Create Program')
+            ],
       ),
     );
   }
 }
-
 
 class PressableInfo extends StatelessWidget {
   String label;
   String info;
   String ext;
 
-  PressableInfo(this.label, this.info, this.ext){
-    if(this.ext == 'mailto:'){
-      this.ext = 'mailto:' + this.info +'?subject=Training&body= ';
-    } else if(this.ext == 'tel:'){
-      if(this.info.length == 10){
+  PressableInfo(this.label, this.info, this.ext) {
+    if (this.ext == 'mailto:') {
+      this.ext = 'mailto:' + this.info + '?subject=Training&body= ';
+    } else if (this.ext == 'tel:') {
+      if (this.info.length == 10) {
         this.ext = 'tel:+1' + this.info;
       }
     }
-
   }
 
   Future<void> _launchURL(String url) async {
-
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -155,7 +164,9 @@ class PressableInfo extends StatelessWidget {
           InkWell(
             splashColor: Colors.transparent,
             enableFeedback: false,
-            onTap: (){_launchURL(this.ext);},
+            onTap: () {
+              _launchURL(this.ext);
+            },
             child: Text(
               this.info,
               textAlign: TextAlign.left,
@@ -171,6 +182,5 @@ class PressableInfo extends StatelessWidget {
     );
   }
 }
-
 
 enum Choices { delete }

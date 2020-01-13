@@ -9,7 +9,6 @@ import 'package:phone/components/users.dart';
 import 'package:flutter/services.dart';
 import 'package:phone/screens/main/profile_button.dart';
 
-
 class DirectorPage extends StatefulWidget {
   final Director user;
 
@@ -24,62 +23,44 @@ class _DirectorPageState extends State<DirectorPage> {
   String search = '';
   String dropdownValue = 'Sort by';
 
-
   _DirectorPageState(this.user);
 
-  List<Widget> filterClients(String filterText, String dropValue) {
+  List<Widget> filterClients() {
+    List<ClientCard> filteredClients = [];
 
-      List<ClientCard> filteredClients = [];
-      if(dropValue == 'Sort by' || dropValue == 'Most Recent'){
-        if(filterText == ''){
-          return this.user.myClientCards().reversed.toList();
-        }
-        for (ClientCard client in this.user.myClientCards()) {
-          String clientName = client.name.toLowerCase();
-          if (clientName.contains(filterText.toLowerCase())) {
-            filteredClients.add(client);
-          }
-        }
-        return filteredClients.reversed.toList();
-
+    for (Client client in this.user.getClients(user)) {
+      String clientName = client.firstName + ' ' + client.lastName;
+      if (clientName.toLowerCase().contains(this.search)) {
+        filteredClients.add(ClientCard(
+          client: client,
+          name: clientName,
+          onLongPress: (){setState(() {
+            this.filterClients();
+          });},));
       }
-      else if(dropValue == 'First Name (A-Z)'){
-        Comparator<ClientCard> firstNameComparator = (a, b) => a.name.split(' ')[0].compareTo(b.name.split(' ')[0]);
-        if(filterText == ''){
-          filteredClients = this.user.myClientCards();
-          filteredClients.sort(firstNameComparator);
-          return filteredClients;
-        }
+    }
 
-        for (ClientCard client in this.user.myClientCards()) {
-          String clientName = client.name.toLowerCase();
-          if (clientName.contains(filterText.toLowerCase())) {
-            filteredClients.add(client);
-          }
-        }
-        filteredClients.sort(firstNameComparator);
-        return filteredClients;
+    if (this.dropdownValue == 'Sort by' || this.dropdownValue == 'Most Recent') {
+      filteredClients = filteredClients.reversed.toList();
+    }
 
-      }
+    else if (this.dropdownValue == 'First Name (A-Z)') {
+      Comparator<ClientCard> firstNameComparator =
+          (a, b) => a.name.split(' ')[0].compareTo(b.name.split(' ')[0]);
 
-      else if(dropValue == 'Last Name (A-Z)'){
-        Comparator<ClientCard> lastNameComparator = (a, b) => a.name.split(' ')[1].compareTo(b.name.split(' ')[1]);
-        if(filterText == ''){
-          filteredClients = this.user.myClientCards();
-          filteredClients.sort(lastNameComparator);
-          return filteredClients;
-        }
-        for (ClientCard client in this.user.myClientCards()) {
-          String clientName = client.name.toLowerCase();
-          if (clientName.contains(filterText.toLowerCase())) {
-            filteredClients.add(client);
-          }
-        }
-        filteredClients.sort(lastNameComparator);
-        return filteredClients;
-      }
+      filteredClients.sort(firstNameComparator);
+    }
 
-      // below is the original implementation, i'll keep it till I have the sorting stuff implemented in all classes.
+    else if (this.dropdownValue == 'Last Name (A-Z)') {
+      Comparator<ClientCard> lastNameComparator =
+          (a, b) => a.name.split(' ')[1].compareTo(b.name.split(' ')[1]);
+
+      filteredClients.sort(lastNameComparator);
+    }
+
+    return filteredClients;
+
+// below is the original implementation, i'll keep it till I have the sorting stuff implemented in all classes.
 
 //    if (filterText == '') {
 //      return this.user.myClientCards().reversed.toList();
@@ -94,63 +75,68 @@ class _DirectorPageState extends State<DirectorPage> {
 //    return filteredClients;
   }
 
-  void addClient(BuildContext context) {
+  void addClient() {
     String firstName;
     String lastName;
     String email;
     String phone;
 
-    SpecialDialog(context, 'Create a client', () {
-      setState(() {
-        this.user.addClient(
-            Client(firstName, lastName, email, 'Bebop', phone));
-      });
-    }, <Widget>[
-      Row(
+    SpecialDialog(
+        context: this.context,
+        title: 'Create a client',
+        onSubmit: () {
+          setState(() {
+            this
+                .user
+                .addClient(Client(firstName, lastName, email, 'Bebop', phone));
+          });
+        },
         children: <Widget>[
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0),
-                labelText: 'First Name',
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10.0),
+                    labelText: 'First Name',
+                  ),
+                  onChanged: (value) {
+                    firstName = value;
+                  },
+                ),
               ),
-              onChanged: (value) {
-                firstName = value;
-              },
-            ),
-          ),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0),
-                labelText: 'Last Name',
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10.0),
+                    labelText: 'Last Name',
+                  ),
+                  onChanged: (value) {
+                    lastName = value;
+                  },
+                ),
               ),
-              onChanged: (value) {
-                lastName = value;
-              },
-            ),
+            ],
           ),
-        ],
-      ),
-      TextField(
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 10.0),
-          labelText: 'Email',
-        ),
-        onChanged: (value) {
-          email = value;
-        },
-      ),
-      TextField(
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 10.0),
-          labelText: 'Phone Number',
-        ),
-        onChanged: (value) {
-          phone = value;
-        },
-      ),
-    ]);
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Email',
+            ),
+            onChanged: (value) {
+              email = value;
+            },
+          ),
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Phone Number',
+            ),
+            onChanged: (value) {
+              phone = value;
+            },
+          ),
+        ]);
   }
 
   @override
@@ -161,7 +147,7 @@ class _DirectorPageState extends State<DirectorPage> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            addClient(context);
+            addClient();
           },
         ),
         appBar: AppBar(
@@ -183,9 +169,11 @@ class _DirectorPageState extends State<DirectorPage> {
                           color: Colors.white,
                         ),
                       ),
-                      onChanged: (value){setState(() {
-                        this.search = value;
-                      });},
+                      onChanged: (value) {
+                        setState(() {
+                          this.search = value;
+                        });
+                      },
                     ),
                   ),
                 ),
@@ -194,19 +182,22 @@ class _DirectorPageState extends State<DirectorPage> {
                   style: TextStyle(
                     color: Colors.black,
                   ),
-                  onChanged: (String value){
+                  onChanged: (String value) {
                     setState(() {
                       dropdownValue = value;
                     });
                   },
-                  items: <String>['Sort by', 'Most Recent', 'First Name (A-Z)', 'Last Name (A-Z)']
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: <String>[
+                    'Sort by',
+                    'Most Recent',
+                    'First Name (A-Z)',
+                    'Last Name (A-Z)'
+                  ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
                     );
-                  })
-                      .toList(),
+                  }).toList(),
                 ),
               ],
             ),
@@ -237,33 +228,44 @@ class _DirectorPageState extends State<DirectorPage> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Expanded(child: CustomButton(onTap: (){Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => UserPage(this.user, 'Director', this.user.directorCards())));
-                }, label: 'Directors')),
-
-                Expanded(child: CustomButton(onTap: (){Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => UserPage(this.user, 'Trainer', this.user.trainerCards())));
-                }, label: 'Trainers')),
-
-                Expanded(child: CustomButton(onTap: (){Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => UserPage(this.user, 'Client', this.user.otherClientCards())));
-                }, label: 'Other Clients'))
-
+                Expanded(
+                    child: CustomButton(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserPage(this.user,
+                                      'Director')));
+                        },
+                        label: 'Directors')),
+                Expanded(
+                    child: CustomButton(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserPage(this.user,
+                                      'Trainer')));
+                        },
+                        label: 'Trainers')),
+                Expanded(
+                    child: CustomButton(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserPage(this.user,
+                                      'Client')));
+                        },
+                        label: 'Other Clients'))
               ],
             ),
-
             GridView.count(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               crossAxisCount: 2,
               padding: EdgeInsets.all(10),
-              children: this.filterClients(this.search, this.dropdownValue),
+              children: this.filterClients(),
             ),
           ],
         ),
@@ -281,15 +283,14 @@ class _DirectorPageState extends State<DirectorPage> {
                 Icons.calendar_today,
               ),
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.insert_chart),
-            title: Text('Analytics'))
+            BottomNavigationBarItem(
+                icon: Icon(Icons.insert_chart), title: Text('Analytics'))
           ],
         ),
       ),
     );
   }
 }
-
 
 Future<bool> _onWillPop() async {
   //await showDialog or Show add banners or whatever

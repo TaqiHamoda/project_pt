@@ -140,39 +140,17 @@ class Trainer extends User{
     return [];
   }
 
-  List<ClientCard> myClientCards(){
-    List<ClientCard> cards = [];
-
-    for(Client client in this._clients){
-      cards.add(ClientCard(
-          client: client,
-          name: client.firstName + " " + client.lastName));
-    }
-
-    return cards;
-  }
-
-  List<UserCard> viewClientCards(){
-    List<UserCard> cards = [];
-
-    for(Client client in this._clients){
-      cards.add(UserCard(client, client.firstName + " " + client.lastName));
-    }
-
-    return cards;
-  }
-
 }
 
 class Director extends Trainer{
-  List<Trainer> _trainers = [];
-  List<Director> _directors = [];
+  List<Trainer> trainers = [];
+  List<Director> directors = [];
 
   Director(String firstName, String lastName, String email, String password, String cellNum) :
         super(firstName, lastName, email, password, cellNum);
 
   void addTrainer(Trainer trainer){
-    this._trainers.add(trainer);
+    this.trainers.add(trainer);
     trainer.assignDirector(this);
   }
 
@@ -180,42 +158,42 @@ class Director extends Trainer{
   void assignDirector(Director director);
 
   void addDirector(Director dir){
-    this._directors.add(dir);
+    this.directors.add(dir);
   }
 
 
-  List<UserCard> directorCards(){
-    List<UserCard> cards = [];
-
-    for(Director director in this._directors){
-      cards.add(UserCard(director, director.firstName + " " + director.lastName));
-    }
-
-    return cards;
-  }
-
-
-  List<UserCard> trainerCards(){
-    List<UserCard> cards = [];
-
-    for(Trainer trainer in this._trainers){
-      cards.add(UserCard(trainer, trainer.firstName + " " + trainer.lastName));
-    }
-
-    return cards;
-  }
-
-  List<UserCard> otherClientCards(){
-    List<UserCard> cards = [];
-
-    for(Trainer user in (this._trainers + this._directors)){
-      for(Client client in user.getClients(user)){
-        cards.add(UserCard(client, client.firstName + " " + client.lastName));
-      }
-    }
-
-    return cards;
-  }
+//  List<UserCard> directorCards(){
+//    List<UserCard> cards = [];
+//
+//    for(Director director in this._directors){
+//      cards.add(UserCard(director, director.firstName + " " + director.lastName));
+//    }
+//
+//    return cards;
+//  }
+//
+//
+//  List<UserCard> trainerCards(){
+//    List<UserCard> cards = [];
+//
+//    for(Trainer trainer in this._trainers){
+//      cards.add(UserCard(trainer, trainer.firstName + " " + trainer.lastName));
+//    }
+//
+//    return cards;
+//  }
+//
+//  List<UserCard> otherClientCards(){
+//    List<UserCard> cards = [];
+//
+//    for(Trainer user in (this._trainers + this._directors)){
+//      for(Client client in user.getClients(user)){
+//        cards.add(UserCard(client, client.firstName + " " + client.lastName));
+//      }
+//    }
+//
+//    return cards;
+//  }
 
 }
 

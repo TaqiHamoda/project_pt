@@ -8,96 +8,96 @@ import 'package:phone/screens/main/dialog.dart';
 class TypicalTrainerDetails extends StatefulWidget {
   final Trainer user;
   final String name;
-  List<UserCard> cards;
 
-  TypicalTrainerDetails(this.user, this.name, this.cards);
+  TypicalTrainerDetails(this.user, this.name);
 
   @override
-  _TypicalTrainerDetails createState() => _TypicalTrainerDetails(this.user, this.name, this.cards);
+  _TypicalTrainerDetails createState() =>
+      _TypicalTrainerDetails(this.user, this.name);
 }
 
 class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
   final String name;
   final Trainer user;
-  List<UserCard> cards;
   String search = '';
 
-  _TypicalTrainerDetails(this.user, this.name, this.cards);
+  _TypicalTrainerDetails(this.user, this.name);
 
-  List<Widget> filter(String filterText) {
-    if (filterText == '') {
-      return cards;
-    }
-    List<Widget> filteredUsers = [];
-    for (UserCard card in cards) {
-      String userName = card.name.toLowerCase();
-      if (userName.contains(filterText.toLowerCase())) {
-        filteredUsers.add(card);
+  List<Widget> filter() {
+    List<UserCard> filteredUsers = [];
+
+    for (Client client in this.user.getClients(user)) {
+      String clientName = client.firstName + ' ' + client.lastName;
+      if (clientName.toLowerCase().contains(this.search.toLowerCase())) {
+        filteredUsers.add(UserCard(name: clientName, user: client,));
       }
     }
     return filteredUsers;
   }
 
-  void addClient(BuildContext context) {
+  void addClient() {
     String firstName;
     String lastName;
     String email;
     String phone;
 
-    SpecialDialog(context, 'Create a client', () {
-      setState(() {
-        this.user.addClient(
-            Client(firstName, lastName, email, 'Bebop', phone));
-        this.cards = this.user.viewClientCards();
-      });
-    }, <Widget>[
-      Row(
-        children: <Widget>[
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0),
-                labelText: 'First Name',
-              ),
-              onChanged: (value) {
-                firstName = value;
-              },
-            ),
-          ),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0),
-                labelText: 'Last Name',
-              ),
-              onChanged: (value) {
-                lastName = value;
-              },
-            ),
-          ),
-        ],
-      ),
-      TextField(
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 10.0),
-          labelText: 'Email',
-        ),
-        onChanged: (value) {
-          email = value;
-        },
-      ),
-      TextField(
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 10.0),
-          labelText: 'Phone Number',
-        ),
-        onChanged: (value) {
-          phone = value;
-        },
-      ),
-    ]);
-  }
+    SpecialDialog(
+        context: this.context,
+        title: 'Create a client',
+        onSubmit: () {
+          this.user.addClient(Client(firstName, lastName, email, 'Bebop', phone));
 
+          setState(() {
+            this.filter();
+          });
+        },
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10.0),
+                    labelText: 'First Name',
+                  ),
+                  onChanged: (value) {
+                    firstName = value;
+                  },
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10.0),
+                    labelText: 'Last Name',
+                  ),
+                  onChanged: (value) {
+                    lastName = value;
+                  },
+                ),
+              ),
+            ],
+          ),
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Email',
+            ),
+            onChanged: (value) {
+              email = value;
+            },
+          ),
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Phone Number',
+            ),
+            onChanged: (value) {
+              phone = value;
+            },
+          ),
+        ]);
+  }
 
   void delete() {}
 
@@ -107,10 +107,9 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          addClient(context);
+          addClient();
         },
       ),
-
       appBar: AppBar(
         bottom: PreferredSize(
           preferredSize: Size(100.0, 50.0),
@@ -127,9 +126,11 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
                   color: Colors.white,
                 ),
               ),
-              onChanged: (value){setState(() {
-                this.search = value;
-              });},
+              onChanged: (value) {
+                setState(() {
+                  this.search = value;
+                });
+              },
             ),
           ),
         ),
@@ -150,36 +151,41 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
           )
         ],
       ),
-      body: ListView(children: <Widget>[
-        Row(
+      body: ListView(
           children: <Widget>[
-            Expanded(
-              child: Container(
-                  margin: EdgeInsets.only(top: 5.0, left: 5.0),
-                  child: CircleAvatar(backgroundImage: this.user.photo, radius: 65,)),
-            ),
-            Expanded(
-              flex: 2,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 2.0, left: 5.0),
-                    child: Text(
-                      this.user.firstName + " " + this.user.lastName,
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                          margin: EdgeInsets.only(top: 5.0, left: 5.0),
+                          child: CircleAvatar(
+                            backgroundImage: this.user.photo,
+                            radius: 65,
+                          )),
                     ),
-                    alignment: Alignment(-1, 0),
-                  ),
-                  PressableInfo('Email: ', this.user.email, 'mailto:'),
-                  PressableInfo('Phone Number: ', this.user.phoneNum, 'tel:'),
-                ],
-              ),
-            )
-          ],
-        ),
-      ] + this.filter(this.search)
-      ),
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(bottom: 2.0, left: 5.0),
+                            child: Text(
+                              this.user.firstName + " " + this.user.lastName,
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.bold),
+                            ),
+                            alignment: Alignment(-1, 0),
+                          ),
+                          PressableInfo('Email: ', this.user.email, 'mailto:'),
+                          PressableInfo(
+                              'Phone Number: ', this.user.phoneNum, 'tel:'),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ] +
+              this.filter()),
     );
   }
 }

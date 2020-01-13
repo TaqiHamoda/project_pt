@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phone/screens/main/messages_screen.dart';
 import 'package:phone/screens/trainer/client_card.dart';
-import 'package:phone/screens/main/profile_edit.dart';
-import 'client_card.dart';
 import 'package:phone/screens/main/dialog.dart';
 import '../../components/users.dart';
 import 'package:phone/screens/main/profile_button.dart';
@@ -20,80 +18,93 @@ class TrainerPage extends StatefulWidget {
 class _TrainerPageState extends State<TrainerPage> {
   Trainer user;
   String search = '';
+  List<ClientCard> filteredClients = [];
 
   _TrainerPageState(this.user);
 
-  List<Widget> filterClients(String filterText) {
-    if (filterText == '') {
-      return this.user.myClientCards();
-    }
-    List<Widget> filteredClients = [];
-    for (ClientCard client in this.user.myClientCards()) {
-      String clientName = client.name.toLowerCase();
-      if (clientName.contains(filterText.toLowerCase())) {
-        filteredClients.add(client);
+  List<Widget> filterClients() {
+    for (Client client in this.user.getClients(user)) {
+
+      String clientName = client.firstName + ' ' + client.lastName;
+
+      if (clientName.toLowerCase().contains(this.search.toLowerCase())) {
+        filteredClients.add(ClientCard(
+          client: client,
+          name: clientName,
+          onLongPress: () {
+            setState(() {
+              filterClients();
+            });
+          },
+        ));
       }
     }
+
     return filteredClients;
   }
 
-  void addClient(BuildContext context) {
+  void addClient() {
     String firstName;
     String lastName;
     String email;
     String phone;
 
-    SpecialDialog(context, 'Create a client', () {
-      setState(() {
-        this.user.addClient(
-            Client(firstName, lastName, email, 'Bebop', phone));
-      });
-    }, <Widget>[
-      Row(
+    SpecialDialog(
+        context: this.context,
+        title: 'Create a client',
+        onSubmit: () {
+          setState(() {
+            this
+                .user
+                .addClient(Client(firstName, lastName, email, 'Bebop', phone));
+          });
+        },
         children: <Widget>[
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0),
-                labelText: 'First Name',
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10.0),
+                    labelText: 'First Name',
+                  ),
+                  onChanged: (value) {
+                    firstName = value;
+                  },
+                ),
               ),
-              onChanged: (value) {
-                firstName = value;
-              },
-            ),
-          ),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0),
-                labelText: 'Last Name',
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10.0),
+                    labelText: 'Last Name',
+                  ),
+                  onChanged: (value) {
+                    lastName = value;
+                  },
+                ),
               ),
-              onChanged: (value) {
-                lastName = value;
-              },
-            ),
+            ],
           ),
-        ],
-      ),
-      TextField(
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 10.0),
-          labelText: 'Email',
-        ),
-        onChanged: (value) {
-          email = value;
-        },
-      ),
-      TextField(
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 10.0),
-          labelText: 'Phone Number',
-        ),
-        onChanged: (value) {
-          phone = value;
-        },
-      ),
-    ]);
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Email',
+            ),
+            onChanged: (value) {
+              email = value;
+            },
+          ),
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Phone Number',
+            ),
+            onChanged: (value) {
+              phone = value;
+            },
+          ),
+        ]);
   }
 
   @override
@@ -104,7 +115,7 @@ class _TrainerPageState extends State<TrainerPage> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            addClient(context);
+            addClient();
           },
         ),
         appBar: AppBar(
@@ -123,9 +134,11 @@ class _TrainerPageState extends State<TrainerPage> {
                     color: Colors.white,
                   ),
                 ),
-                onChanged: (value){setState(() {
-                  this.search = value;
-                });},
+                onChanged: (value) {
+                  setState(() {
+                    this.search = value;
+                  });
+                },
               ),
             ),
           ),
@@ -158,7 +171,7 @@ class _TrainerPageState extends State<TrainerPage> {
               shrinkWrap: true,
               crossAxisCount: 2,
               padding: EdgeInsets.all(10),
-              children: this.filterClients(this.search),
+              children: this.filterClients(),
             ),
           ],
         ),
@@ -182,7 +195,6 @@ class _TrainerPageState extends State<TrainerPage> {
     );
   }
 }
-
 
 Future<bool> _onWillPop() async {
   //await showDialog or Show add banners or whatever
