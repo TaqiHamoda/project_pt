@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  final Function _function;
+  final Function onTap;
   final String label;
 
-  CustomButton(this._function, this.label);
+  CustomButton({this.onTap, this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class CustomButton extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       child: FlatButton(
           onPressed: () {
-            this._function();
+            this.onTap();
           },
           child: Text(this.label)),
     );

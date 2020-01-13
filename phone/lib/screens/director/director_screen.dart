@@ -9,6 +9,7 @@ import 'package:phone/components/users.dart';
 import 'package:flutter/services.dart';
 import 'package:phone/screens/main/profile_button.dart';
 
+
 class DirectorPage extends StatefulWidget {
   final Director user;
 
@@ -21,21 +22,76 @@ class DirectorPage extends StatefulWidget {
 class _DirectorPageState extends State<DirectorPage> {
   Director user;
   String search = '';
+  String dropdownValue = 'Sort by';
+
 
   _DirectorPageState(this.user);
 
-  List<Widget> filterClients(String filterText) {
-    if (filterText == '') {
-      return this.user.myClientCards();
-    }
-    List<Widget> filteredClients = [];
-    for (ClientCard client in this.user.myClientCards()) {
-      String clientName = client.name.toLowerCase();
-      if (clientName.contains(filterText.toLowerCase())) {
-        filteredClients.add(client);
+  List<Widget> filterClients(String filterText, String dropValue) {
+
+      List<ClientCard> filteredClients = [];
+      if(dropValue == 'Sort by' || dropValue == 'Most Recent'){
+        if(filterText == ''){
+          return this.user.myClientCards().reversed.toList();
+        }
+        for (ClientCard client in this.user.myClientCards()) {
+          String clientName = client.name.toLowerCase();
+          if (clientName.contains(filterText.toLowerCase())) {
+            filteredClients.add(client);
+          }
+        }
+        return filteredClients.reversed.toList();
+
       }
-    }
-    return filteredClients;
+      else if(dropValue == 'First Name (A-Z)'){
+        Comparator<ClientCard> firstNameComparator = (a, b) => a.name.split(' ')[0].compareTo(b.name.split(' ')[0]);
+        if(filterText == ''){
+          filteredClients = this.user.myClientCards();
+          filteredClients.sort(firstNameComparator);
+          return filteredClients;
+        }
+
+        for (ClientCard client in this.user.myClientCards()) {
+          String clientName = client.name.toLowerCase();
+          if (clientName.contains(filterText.toLowerCase())) {
+            filteredClients.add(client);
+          }
+        }
+        filteredClients.sort(firstNameComparator);
+        return filteredClients;
+
+      }
+
+      else if(dropValue == 'Last Name (A-Z)'){
+        Comparator<ClientCard> lastNameComparator = (a, b) => a.name.split(' ')[1].compareTo(b.name.split(' ')[1]);
+        if(filterText == ''){
+          filteredClients = this.user.myClientCards();
+          filteredClients.sort(lastNameComparator);
+          return filteredClients;
+        }
+        for (ClientCard client in this.user.myClientCards()) {
+          String clientName = client.name.toLowerCase();
+          if (clientName.contains(filterText.toLowerCase())) {
+            filteredClients.add(client);
+          }
+        }
+        filteredClients.sort(lastNameComparator);
+        return filteredClients;
+      }
+
+      // below is the original implementation, i'll keep it till I have the sorting stuff implemented in all classes.
+
+//    if (filterText == '') {
+//      return this.user.myClientCards().reversed.toList();
+//    }
+//    List<Widget> filteredClients = [];
+//    for (ClientCard client in this.user.myClientCards()) {
+//      String clientName = client.name.toLowerCase();
+//      if (clientName.contains(filterText.toLowerCase())) {
+//        filteredClients.add(client);
+//      }
+//    }
+//    return filteredClients;
   }
 
   void addClient(BuildContext context) {
@@ -111,23 +167,48 @@ class _DirectorPageState extends State<DirectorPage> {
         appBar: AppBar(
           bottom: PreferredSize(
             preferredSize: Size(0, 55),
-            child: Container(
-              margin: EdgeInsets.only(top: 5.0),
-              child: TextField(
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Colors.white),
-                  contentPadding: EdgeInsets.only(left: 10.0),
-                  labelText: 'Search by name',
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.white,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(top: 5.0),
+                    child: TextField(
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(color: Colors.white),
+                        contentPadding: EdgeInsets.only(left: 10.0),
+                        labelText: 'Search by name',
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onChanged: (value){setState(() {
+                        this.search = value;
+                      });},
+                    ),
                   ),
                 ),
-                onChanged: (value){setState(() {
-                  this.search = value;
-                });},
-              ),
+                DropdownButton<String>(
+                  value: dropdownValue,
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                  onChanged: (String value){
+                    setState(() {
+                      dropdownValue = value;
+                    });
+                  },
+                  items: <String>['Sort by', 'Most Recent', 'First Name (A-Z)', 'Last Name (A-Z)']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  })
+                      .toList(),
+                ),
+              ],
             ),
           ),
           leading: ProfileButton(this.user),
@@ -156,23 +237,23 @@ class _DirectorPageState extends State<DirectorPage> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Expanded(child: CustomButton((){Navigator.push(
+                Expanded(child: CustomButton(onTap: (){Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => UserPage(this.user, 'Director', this.user.directorCards())));
-                }, 'Directors')),
+                }, label: 'Directors')),
 
-                Expanded(child: CustomButton((){Navigator.push(
+                Expanded(child: CustomButton(onTap: (){Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => UserPage(this.user, 'Trainer', this.user.trainerCards())));
-                }, 'Trainers')),
+                }, label: 'Trainers')),
 
-                Expanded(child: CustomButton((){Navigator.push(
+                Expanded(child: CustomButton(onTap: (){Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => UserPage(this.user, 'Client', this.user.otherClientCards())));
-                }, 'Other Clients'))
+                }, label: 'Other Clients'))
 
               ],
             ),
@@ -182,7 +263,7 @@ class _DirectorPageState extends State<DirectorPage> {
               shrinkWrap: true,
               crossAxisCount: 2,
               padding: EdgeInsets.all(10),
-              children: this.filterClients(this.search),
+              children: this.filterClients(this.search, this.dropdownValue),
             ),
           ],
         ),

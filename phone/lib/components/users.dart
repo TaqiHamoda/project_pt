@@ -68,8 +68,8 @@ class Client extends User{
     this.programs.add(program);
   }
 
-  void addGoal(String goal){
-    this.goals.add(Goal(goal));
+  void addGoal(Goal goal){
+    this.goals.add(goal);
   }
 
   void addSessions(int sessionsNum){
@@ -237,8 +237,12 @@ List<User> userCreator(){
 
   List<String> firstNames = ['Ahmed', 'Jotaro', 'Dio', 'Joe', 'James', 'Juan', 'Richard', 'Ahsan', 'Moaz', 'Mohammed'];
   List<String> lastNames = ['Mo', 'Kujo', 'Martinez', 'Brando', 'Joestar', 'Bob', 'Henry', 'Waheed', 'Mohammed', 'Smith'];
-  List<String> goals = ['Lose 15 lbs', 'Get shredded', 'Get deezed', 'Run a marathon', 'Become a beast',
-    'Get pussy', 'Bench 3 plates', 'Sqaut 4 plates', 'Gain weight'];
+  List<Goal> goals = [Goal(exercise: 'Lose', load: 15, date: 'March 2020', current: 5,),
+    Goal(exercise: 'Bench Press', load: 315, date: 'March 2020', current: 265,),
+    Goal(exercise: 'OverHead Press', load: 225, date: 'March 2020', current: 135,),
+    Goal(exercise: 'Squat', load: 405, date: 'March 2020', current: 315,),
+    Goal(exercise: 'Run', load: 1, date: 'March 2020', unit: 'Mile(s)', current: 0.7,),
+    Goal(exercise: 'Gain', load: 20, date: 'March 2020', current: 0,),];
 
   List<Client> clients = [];
 
@@ -249,9 +253,9 @@ List<User> userCreator(){
   Trainer samy = Trainer('Samy', 'Hamoda', 'samy@app.com', 'Bebop', phoneNumberGenerator());
 
   Client andrew = Client('Andrew', 'Petersen', 'andrew@app.com', 'Bebop', '1234567890');
-  andrew.addGoal('OverHead Press 2 Plates');
-  andrew.addGoal('Bench 3 Plates');
-  andrew.addGoal('Squat 4 Plates');
+  andrew.addGoal(goals[0]);
+  andrew.addGoal(goals[2]);
+  andrew.addGoal(goals.elementAt(goals.length - 1));
 
   samy.addClient(andrew);
   clients.add(andrew);
@@ -266,9 +270,9 @@ List<User> userCreator(){
   for(int i = 0; i < 30; i++){
     String firstName = firstNames[generator.nextInt(firstNames.length)];
     String lastName = lastNames[generator.nextInt(lastNames.length)];
-    String goal1 = goals[generator.nextInt(goals.length)];
-    String goal2 = goals[generator.nextInt(goals.length)];
-    String goal3 = goals[generator.nextInt(goals.length)];
+    Goal goal1 = goals[generator.nextInt(goals.length)];
+    Goal goal2 = goals[generator.nextInt(goals.length)];
+    Goal goal3 = goals[generator.nextInt(goals.length)];
 
     int number = generator.nextInt(4);
 

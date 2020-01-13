@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:phone/screens/trainer/trainer_program_screen.dart';
+import 'dart:core';
 
 class Program extends StatelessWidget {
   List<Exercise> exercises = [];
@@ -9,7 +10,7 @@ class Program extends StatelessWidget {
   String name;
   List<Goal> goals = [];
 
-  Program(this.name, List<Goal> goals) {
+  Program({this.name, List<Goal> goals}) {
     this.goals.addAll(goals);
   }
 
@@ -126,6 +127,19 @@ class Exercise {
 
               Expanded(
                 child: Column(children: <Widget>[
+                  Text('Weight'),
+
+                  TextField(
+                    textAlign: TextAlign.center,
+                    onChanged: (value){ this.reps = value; },
+                    controller: TextEditingController(text: this.reps),
+                    decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
+                  )
+                ],),
+              ),
+
+              Expanded(
+                child: Column(children: <Widget>[
                   Text('Rest (Min)'),
 
                   TextField(
@@ -226,6 +240,19 @@ class Exercise {
 
             Expanded(
               child: Column(children: <Widget>[
+                Text('Weight'),
+
+                TextField(
+                  textAlign: TextAlign.center,
+                  controller: TextEditingController(text: this.reps),
+                  enabled: false,
+                  decoration: InputDecoration(contentPadding: EdgeInsets.all(10)),
+                )
+              ],),
+            ),
+
+            Expanded(
+              child: Column(children: <Widget>[
                 Text('Rest (Min)'),
 
                 TextField(
@@ -266,18 +293,22 @@ class Exercise {
   }
 }
 
-class WarmUp {}
 
 class Circuit extends Exercise {}
 
 class Goal extends StatelessWidget {
-  String goal;
-  bool reached = false;
+  int load;
+  String exercise;
+  List<List<dynamic>> progress = [];
+  String unit;
+  double current;
+  String date;
 
-  Goal(this.goal);
+  Goal({this.exercise, this.load, this.date, this.unit='lbs', this.current=0});
 
-  void reachedGoal() {
-    this.reached = true;
+  void record(double value) {
+    current = value;
+    this.progress.add([DateTime.now(), value]);
   }
 
   @override
@@ -285,11 +316,8 @@ class Goal extends StatelessWidget {
     return Column(
       children: <Widget>[
         ListTile(
-          leading: Icon(
-            Icons.trip_origin,
-            color: reached ? Colors.green : null,
-          ),
-          title: Text('Goal: ' + this.goal),
+          leading: CircularProgressIndicator(value: (this.current/this.load), backgroundColor: Colors.grey,),
+          title: Text(this.exercise + ' ' + this.load.toString() + ' ' + this.unit + ' by ' + this.date),
         ),
         Divider(
           thickness: 1.5,

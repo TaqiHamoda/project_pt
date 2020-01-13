@@ -56,57 +56,11 @@ class _ClientPageState extends State<ClientPage> {
         ),
         body: Center(
           child: Column(
-            children: <Widget>[
-              CircularPercentIndicator(
-                radius: 250.0,
-                startAngle: 0,
-                animation: true,
-                animationDuration: 1200,
-                lineWidth: 15.0,
-                percent: 0.33,
-                center: CircularPercentIndicator(
-                  radius: 250.0,
-                  startAngle: 120,
-                  animation: true,
-                  animationDuration: 1200,
-                  lineWidth: 15.0,
-                  percent: 0.33,
-                  center: CircularPercentIndicator(
-                    radius: 250.0,
-                    startAngle: 240,
-                    animation: true,
-                    animationDuration: 1200,
-                    lineWidth: 15.0,
-                    percent: 0.33,
-                    center: FlatButton(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onPressed: (){},
-                        child: SizedBox(
-                          width: 135,
-                            height: 135,
-                            child: Center(
-                                child: Text(this.goal, textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 25),)),
-                        )
-                    ),
-                    circularStrokeCap: CircularStrokeCap.round,
-                    backgroundColor: Colors.transparent,
-                    progressColor: Colors.red,
-                  ),
-                  circularStrokeCap: CircularStrokeCap.round,
-                  backgroundColor: Colors.transparent,
-                  progressColor: Colors.green,
-                ),
-                circularStrokeCap: CircularStrokeCap.round,
-                backgroundColor: Colors.grey,
-                progressColor: Colors.blue,
-              ),
-
+            children: <Widget>[SizedBox(height: 10,)] + this.user.goals + <Widget>[
               Row(
                 children: <Widget>[
-                  Expanded(child: CustomButton((){}, 'Programs')),
-                  Expanded(child: CustomButton((){}, 'Par-Q'))
+                  Expanded(child: CustomButton(onTap: (){}, label: 'Programs')),
+                  Expanded(child: CustomButton(onTap: (){}, label: 'Par-Q'))
                 ],
               ),
             ],
