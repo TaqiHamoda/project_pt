@@ -9,22 +9,22 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class ClientPage extends StatefulWidget {
-  final Client user;
+  final Client client;
 
-  ClientPage(this.user);
+  ClientPage({this.client});
 
   @override
-  _ClientPageState createState() => _ClientPageState(this.user);
+  _ClientPageState createState() => _ClientPageState(this.client);
 }
 
 class _ClientPageState extends State<ClientPage> {
-  Client user;
+  Client client;
   String search = '';
   int rotations = 0;
   int touchedIndex;
   String goal = 'Be able to do five push-ups';
 
-  _ClientPageState(this.user);
+  _ClientPageState(this.client);
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +33,9 @@ class _ClientPageState extends State<ClientPage> {
       child: Scaffold(
         appBar: AppBar(
           bottom: PreferredSize(preferredSize: Size(0, 5), child: SizedBox(),),
-          leading: ProfileButton(this.user),
+          leading: ProfileButton(user: this.client),
           centerTitle: true,
-          title: Text(this.user.firstName,
+          title: Text(this.client.firstName,
             style: TextStyle(
               fontSize: 30.0,
             ),
@@ -49,14 +49,14 @@ class _ClientPageState extends State<ClientPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MessagePage(this.user)));
+                        builder: (context) => MessagePage(this.client)));
               },
             ),
           ],
         ),
         body: Center(
           child: Column(
-            children: <Widget>[SizedBox(height: 10,)] + this.user.goals + <Widget>[
+            children: <Widget>[SizedBox(height: 10,)] + this.client.goals + <Widget>[
               Row(
                 children: <Widget>[
                   Expanded(child: CustomButton(onTap: (){}, label: 'Programs')),

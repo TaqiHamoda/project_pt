@@ -28,21 +28,23 @@ class _UserPageState extends State<UserPage> {
     List<UserCard> filtered = [];
     List<User> users;
 
-    if(screenType == 'Trainer'){
+    if(this.screenType == 'Trainer'){
       users = director.trainers;
-    } else if(screenType == 'Director'){
+    } else if(this.screenType == 'Director'){
       users = director.directors;
     } else {
       users = [];
 
       for(Trainer trainer in this.director.directors + this.director.trainers){
-        for(Client client in trainer.getClients(director)){
+        for(Client client in trainer.clients){
           users.add(client);
         }
       }
+
+      users.addAll(this.director.clients);
     }
 
-    for (User user in this.director.getClients(director)) {
+    for (User user in users) {
 
       String userName = user.firstName + ' ' + user.lastName;
 

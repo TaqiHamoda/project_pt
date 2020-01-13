@@ -5,7 +5,7 @@ import 'package:phone/screens/main/profile_edit.dart';
 class ProfileButton extends StatelessWidget {
   final User user;
 
-  ProfileButton(this.user);
+  ProfileButton({this.user});
 
   @override
   Widget build(BuildContext context) {

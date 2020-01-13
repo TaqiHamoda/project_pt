@@ -53,7 +53,7 @@ class UserCard extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      TypicalTrainerDetails(trainer, this.name,)));
+                      TypicalTrainerDetails(trainer: trainer, name: this.name,)));
         }
       },
       child: Card(

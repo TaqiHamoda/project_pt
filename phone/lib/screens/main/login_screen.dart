@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   String _userEmail = '';
   String _userPassword = '';
   bool error = false;
-  final List<User> users = userCreator();
+  final List<User> users = UserCreator.create();
 
   void logIn() {
     bool success = false;
@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
         if (user is Client) {
           success = true;
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ClientPage(user)));
+              context, MaterialPageRoute(builder: (context) => ClientPage(client: user)));
         } else if (user is Director){
           success = true;
           Navigator.push(
@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
         } else if (user is Trainer) {
           success = true;
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => TrainerPage(user)));
+              context, MaterialPageRoute(builder: (context) => TrainerPage(trainer: user)));
         }
 
       }

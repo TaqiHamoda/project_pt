@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:phone/components/users.dart';
 import 'package:phone/screens/director/typical_card.dart';
 import 'package:phone/screens/main/custom_button.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:phone/screens/main/pressable_info.dart';
 import 'package:phone/screens/main/dialog.dart';
 
 class TypicalTrainerDetails extends StatefulWidget {
-  final Trainer user;
+  final Trainer trainer;
   final String name;
 
-  TypicalTrainerDetails(this.user, this.name);
+  TypicalTrainerDetails({this.trainer, this.name});
 
   @override
   _TypicalTrainerDetails createState() =>
-      _TypicalTrainerDetails(this.user, this.name);
+      _TypicalTrainerDetails(this.trainer, this.name);
 }
 
 class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
@@ -26,7 +26,7 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
   List<Widget> filter() {
     List<UserCard> filteredUsers = [];
 
-    for (Client client in this.user.getClients(user)) {
+    for (Client client in this.user.clients) {
       String clientName = client.firstName + ' ' + client.lastName;
       if (clientName.toLowerCase().contains(this.search.toLowerCase())) {
         filteredUsers.add(UserCard(name: clientName, user: client,));
@@ -176,9 +176,14 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
                             ),
                             alignment: Alignment(-1, 0),
                           ),
-                          PressableInfo('Email: ', this.user.email, 'mailto:'),
                           PressableInfo(
-                              'Phone Number: ', this.user.phoneNum, 'tel:'),
+                              label: 'Email: ',
+                              info: this.user.email,
+                              ext: 'mailto:'),
+                          PressableInfo(
+                              label: 'Phone Number: ',
+                              info: this.user.phoneNum,
+                              ext: 'tel:'),
                         ],
                       ),
                     )
@@ -186,61 +191,6 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
                 ),
               ] +
               this.filter()),
-    );
-  }
-}
-
-class PressableInfo extends StatelessWidget {
-  String label;
-  String info;
-  String ext;
-
-  PressableInfo(this.label, this.info, this.ext) {
-    if (this.ext == 'mailto:') {
-      this.ext = 'mailto:' + this.info + '?subject=Training&body= ';
-    } else if (this.ext == 'tel:') {
-      if (this.info.length == 10) {
-        this.ext = 'tel:+1' + this.info;
-      }
-    }
-  }
-
-  Future<void> _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      print('Could not launch $url');
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5.0),
-      child: Row(
-        children: <Widget>[
-          Text(
-            this.label,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-          InkWell(
-            splashColor: Colors.transparent,
-            enableFeedback: false,
-            onTap: () {
-              _launchURL(this.ext);
-            },
-            child: Text(
-              this.info,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-            ),
-          )
-        ],
-      ),
-      alignment: Alignment(-1, 0),
     );
   }
 }

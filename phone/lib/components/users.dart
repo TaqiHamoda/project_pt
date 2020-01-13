@@ -32,15 +32,6 @@ class User {
     this.lastName = splitName[1];
   }
 
-  void setEmail(String email) {
-    this.email = email;
-  }
-
-  void setNumber(String number) {
-    this.phoneNum = number;
-  }
-
-
   void setPassword(String password) {
     this._password = password;
   }
@@ -53,7 +44,7 @@ class Client extends User{
   List<Program> programs = [];
   Trainer trainer;
   List<Goal> goals = [];
-  int sessions;
+  int sessions = 0;
 
   Client(String firstName, String lastName, String email, String password, String cellNum) :
         super(firstName, lastName, email, password, cellNum);
@@ -73,7 +64,7 @@ class Client extends User{
   }
 
   void addSessions(int sessionsNum){
-    this.sessions = sessionsNum;
+    this.sessions += sessionsNum;
   }
 
 }
@@ -112,14 +103,13 @@ class Group extends User{
 
 
 class Trainer extends User{
-  List<Client> _clients = [];
-  Director director;
+  List<Client> clients = [];
 
   Trainer(String firstName, String lastName, String email, String password, String cellNum) :
         super(firstName, lastName, email, password, cellNum);
 
   void addClient(Client client){
-    this._clients.add(client);
+    this.clients.add(client);
     client.assignTrainer(this);
   }
 
@@ -127,169 +117,123 @@ class Trainer extends User{
     this.messageList.add(client);
   }
 
-  void assignDirector(Director director){
-    this.director = director;
-    this.messageList.add(director);
-  }
-
-  List<Client> getClients(User user){
-    if ((user is Director) || (user == this)){
-      return this._clients;
-    }
-
-    return [];
-  }
 
 }
 
 class Director extends Trainer{
   List<Trainer> trainers = [];
-  List<Director> directors = [];
+  List<Trainer> directors = [];
 
   Director(String firstName, String lastName, String email, String password, String cellNum) :
         super(firstName, lastName, email, password, cellNum);
 
   void addTrainer(Trainer trainer){
     this.trainers.add(trainer);
-    trainer.assignDirector(this);
   }
 
-  @override
-  void assignDirector(Director director);
 
   void addDirector(Director dir){
     this.directors.add(dir);
   }
 
-
-//  List<UserCard> directorCards(){
-//    List<UserCard> cards = [];
-//
-//    for(Director director in this._directors){
-//      cards.add(UserCard(director, director.firstName + " " + director.lastName));
-//    }
-//
-//    return cards;
-//  }
-//
-//
-//  List<UserCard> trainerCards(){
-//    List<UserCard> cards = [];
-//
-//    for(Trainer trainer in this._trainers){
-//      cards.add(UserCard(trainer, trainer.firstName + " " + trainer.lastName));
-//    }
-//
-//    return cards;
-//  }
-//
-//  List<UserCard> otherClientCards(){
-//    List<UserCard> cards = [];
-//
-//    for(Trainer user in (this._trainers + this._directors)){
-//      for(Client client in user.getClients(user)){
-//        cards.add(UserCard(client, client.firstName + " " + client.lastName));
-//      }
-//    }
-//
-//    return cards;
-//  }
-
 }
 
 
-String phoneNumberGenerator(){
-  Random generator = Random();
-  String phoneNum = '';
+class UserCreator{
 
-  for(int i = 0; i < 10; i++){
-    phoneNum += generator.nextInt(10).toString();
+  static String phoneNumberGenerator(){
+    Random generator = Random();
+    String phoneNum = '';
+
+    for(int i = 0; i < 10; i++){
+      phoneNum += generator.nextInt(10).toString();
+    }
+
+    return phoneNum;
   }
 
-  return phoneNum;
-}
+  static List<User> create(){
+    Random generator = Random();
 
+    List<String> firstNames = ['Ahmed', 'Jotaro', 'Dio', 'Joe', 'James', 'Juan', 'Richard', 'Ahsan', 'Moaz', 'Mohammed'];
+    List<String> lastNames = ['Mo', 'Kujo', 'Martinez', 'Brando', 'Joestar', 'Bob', 'Henry', 'Waheed', 'Mohammed', 'Smith'];
+    List<Goal> goals = [Goal(exercise: 'Lose', load: 15, date: 'March 2020', current: 5,),
+      Goal(exercise: 'Bench Press', load: 315, date: 'March 2020', current: 265,),
+      Goal(exercise: 'OverHead Press', load: 225, date: 'March 2020', current: 135,),
+      Goal(exercise: 'Squat', load: 405, date: 'March 2020', current: 315,),
+      Goal(exercise: 'Run', load: 1, date: 'March 2020', unit: 'Mile(s)', current: 0.7,),
+      Goal(exercise: 'Gain', load: 20, date: 'March 2020', current: 0,),];
 
-List<User> userCreator(){
-  Random generator = Random();
+    List<Client> clients = [];
 
-  List<String> firstNames = ['Ahmed', 'Jotaro', 'Dio', 'Joe', 'James', 'Juan', 'Richard', 'Ahsan', 'Moaz', 'Mohammed'];
-  List<String> lastNames = ['Mo', 'Kujo', 'Martinez', 'Brando', 'Joestar', 'Bob', 'Henry', 'Waheed', 'Mohammed', 'Smith'];
-  List<Goal> goals = [Goal(exercise: 'Lose', load: 15, date: 'March 2020', current: 5,),
-    Goal(exercise: 'Bench Press', load: 315, date: 'March 2020', current: 265,),
-    Goal(exercise: 'OverHead Press', load: 225, date: 'March 2020', current: 135,),
-    Goal(exercise: 'Squat', load: 405, date: 'March 2020', current: 315,),
-    Goal(exercise: 'Run', load: 1, date: 'March 2020', unit: 'Mile(s)', current: 0.7,),
-    Goal(exercise: 'Gain', load: 20, date: 'March 2020', current: 0,),];
+    Director hiro = Director('Hiro', 'Diver', 'hiro@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
+    Director youssef = Director('Youssef', 'Nafei', 'you@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
 
-  List<Client> clients = [];
+    Trainer taqi = Trainer('Taqi', 'Hamoda', 'taqi@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
+    Trainer samy = Trainer('Samy', 'Hamoda', 'samy@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
 
-  Director hiro = Director('Hiro', 'Diver', 'hiro@app.com', 'Bebop', phoneNumberGenerator());
-  Director youssef = Director('Youssef', 'Nafei', 'you@app.com', 'Bebop', phoneNumberGenerator());
+    Client andrew = Client('Andrew', 'Petersen', 'andrew@app.com', 'Bebop', '1234567890');
+    andrew.addGoal(goals[0]);
+    andrew.addGoal(goals[2]);
+    andrew.addGoal(goals.elementAt(goals.length - 1));
 
-  Trainer taqi = Trainer('Taqi', 'Hamoda', 'taqi@app.com', 'Bebop', phoneNumberGenerator());
-  Trainer samy = Trainer('Samy', 'Hamoda', 'samy@app.com', 'Bebop', phoneNumberGenerator());
+    samy.addClient(andrew);
+    clients.add(andrew);
 
-  Client andrew = Client('Andrew', 'Petersen', 'andrew@app.com', 'Bebop', '1234567890');
-  andrew.addGoal(goals[0]);
-  andrew.addGoal(goals[2]);
-  andrew.addGoal(goals.elementAt(goals.length - 1));
+    hiro.addTrainer(taqi);
+    hiro.addTrainer(samy);
+    youssef.addTrainer(taqi);
+    youssef.addTrainer(samy);
+    hiro.addDirector(youssef);
+    youssef.addDirector(hiro);
 
-  samy.addClient(andrew);
-  clients.add(andrew);
+    for(int i = 0; i < 30; i++){
+      String firstName = firstNames[generator.nextInt(firstNames.length)];
+      String lastName = lastNames[generator.nextInt(lastNames.length)];
+      Goal goal1 = goals[generator.nextInt(goals.length)];
+      Goal goal2 = goals[generator.nextInt(goals.length)];
+      Goal goal3 = goals[generator.nextInt(goals.length)];
 
-  hiro.addTrainer(taqi);
-  hiro.addTrainer(samy);
-  youssef.addTrainer(taqi);
-  youssef.addTrainer(samy);
-  hiro.addDirector(youssef);
-  youssef.addDirector(hiro);
+      int number = generator.nextInt(4);
 
-  for(int i = 0; i < 30; i++){
-    String firstName = firstNames[generator.nextInt(firstNames.length)];
-    String lastName = lastNames[generator.nextInt(lastNames.length)];
-    Goal goal1 = goals[generator.nextInt(goals.length)];
-    Goal goal2 = goals[generator.nextInt(goals.length)];
-    Goal goal3 = goals[generator.nextInt(goals.length)];
+      if(number == 0){
+        Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
+        hiro.addClient(client);
+        client.addGoal(goal1);
+        client.addGoal(goal2);
+        client.addGoal(goal3);
+      }
 
-    int number = generator.nextInt(4);
+      else if(number == 1){
+        Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
+        youssef.addClient(client);
+        client.addGoal(goal1);
+        client.addGoal(goal2);
+        client.addGoal(goal3);
+      }
 
-    if(number == 0){
-      Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', phoneNumberGenerator());
-      hiro.addClient(client);
-      client.addGoal(goal1);
-      client.addGoal(goal2);
-      client.addGoal(goal3);
+      else if(number == 2){
+        Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
+        taqi.addClient(client);
+        client.addGoal(goal1);
+        client.addGoal(goal2);
+        client.addGoal(goal3);
+      }
+
+      else{
+        Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
+        samy.addClient(client);
+        client.addGoal(goal1);
+        client.addGoal(goal2);
+        client.addGoal(goal3);
+      }
     }
 
-    else if(number == 1){
-      Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', phoneNumberGenerator());
-      youssef.addClient(client);
-      client.addGoal(goal1);
-      client.addGoal(goal2);
-      client.addGoal(goal3);
-    }
 
-    else if(number == 2){
-      Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', phoneNumberGenerator());
-      taqi.addClient(client);
-      client.addGoal(goal1);
-      client.addGoal(goal2);
-      client.addGoal(goal3);
-    }
+    List<User> users = [hiro, youssef, taqi, samy];
+    users.addAll(clients);
 
-    else{
-      Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', phoneNumberGenerator());
-      samy.addClient(client);
-      client.addGoal(goal1);
-      client.addGoal(goal2);
-      client.addGoal(goal3);
-    }
+    return users;
   }
 
-
-  List<User> users = [hiro, youssef, taqi, samy];
-  users.addAll(clients);
-
-  return users;
 }

@@ -28,15 +28,13 @@ class _DirectorPageState extends State<DirectorPage> {
   List<Widget> filterClients() {
     List<ClientCard> filteredClients = [];
 
-    for (Client client in this.user.getClients(user)) {
+    for (Client client in this.user.clients) {
       String clientName = client.firstName + ' ' + client.lastName;
       if (clientName.toLowerCase().contains(this.search)) {
         filteredClients.add(ClientCard(
           client: client,
-          name: clientName,
-          onLongPress: (){setState(() {
-            this.filterClients();
-          });},));
+          name: clientName,)
+        );
       }
     }
 
@@ -202,7 +200,7 @@ class _DirectorPageState extends State<DirectorPage> {
               ],
             ),
           ),
-          leading: ProfileButton(this.user),
+          leading: ProfileButton(user: this.user),
           centerTitle: true,
           title: Text(
             'Director ' + this.user.firstName,
@@ -257,7 +255,7 @@ class _DirectorPageState extends State<DirectorPage> {
                                   builder: (context) => UserPage(this.user,
                                       'Client')));
                         },
-                        label: 'Other Clients'))
+                        label: 'Clients'))
               ],
             ),
             GridView.count(

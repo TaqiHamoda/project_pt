@@ -122,7 +122,7 @@ class _SettingsPageState extends State<SettingsPage> {
               TextFormField(
                 initialValue: user.email,
                 onFieldSubmitted: (String value){
-                  this.user.setEmail(value);
+                  this.user.email = value;
                 },
                 decoration: InputDecoration(
                   icon: Icon(Icons.mail),
@@ -136,7 +136,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   return phoneExp.hasMatch(value.trim()) ? null : 'Enter valid phone number';
                 },
                 onFieldSubmitted: (String value){
-                  this.user.setNumber(value);
+                  this.user.phoneNum = value;
                 },
                 decoration: InputDecoration(
                   icon: Icon(Icons.phone),

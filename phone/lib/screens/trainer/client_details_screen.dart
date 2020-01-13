@@ -5,23 +5,25 @@ import 'package:phone/components/users.dart';
 import 'package:phone/screens/main/custom_button.dart';
 import 'package:phone/screens/main/dialog.dart';
 import 'package:phone/components/paperwork.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:phone/screens/main/pressable_info.dart';
 
 class ClientDetails extends StatefulWidget {
-  final Client user;
+  final Trainer trainer;
+  final Client client;
   final String name;
 
-  ClientDetails(this.user, this.name);
+  ClientDetails({@required this.client, @required this.trainer, @required this.name});
 
   @override
-  _ClientDetails createState() => _ClientDetails(this.user, this.name);
+  _ClientDetails createState() => _ClientDetails(this.client, this.name, this.trainer);
 }
 
 class _ClientDetails extends State<ClientDetails> {
+  final Trainer trainer;
   final String name;
   final Client client;
 
-  _ClientDetails(this.client, this.name);
+  _ClientDetails(this.client, this.name, this.trainer);
 
   void delete() {}
 
@@ -99,9 +101,18 @@ class _ClientDetails extends State<ClientDetails> {
                           ),
                           alignment: Alignment(-1, 0),
                         ),
-                        PressableInfo('Email: ', this.client.email, 'mailto:'),
                         PressableInfo(
-                            'Phone Number: ', this.client.phoneNum, 'tel:'),
+                            label: 'Email: ',
+                            info: this.client.email,
+                            ext: 'mailto:'),
+                        PressableInfo(
+                            label: 'Phone Number: ',
+                            info: this.client.phoneNum,
+                            ext: 'tel:'),
+                        PressableInfo(
+                            label: 'Sessions Remaining: ' + this.client.sessions.toString(),
+                            info: '',
+                            ext: '')
                       ],
                     ),
                   )
@@ -124,61 +135,6 @@ class _ClientDetails extends State<ClientDetails> {
                   label: 'Create Program')
             ],
       ),
-    );
-  }
-}
-
-class PressableInfo extends StatelessWidget {
-  String label;
-  String info;
-  String ext;
-
-  PressableInfo(this.label, this.info, this.ext) {
-    if (this.ext == 'mailto:') {
-      this.ext = 'mailto:' + this.info + '?subject=Training&body= ';
-    } else if (this.ext == 'tel:') {
-      if (this.info.length == 10) {
-        this.ext = 'tel:+1' + this.info;
-      }
-    }
-  }
-
-  Future<void> _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      print('Could not launch $url');
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5.0),
-      child: Row(
-        children: <Widget>[
-          Text(
-            this.label,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-          InkWell(
-            splashColor: Colors.transparent,
-            enableFeedback: false,
-            onTap: () {
-              _launchURL(this.ext);
-            },
-            child: Text(
-              this.info,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-            ),
-          )
-        ],
-      ),
-      alignment: Alignment(-1, 0),
     );
   }
 }

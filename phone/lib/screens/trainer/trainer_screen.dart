@@ -7,36 +7,31 @@ import 'package:phone/screens/main/profile_button.dart';
 import 'package:flutter/services.dart';
 
 class TrainerPage extends StatefulWidget {
-  final Trainer user;
+  final Trainer trainer;
 
-  TrainerPage(this.user);
+  TrainerPage({this.trainer});
 
   @override
-  _TrainerPageState createState() => _TrainerPageState(this.user);
+  _TrainerPageState createState() => _TrainerPageState(this.trainer);
 }
 
 class _TrainerPageState extends State<TrainerPage> {
-  Trainer user;
+  Trainer trainer;
   String search = '';
-  List<ClientCard> filteredClients = [];
 
-  _TrainerPageState(this.user);
+  _TrainerPageState(this.trainer);
 
   List<Widget> filterClients() {
-    for (Client client in this.user.getClients(user)) {
+    List<ClientCard> filteredClients = [];
+    for (Client client in this.trainer.clients) {
 
       String clientName = client.firstName + ' ' + client.lastName;
 
       if (clientName.toLowerCase().contains(this.search.toLowerCase())) {
         filteredClients.add(ClientCard(
           client: client,
-          name: clientName,
-          onLongPress: () {
-            setState(() {
-              filterClients();
-            });
-          },
-        ));
+          name: clientName,)
+        );
       }
     }
 
@@ -55,7 +50,7 @@ class _TrainerPageState extends State<TrainerPage> {
         onSubmit: () {
           setState(() {
             this
-                .user
+                .trainer
                 .addClient(Client(firstName, lastName, email, 'Bebop', phone));
           });
         },
@@ -142,10 +137,10 @@ class _TrainerPageState extends State<TrainerPage> {
               ),
             ),
           ),
-          leading: ProfileButton(this.user),
+          leading: ProfileButton(user: this.trainer),
           centerTitle: true,
           title: Text(
-            'Trainer ' + this.user.firstName,
+            'Trainer ' + this.trainer.firstName,
             style: TextStyle(
               fontSize: 30.0,
             ),
@@ -159,7 +154,7 @@ class _TrainerPageState extends State<TrainerPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MessagePage(this.user)));
+                        builder: (context) => MessagePage(this.trainer)));
               },
             ),
           ],
