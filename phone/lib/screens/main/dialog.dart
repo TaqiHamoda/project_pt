@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class SpecialDialog {
   final List<Widget> children;
-  final Function submitFunction;
+  final Function onSubmit;
   final String title;
 
 
-  SpecialDialog( BuildContext context, this.title, this.submitFunction, this.children) {
+  SpecialDialog({BuildContext context, this.title, this.onSubmit, this.children}) {
     showDialog<Null>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -24,7 +24,7 @@ class SpecialDialog {
                     style: TextStyle(color: Colors.blue),),
                   onPressed: () {
                     Navigator.of(context).pop();
-                    this.submitFunction();},
+                    this.onSubmit();},
                 ),
               ),
 

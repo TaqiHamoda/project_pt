@@ -5,121 +5,139 @@ import 'package:phone/components/users.dart';
 import 'typical_card.dart';
 
 class UserPage extends StatefulWidget {
-
-  final User user;
+  final Director director;
   final String screenType;
-  final List<UserCard> cards;
 
-  UserPage(this.user, this.screenType, this.cards);
+  UserPage(this.director, this.screenType,);
 
   @override
-  _UserPageState createState() => _UserPageState(this.user, this.screenType, this.cards);
+  _UserPageState createState() =>
+      _UserPageState(this.director, this.screenType,);
 }
 
 class _UserPageState extends State<UserPage> {
-
-  User user;
+  Director director;
   String screenType;
-  List<UserCard> cards;
   String search = '';
   Widget floatingButton;
 
+  _UserPageState(this.director, this.screenType,);
 
-  _UserPageState(this.user, this.screenType, this.cards);
+  List<UserCard> filter() {
 
-  List<UserCard> filter(String filterText) {
+    List<UserCard> filtered = [];
+    List<User> users;
 
-    if (filterText == '') {
-      return cards;
-    }
-    List<UserCard> filteredUsers = [];
-    for (UserCard card in cards) {
-      String userName = card.name.toLowerCase();
-      if (userName.contains(filterText.toLowerCase())) {
-        filteredUsers.add(card);
+    if(screenType == 'Trainer'){
+      users = director.trainers;
+    } else if(screenType == 'Director'){
+      users = director.directors;
+    } else {
+      users = [];
+
+      for(Trainer trainer in this.director.directors + this.director.trainers){
+        for(Client client in trainer.getClients(director)){
+          users.add(client);
+        }
       }
     }
-    return filteredUsers;
+
+    for (User user in this.director.getClients(director)) {
+
+      String userName = user.firstName + ' ' + user.lastName;
+
+      if (userName.toLowerCase().contains(this.search.toLowerCase())) {
+        filtered.add(UserCard(
+          user: user,
+          name: userName,
+        ));
+      }
+    }
+
+    return filtered;
   }
 
-  void add(BuildContext context) {
+  void add() {
     String firstName;
     String lastName;
     String email;
     String phone;
 
-    SpecialDialog(context, 'Create a ' + this.screenType, () {
-        setState(() {
-          Director director = this.user;
-
-          if(this.screenType == 'Trainer') {
-            director.addTrainer(Trainer(firstName, lastName, email, 'Bebop', phone));
-            this.cards = director.trainerCards();
+    SpecialDialog(
+        context: this.context,
+        title: 'Create a ' + this.screenType,
+        onSubmit: () {
+          if (this.screenType == 'Trainer') {
+            director.addTrainer(
+                Trainer(firstName, lastName, email, 'Bebop', phone));
+          } else if (this.screenType == 'Director') {
+            director.addDirector(
+                Director(firstName, lastName, email, 'Bebop', phone));
           }
-
-          else if(this.screenType == 'Director') {
-            director.addDirector(Director(firstName, lastName, email, 'Bebop', phone));
-            this.cards = director.directorCards();
-          }
-        });
-
-    }, <Widget>[
-      Row(
+          
+          setState(() {
+            this.filter();
+          });
+        },
         children: <Widget>[
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0),
-                labelText: 'First Name',
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10.0),
+                    labelText: 'First Name',
+                  ),
+                  onChanged: (value) {
+                    firstName = value;
+                  },
+                ),
               ),
-              onChanged: (value) {
-                firstName = value;
-              },
-            ),
-          ),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0),
-                labelText: 'Last Name',
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10.0),
+                    labelText: 'Last Name',
+                  ),
+                  onChanged: (value) {
+                    lastName = value;
+                  },
+                ),
               ),
-              onChanged: (value) {
-                lastName = value;
-              },
-            ),
+            ],
           ),
-        ],
-      ),
-      TextField(
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 10.0),
-          labelText: 'Email',
-        ),
-        onChanged: (value) {
-          email = value;
-        },
-      ),
-      TextField(
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 10.0),
-          labelText: 'Phone Number',
-        ),
-        onChanged: (value) {
-          phone = value;
-        },
-      ),
-    ]);
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Email',
+            ),
+            onChanged: (value) {
+              email = value;
+            },
+          ),
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Phone Number',
+            ),
+            onChanged: (value) {
+              phone = value;
+            },
+          ),
+        ]);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: this.screenType == 'Client' ? null :  FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          this.add(context);
-        },
-      ),
+      floatingActionButton: this.screenType == 'Client'
+          ? null
+          : FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {
+                this.add();
+              },
+            ),
       appBar: AppBar(
         bottom: PreferredSize(
           preferredSize: Size(100.0, 50.0),
@@ -136,14 +154,17 @@ class _UserPageState extends State<UserPage> {
                   color: Colors.white,
                 ),
               ),
-              onChanged: (value){setState(() {
-                this.search = value;
-              });},
+              onChanged: (value) {
+                setState(() {
+                  this.search = value;
+                });
+              },
             ),
           ),
         ),
         centerTitle: true,
-        title: Text(this.screenType + 's',
+        title: Text(
+          this.screenType + 's',
           style: TextStyle(
             fontSize: 30.0,
           ),
@@ -157,17 +178,17 @@ class _UserPageState extends State<UserPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MessagePage(this.user)));
+                      builder: (context) => MessagePage(this.director)));
             },
           ),
         ],
       ),
       body: ListView(
-        children: this.filter(this.search),
+        children: this.filter(),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (int index){
-          if (index == 0){
+        onTap: (int index) {
+          if (index == 0) {
             Navigator.pop(context);
           }
         },
