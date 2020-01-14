@@ -7,6 +7,8 @@ import 'package:phone/screens/main/profile_button.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/animation.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:phone/screens/main/graphs.dart';
+import 'package:phone/components/paperwork.dart';
 
 class ClientPage extends StatefulWidget {
   final Client user;
@@ -22,8 +24,13 @@ class _ClientPageState extends State<ClientPage> {
   String search = '';
   int rotations = 0;
   Widget circles;
+  String timeInterval = 'Monthly';
+  String whichGoal = 'Goal 1';
+  Goal currGoal;
 
-  _ClientPageState(this.user);
+  _ClientPageState(this.user){
+    this.currGoal = this.user.goals[1];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +69,52 @@ class _ClientPageState extends State<ClientPage> {
                   Expanded(child: CustomButton(onTap: (){}, label: 'Par-Q'))
                 ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: (){
+                      setState(() {
+                        if(timeInterval == 'Monthly'){
+                          timeInterval = '3 Month';
+                        }
+                        else if(timeInterval == '3 Month'){
+                          timeInterval = 'Yearly';
+                        }
+                        else{
+                          timeInterval = 'Monthly';
+                        }
+
+                      });
+                    },
+                    child: Text(
+                      this.timeInterval,
+                    ),
+                  ),
+                  FlatButton(
+                    onPressed: (){
+                      setState(() { // can prob be cleaned up but allow it for now
+                        if(whichGoal == 'Goal 1'){
+                          this.currGoal = this.user.goals[1]; // index 1 for testing purposes
+                          whichGoal = 'Goal 2';
+                        }
+                        else if(whichGoal == 'Goal 2'){
+                          this.currGoal = this.user.goals[1];
+                          whichGoal = 'Goal 3';
+                        }
+                        else{
+                          this.currGoal = this.user.goals[1];
+                          whichGoal = 'Goal 1';
+                        }
+                      });
+                    },
+                    child: Text(
+                      whichGoal,
+                    ),
+                  ),
+                ],
+              ),
+              Graph(this.timeInterval, this.user, this.currGoal),
             ],
           ),
         ),
