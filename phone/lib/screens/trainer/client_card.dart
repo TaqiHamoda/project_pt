@@ -4,13 +4,13 @@ import '../../components/users.dart';
 
 class ClientCard extends StatelessWidget {
 
-  ClientCard({@required this.client, @required this.name, this.onLongPress});
-
   final String name;
   final Client client;
+  final Trainer trainer;
   final Function onLongPress;
   bool selected = false;
 
+  ClientCard({@required this.client, @required this.name, @required this.trainer, this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ClientCard extends StatelessWidget {
             onPressed: (){
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) =>
-                      ClientDetails(this.client, this.name),
+                      ClientDetails(client: this.client, name: this.name, trainer: this.trainer),
                   ),
               );
             },

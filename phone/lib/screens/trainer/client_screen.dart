@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:phone/screens/main/messages_screen.dart';
 import 'package:phone/screens/main/custom_button.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:phone/screens/trainer/goal_card.dart';
 import '../../components/users.dart';
 import 'package:phone/screens/main/profile_button.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/animation.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:phone/screens/main/graphs.dart';
 import 'package:phone/components/paperwork.dart';
+import 'goal_card.dart';
 
 class ClientPage extends StatefulWidget {
-  final Client user;
+  final Client client;
 
-  ClientPage(this.user);
+  ClientPage({@required this.client});
 
   @override
-  _ClientPageState createState() => _ClientPageState(this.user);
+  _ClientPageState createState() => _ClientPageState(this.client);
 }
 
 class _ClientPageState extends State<ClientPage> {
-  Client user;
+  Client client;
   String search = '';
-  int rotations = 0;
-  Widget circles;
   String timeInterval = 'Monthly';
   String whichGoal = 'Goal 1';
   Goal currGoal;
+  List<GoalCard> goalCards = [];
 
-  _ClientPageState(this.user){
-    this.currGoal = this.user.goals[1];
+  _ClientPageState(this.client){
+    for(Goal goal in this.client.goals){
+      this.goalCards.add(GoalCard(goal: goal));
+    }
+    
+    this.currGoal = this.client.goals[1];
   }
 
   @override
@@ -39,9 +41,9 @@ class _ClientPageState extends State<ClientPage> {
       child: Scaffold(
         appBar: AppBar(
           bottom: PreferredSize(preferredSize: Size(0, 5), child: SizedBox(),),
-          leading: ProfileButton(this.user),
+          leading: ProfileButton(this.client),
           centerTitle: true,
-          title: Text(this.user.firstName,
+          title: Text(this.client.firstName,
             style: TextStyle(
               fontSize: 30.0,
             ),
@@ -55,14 +57,14 @@ class _ClientPageState extends State<ClientPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MessagePage(this.user)));
+                        builder: (context) => MessagePage(this.client)));
               },
             ),
           ],
         ),
         body: Center(
           child: Column(
-            children: <Widget>[SizedBox(height: 10,)] + this.user.goals + <Widget>[
+            children: <Widget>[SizedBox(height: 10,)] + this.goalCards + <Widget>[
               Row(
                 children: <Widget>[
                   Expanded(child: CustomButton(onTap: (){}, label: 'Programs')),
@@ -95,15 +97,15 @@ class _ClientPageState extends State<ClientPage> {
                     onPressed: (){
                       setState(() { // can prob be cleaned up but allow it for now
                         if(whichGoal == 'Goal 1'){
-                          this.currGoal = this.user.goals[1]; // index 1 for testing purposes
+                          this.currGoal = this.client.goals[1]; // index 1 for testing purposes
                           whichGoal = 'Goal 2';
                         }
                         else if(whichGoal == 'Goal 2'){
-                          this.currGoal = this.user.goals[1];
+                          this.currGoal = this.client.goals[1];
                           whichGoal = 'Goal 3';
                         }
                         else{
-                          this.currGoal = this.user.goals[1];
+                          this.currGoal = this.client.goals[1];
                           whichGoal = 'Goal 1';
                         }
                       });
@@ -114,7 +116,7 @@ class _ClientPageState extends State<ClientPage> {
                   ),
                 ],
               ),
-              Graph(this.timeInterval, this.user, this.currGoal),
+              Expanded(child: Graph(this.timeInterval, this.client, this.currGoal)),
             ],
           ),
         ),

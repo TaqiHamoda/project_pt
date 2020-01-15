@@ -10,25 +10,25 @@ import 'package:flutter/services.dart';
 import 'package:phone/screens/main/profile_button.dart';
 
 class DirectorPage extends StatefulWidget {
-  final Director user;
+  final Director director;
 
-  DirectorPage(this.user);
+  DirectorPage({@required this.director});
 
   @override
-  _DirectorPageState createState() => _DirectorPageState(this.user);
+  _DirectorPageState createState() => _DirectorPageState(this.director);
 }
 
 class _DirectorPageState extends State<DirectorPage> {
-  Director user;
+  Director director;
   String search = '';
   String dropdownValue = 'Sort by';
 
-  _DirectorPageState(this.user);
+  _DirectorPageState(this.director);
 
   List<Widget> filterClients() {
     List<ClientCard> filteredClients = [];
 
-    for (Client client in this.user.getClients(user)) {
+    for (Client client in this.director.getClients(director)) {
       String clientName = client.firstName + ' ' + client.lastName;
       if (clientName.toLowerCase().contains(this.search)) {
         filteredClients.add(ClientCard(
@@ -87,7 +87,7 @@ class _DirectorPageState extends State<DirectorPage> {
         onSubmit: () {
           setState(() {
             this
-                .user
+                .director
                 .addClient(Client(firstName, lastName, email, 'Bebop', phone));
           });
         },
@@ -202,10 +202,10 @@ class _DirectorPageState extends State<DirectorPage> {
               ],
             ),
           ),
-          leading: ProfileButton(this.user),
+          leading: ProfileButton(this.director),
           centerTitle: true,
           title: Text(
-            'Director ' + this.user.firstName,
+            'Director ' + this.director.firstName,
             style: TextStyle(
               fontSize: 30.0,
             ),
@@ -219,7 +219,7 @@ class _DirectorPageState extends State<DirectorPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MessagePage(this.user)));
+                        builder: (context) => MessagePage(this.director)));
               },
             ),
           ],
@@ -234,7 +234,7 @@ class _DirectorPageState extends State<DirectorPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UserPage(this.user,
+                                  builder: (context) => UserPage(this.director,
                                       'Director')));
                         },
                         label: 'Directors')),
@@ -244,7 +244,7 @@ class _DirectorPageState extends State<DirectorPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UserPage(this.user,
+                                  builder: (context) => UserPage(this.director,
                                       'Trainer')));
                         },
                         label: 'Trainers')),
@@ -254,7 +254,7 @@ class _DirectorPageState extends State<DirectorPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UserPage(this.user,
+                                  builder: (context) => UserPage(this.director,
                                       'Client')));
                         },
                         label: 'Other Clients'))

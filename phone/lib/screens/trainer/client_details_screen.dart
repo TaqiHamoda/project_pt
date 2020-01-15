@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../main/messages_screen.dart';
+import 'program_card.dart';
 import 'package:phone/components/users.dart';
 import 'package:phone/screens/main/custom_button.dart';
 import 'package:phone/screens/main/dialog.dart';
@@ -8,20 +9,28 @@ import 'package:phone/components/paperwork.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ClientDetails extends StatefulWidget {
-  final Client user;
+  final Client client;
   final String name;
+  final Trainer trainer;
 
-  ClientDetails(this.user, this.name);
+  ClientDetails({@required this.client, @required this.name, @required this.trainer});
 
   @override
-  _ClientDetails createState() => _ClientDetails(this.user, this.name);
+  _ClientDetails createState() => _ClientDetails(this.client, this.name, this.trainer);
 }
 
 class _ClientDetails extends State<ClientDetails> {
   final String name;
   final Client client;
+  final Trainer trainer;
+  List<ProgramCard> programCards = [];
 
-  _ClientDetails(this.client, this.name);
+  _ClientDetails(this.client, this.name, this.trainer){
+
+    for(Program program in this.client.programs){
+      this.programCards.add(ProgramCard(program: program, trainer: this.trainer));
+    }
+  }
 
   void delete() {}
 
@@ -32,11 +41,15 @@ class _ClientDetails extends State<ClientDetails> {
         context: this.context,
         title: 'Create a new workout',
         onSubmit: () {
+          Program program = Program(
+            name: programName,
+            goals: this.client.goals,
+          );
+
+          this.client.addProgram(program);
+
           setState(() {
-            this.client.addProgram(Program(
-                  name: programName,
-                  goals: this.client.goals,
-                ));
+            this.programCards.add(ProgramCard(program: program, trainer: this.trainer,));
           });
         },
         children: <Widget>[
@@ -115,7 +128,7 @@ class _ClientDetails extends State<ClientDetails> {
                 ],
               )
             ] +
-            this.client.programs +
+            this.programCards +
             [
               CustomButton(
                   onTap: () {
