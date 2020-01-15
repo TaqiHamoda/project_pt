@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:phone/components/paperwork.dart';
 import 'package:phone/components/users.dart';
+import 'dart:math';
 
 
 
@@ -17,40 +18,42 @@ class Graph extends StatelessWidget {
 
 
   Graph(this.timeInterval, this.user, this.goal){
-    addSpot(1, this.goal.current);
-    addSpot(2, this.goal.current + 10);
-    addSpot(3, this.goal.current - 15);
+    addSpot(1, _getMinY());
+    addSpot(2, _getMaxY());
+    addSpot(3, (_getMaxY() + _getMinY()) / 2);
   }
 
   String _getInterval(double value, String unit){
-    int val = value.toInt();
-    if(unit == 'lbs'){
-      if(val % 10 == 0 && val <= _getMaxY() && val >= _getMinY()){
-        return val.toString();
-      }
+    if(value == _getMinY()){
+      return value.toInt().toString();
     }
 
-    else if(unit == 'Mile(s)'){
-      return '';
+    else if(value == _getMaxY()){
+      return value.toInt().toString();
+    }
+
+
+    double average = ((_getMaxY() + _getMinY()) / 2).roundToDouble();
+    if(value == average){
+      return average.toInt().toString();
     }
 
     return '';
+
+
+
+
   }
 
   double _getMinY(){
-    if(this.goal.current >= 100){
-      return (this.goal.current - 50);
-    }
 
-    return 0;
+
+    return (this.goal.current * 0.9).roundToDouble();
   }
 
   double _getMaxY(){
-    if(_getMinY() >= 40){
-      return (this.goal.current + 50);
-    }
 
-    return 10;
+    return (this.goal.current * 1.1).roundToDouble();
   }
 
   void addSpot(double x, double y){
