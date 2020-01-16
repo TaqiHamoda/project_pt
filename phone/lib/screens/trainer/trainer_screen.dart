@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 class TrainerPage extends StatefulWidget {
   final Trainer trainer;
 
-  TrainerPage({this.trainer});
+  TrainerPage({@required this.trainer});
 
   @override
   _TrainerPageState createState() => _TrainerPageState(this.trainer);
@@ -29,6 +29,7 @@ class _TrainerPageState extends State<TrainerPage> {
 
       if (clientName.toLowerCase().contains(this.search.toLowerCase())) {
         filteredClients.add(ClientCard(
+          trainer: this.trainer,
           client: client,
           name: clientName,)
         );

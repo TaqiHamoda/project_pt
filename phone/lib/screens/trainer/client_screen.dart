@@ -5,13 +5,19 @@ import 'package:phone/screens/main/custom_button.dart';
 import '../../components/users.dart';
 import 'package:phone/screens/main/profile_button.dart';
 import 'package:flutter/services.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:phone/screens/trainer/goal_card.dart';
+import '../../components/users.dart';
+import 'package:phone/screens/main/profile_button.dart';
+import 'package:flutter/services.dart';
+import 'package:phone/screens/main/graphs.dart';
+import 'package:phone/components/paperwork.dart';
+import 'goal_card.dart';
 
 class ClientPage extends StatefulWidget {
   final Client client;
 
-  ClientPage({this.client});
+  ClientPage({@required this.client});
 
   @override
   _ClientPageState createState() => _ClientPageState(this.client);
@@ -20,11 +26,18 @@ class ClientPage extends StatefulWidget {
 class _ClientPageState extends State<ClientPage> {
   Client client;
   String search = '';
-  int rotations = 0;
-  int touchedIndex;
-  String goal = 'Be able to do five push-ups';
+  String timeInterval = 'Monthly';
+  String whichGoal = 'Goal 1';
+  Goal currGoal;
+  List<GoalCard> goalCards = [];
 
-  _ClientPageState(this.client);
+  _ClientPageState(this.client){
+    for(Goal goal in this.client.goals){
+      this.goalCards.add(GoalCard(goal: goal));
+    }
+    
+    this.currGoal = this.client.goals[1];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +69,59 @@ class _ClientPageState extends State<ClientPage> {
         ),
         body: Center(
           child: Column(
-            children: <Widget>[SizedBox(height: 10,)] + this.client.goals + <Widget>[
+            children: <Widget>[SizedBox(height: 10,)] + this.goalCards + <Widget>[
               Row(
                 children: <Widget>[
                   Expanded(child: CustomButton(onTap: (){}, label: 'Programs')),
                   Expanded(child: CustomButton(onTap: (){}, label: 'Par-Q'))
                 ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: (){
+                      setState(() {
+                        if(timeInterval == 'Monthly'){
+                          timeInterval = '3 Month';
+                        }
+                        else if(timeInterval == '3 Month'){
+                          timeInterval = 'Yearly';
+                        }
+                        else{
+                          timeInterval = 'Monthly';
+                        }
+
+                      });
+                    },
+                    child: Text(
+                      this.timeInterval,
+                    ),
+                  ),
+                  FlatButton(
+                    onPressed: (){
+                      setState(() { // can prob be cleaned up but allow it for now
+                        if(whichGoal == 'Goal 1'){
+                          this.currGoal = this.client.goals[1]; // index 1 for testing purposes
+                          whichGoal = 'Goal 2';
+                        }
+                        else if(whichGoal == 'Goal 2'){
+                          this.currGoal = this.client.goals[1];
+                          whichGoal = 'Goal 3';
+                        }
+                        else{
+                          this.currGoal = this.client.goals[1];
+                          whichGoal = 'Goal 1';
+                        }
+                      });
+                    },
+                    child: Text(
+                      whichGoal,
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(child: Graph(this.timeInterval, this.client, this.currGoal)),
             ],
           ),
         ),

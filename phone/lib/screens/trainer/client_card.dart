@@ -4,12 +4,13 @@ import '../../components/users.dart';
 
 class ClientCard extends StatelessWidget {
 
-  ClientCard({@required this.client, @required this.name});
-
   final String name;
   final Client client;
+  final Trainer trainer;
+  final Function onLongPress;
   bool selected = false;
 
+  ClientCard({@required this.client, @required this.name, @required this.trainer, this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +18,35 @@ class ClientCard extends StatelessWidget {
       onPressed: (){
         Navigator.push(context,
             MaterialPageRoute(builder: (context) =>
-                ClientDetails(client: this.client, name: this.name),
+                ClientDetails(client: this.client, name: this.name, trainer: this.trainer,),
             ),
         );
       },
 
       child: Column(
         children: <Widget>[
-          CircleAvatar(backgroundImage: this.client.photo, radius: 50,),
-          Text(
-            this.name,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20.0,
+          FlatButton(
+            onLongPress: (){ this.onLongPress();
+            this.selected = !this.selected; },
+            onPressed: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>
+                      ClientDetails(client: this.client, name: this.name, trainer: this.trainer),
+                  ),
+              );
+            },
+
+            child: Column(
+              children: <Widget>[
+                CircleAvatar(backgroundImage: this.client.photo, radius: 50,),
+                Text(
+                  this.name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         } else if (user is Director){
           success = true;
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => DirectorPage(user)));
+              context, MaterialPageRoute(builder: (context) => DirectorPage(director: user)));
         } else if (user is Trainer) {
           success = true;
           Navigator.push(
