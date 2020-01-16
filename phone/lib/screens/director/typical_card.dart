@@ -1,29 +1,50 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phone/components/users.dart';
 import 'package:phone/screens/director/typical_trainers_details.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:phone/screens/main/pressable_info.dart';
+
 
 class UserCard extends StatelessWidget {
 
   final String name;
   final User user;
+  final List<PressableInfo> info = [];
   Widget preferredWidget;
 
   UserCard({this.user, this.name}){
+    this.info.add(PressableInfo(label: 'E-mail: ', info: this.user.email, ext: 'mailto:'));
+    this.info.add(PressableInfo(label: 'Phone Number: ', info: this.user.phoneNum, ext: 'tel:'));
+
     if (this.user is Trainer) {
-      preferredWidget = IconButton(
-          icon: Icon(
-            Icons.delete,
-            color: Colors.red,
+      preferredWidget = PopupMenuButton<Choices>(
+        onSelected: (Choices result) {
+          if (result == Choices.delete) {
+          }
+        },
+        itemBuilder: (BuildContext context) => <PopupMenuEntry<Choices>>[
+          PopupMenuItem<Choices>(
+            value: Choices.delete,
+            child: Text('Delete'),
           ),
-          onPressed: () {
-            this.delete();
-          });
-    } else {
+        ],
+      );
+    }
+
+    else {
+      Client client = this.user;
+
+      this.info.add(PressableInfo(label: 'Sessions Remaining: ', info: client.sessions.toString(), ext: null));
+
       preferredWidget = PopupMenuButton<Choices>(
         onSelected: (Choices result) {
           if (result == Choices.parQ) {
-          } else {}
+
+          } else if (result == Choices.assessment){
+
+          } else if (result == Choices.addSessions){
+
+          }
         },
         itemBuilder: (BuildContext context) => <PopupMenuEntry<Choices>>[
           PopupMenuItem<Choices>(
@@ -34,10 +55,16 @@ class UserCard extends StatelessWidget {
             value: Choices.assessment,
             child: Text('Assessment'),
           ),
+          PopupMenuItem<Choices>(
+            value: Choices.addSessions,
+            child: Text('Add Sessions'),
+          ),
         ],
       );
     }
   }
+
+
   void delete() {}
 
   @override
@@ -60,38 +87,32 @@ class UserCard extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Expanded(
-              flex: 5,
-              child: Row(
+              flex: 2,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                  child: CircleAvatar(backgroundImage: this.user.photo, radius: 45,)),
+            ),
+            Expanded(
+              flex: 4,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  CircleAvatar(backgroundImage: this.user.photo, radius: 25,),
-                  SizedBox(width: 10.0,),
                   Text(
                     this.name,
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.left,
                     style: TextStyle(
+                      fontWeight: FontWeight.bold,
                       fontSize: 20.0,
                     ),
                   ),
-                ],
+                ] + this.info,
               ),
             ),
-
             Expanded(
-              flex: 3,
-              child: Row(
-                children: <Widget>[
-                  IconButton(icon: Icon(Icons.email), onPressed: () {
-                    _launchURL('mailto:' + this.user.email + '?subject= &body= ');
-                  }),
-
-                  IconButton(icon: Icon(Icons.phone), onPressed: () {
-                    _launchURL('tel:+1' + this.user.phoneNum);
-                  }),
-                  Container(
-                      alignment: Alignment(1.0, 0.0), child: this.preferredWidget)
-                ],
-              ),
-            ),
+              child: Container(
+                alignment: Alignment(1.0, 0.0),
+                child: this.preferredWidget,),
+            )
           ],
         ),
       ),
@@ -99,14 +120,5 @@ class UserCard extends StatelessWidget {
   }
 }
 
-
-Future<void> _launchURL(String url) async {
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    print('Could not launch $url');
-  }
-}
-
-enum Choices { parQ, assessment }
+enum Choices {delete, parQ, assessment, addSessions}
 

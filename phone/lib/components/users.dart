@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'paperwork.dart';
-import 'package:phone/screens/trainer/client_card.dart';
-import 'package:phone/screens/director/typical_card.dart';
 import 'dart:math';
 
 class User {
@@ -53,6 +51,10 @@ class Client extends User{
     this.trainer = trainer;
     this.messageList.add(trainer);
 
+  }
+
+  bool get status{
+    return this.sessions > 0;
   }
 
   void addProgram(Program program){

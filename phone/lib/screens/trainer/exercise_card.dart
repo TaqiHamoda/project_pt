@@ -10,20 +10,19 @@ class ExerciseCard extends StatelessWidget {
 
   ExerciseCard({@required this.exercise, this.onChosen, @required this.user});
 
-  set chosen(bool choice){
-    this._chosen = choice;
-
-    if(this._chosen){
-      this.onChosen();
-    }
-  }
-
-  get chosen{
+  bool get chosen{
     return this._chosen;
   }
 
   @override
   Widget build(BuildContext context) {
+    IconButton selectIcon = IconButton(
+      icon: Icon(Icons.trip_origin, color: this._chosen ? Colors.green : null,),
+      onPressed: (){
+      this._chosen = !this._chosen;
+      this.onChosen();
+      },);
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: Card(
@@ -43,7 +42,7 @@ class ExerciseCard extends StatelessWidget {
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(10),
                           labelText: this.user is Trainer ? 'Exercise Name' : null,
-                          suffixIcon: this.user is Trainer ? Icon(Icons.trip_origin, color: this._chosen ? Colors.green : null,) : null),
+                          suffixIcon: this.user is Trainer ? selectIcon : null),
                     ), alignment: Alignment(0, -1),)
                 ),
               ],),
@@ -149,3 +148,33 @@ class ExerciseCard extends StatelessWidget {
     );
   }
 }
+
+
+class CircuitCard extends ExerciseCard {
+  final Circuit circuit;
+  final List<Widget> exerciseCards = [];
+  final User user;
+  int color = 0;
+
+  CircuitCard({@required this.circuit, @required this.user}){
+    for(Exercise exercise in circuit.exercises){
+
+      this.exerciseCards.add(Container(
+        margin: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(5.0),
+        child: ExerciseCard(exercise: exercise, user: this.user),
+        color: (this.color/2) == 0 ? Colors.grey[700] : Colors.grey[500],
+      ));
+
+      this.color += 1;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: this.exerciseCards,
+    );
+  }
+}
+

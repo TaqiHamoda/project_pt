@@ -7,7 +7,6 @@ import 'program_card.dart';
 import 'package:phone/components/paperwork.dart';
 import 'package:phone/screens/main/custom_button.dart';
 import 'package:phone/components/users.dart';
-import 'package:phone/screens/main/dialog.dart';
 
 class TrainerProgramPage extends StatefulWidget {
   final ProgramCard programCard;
@@ -24,42 +23,78 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
   final String rpe = "\n";
   final ProgramCard programCard;
   final Trainer trainer;
-  IconButton currentButton;
-  List<ExerciseCard> exerciseCards = [];
+  Widget circuitButton = SizedBox();
+  List<ExerciseCard> exerciseCards;
+  List<ExerciseCard> chosenCards = [];
 
   _TrainerProgramPageState(this.programCard, this.trainer) {
-    for (Exercise exercise in this.programCard.program.exercises) {
-      this.exerciseCards.add(ExerciseCard(
+    this.exerciseCards = this.createCards();
+  }
+
+  List<ExerciseCard> createCards(){
+    List<ExerciseCard> cards = [];
+
+      for (Exercise exercise in this.programCard.program.exercises) {
+        if(exercise is Circuit){
+          cards.add(CircuitCard(circuit: exercise, user: this.trainer,));
+        }
+
+        else{
+          cards.add(ExerciseCard(
             exercise: exercise,
             user: this.trainer,
-            onChosen: () {},
+            onChosen: () {changeButton();},
           ));
+        }
+      }
+
+      return cards;
+  }
+
+  void changeButton(){
+    bool chosen = false;
+
+    for(ExerciseCard exerciseCard in this.exerciseCards){
+      if(exerciseCard.chosen){
+        chosenCards.add(exerciseCard);
+        chosen = true;
+      }
     }
 
-    IconButton firstButton;
-    IconButton secondButton;
+    if(chosen){
+      setState(() {
+        this.circuitButton = FlatButton(
+            onPressed: (){
+              createCircuit();
+              setState(() {
+                this.circuitButton = SizedBox();
+              });
+            },
+            child: Text('Create Circuit', style: TextStyle(color: Colors.white, fontSize: 15),),);
+      });
+    }
 
-    firstButton = IconButton(
-        icon: Icon(Icons.edit),
-        onPressed: () {
-//          setState(() {
-//            this.type = 'Trainer';
-//            this.exercises = this.program.getWorkout(this.type);
-//            this.currentButton = secondButton;
-//          });
-        });
+  }
 
-    secondButton = IconButton(
-        icon: Icon(Icons.check),
-        onPressed: () {
-//          setState(() {
-//            this.type = 'Client';
-//            this.exercises = this.program.getWorkout(this.type);
-//            this.currentButton = firstButton;
-//          });
-        });
 
-    currentButton = firstButton;
+  void createCircuit(){
+    if(this.chosenCards.length == 0){
+      return;
+    }
+
+    Circuit circuit = Circuit();
+
+    for(ExerciseCard exerciseCard in this.chosenCards){
+      circuit.addExercise(exerciseCard.exercise);
+      this.programCard.program.exercises.remove(exerciseCard.exercise);
+    }
+
+    this.programCard.program.addExercise(circuit);
+
+    setState(() {
+      this.exerciseCards = this.createCards();
+    });
+
   }
 
   void get share async {
@@ -115,7 +150,7 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
               onPressed: () {
                 ShareExtend.share('Hi', 'bye');
               }),
-          this.currentButton
+          this.circuitButton
         ],
       ),
       body: ListView(

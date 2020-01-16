@@ -6,7 +6,7 @@ class PressableInfo extends StatelessWidget {
   String info;
   String ext;
 
-  PressableInfo({this.label, this.info, this.ext}) {
+  PressableInfo({@required this.label, @required this.info, @required this.ext}) {
     if (this.ext == 'mailto:') {
       this.ext = 'mailto:' + this.info + '?subject=Training&body= ';
     } else if (this.ext == 'tel:') {
