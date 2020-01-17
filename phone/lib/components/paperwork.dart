@@ -53,6 +53,10 @@ class Goal{
     this.record(this.current);
   }
 
+  String toString(){
+    return this.exercise + ' ' + this.load.toString() + ' ' + this.unit + ' by ' + this.date;
+  }
+
   void record(double value) {
     this.current = value;
     this.progress.add([DateTime.now(), value]);

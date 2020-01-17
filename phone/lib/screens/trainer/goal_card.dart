@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phone/components/paperwork.dart';
+import 'client_goal_screen.dart';
 
 class GoalCard extends StatelessWidget {
   final Goal goal;
@@ -12,7 +13,13 @@ class GoalCard extends StatelessWidget {
       children: <Widget>[
         ListTile(
           leading: CircularProgressIndicator(value: (this.goal.current/this.goal.load), backgroundColor: Colors.grey,),
-          title: Text(this.goal.exercise + ' ' + this.goal.load.toString() + ' ' + this.goal.unit + ' by ' + this.goal.date),
+          title: Text(this.goal.toString()),
+          onTap: (){
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => GoalPage(goal: this.goal)));
+          },
         ),
         Divider(
           thickness: 1.5,
