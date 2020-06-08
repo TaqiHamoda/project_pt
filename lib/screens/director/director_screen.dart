@@ -281,8 +281,6 @@ class _DirectorPageState extends State<DirectorPage> {
                 Icons.calendar_today,
               ),
             ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.insert_chart), title: Text('Analytics'))
           ],
         ),
       ),
