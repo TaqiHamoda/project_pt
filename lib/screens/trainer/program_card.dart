@@ -7,14 +7,18 @@ import 'package:phone/screens/trainer/trainer_program_screen.dart';
 class ProgramCard extends StatelessWidget {
   final Program program;
   final Trainer trainer;
+  final Function delete;
 
-  ProgramCard({@required this.program, @required this.trainer});
+  ProgramCard(
+      {@required this.program, @required this.trainer, @required this.delete});
 
-  get goals{
+  get goals {
     List<GoalCard> goals = [];
 
-    for(Goal goal in this.program.goals){
-      goals.add(GoalCard(goal: goal,));
+    for (Goal goal in this.program.goals) {
+      goals.add(GoalCard(
+        goal: goal,
+      ));
     }
 
     return goals;
@@ -25,7 +29,9 @@ class ProgramCard extends StatelessWidget {
     return ListTile(
         leading: Icon(Icons.table_chart),
         trailing: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            delete();
+          },
           icon: Icon(
             Icons.delete,
             color: Colors.red,
@@ -35,7 +41,10 @@ class ProgramCard extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => TrainerProgramPage(programCard: this, trainer: this.trainer,)));
+                  builder: (context) => TrainerProgramPage(
+                        programCard: this,
+                        trainer: this.trainer,
+                      )));
         },
         title: Text(
           this.program.name,
@@ -43,5 +52,3 @@ class ProgramCard extends StatelessWidget {
         ));
   }
 }
-
-

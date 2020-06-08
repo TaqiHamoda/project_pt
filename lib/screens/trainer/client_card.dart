@@ -8,17 +8,19 @@ class ClientCard extends StatelessWidget {
   final Client client;
   final Trainer trainer;
   final Function onLongPress;
+  final Function delete;
   bool selected = false;
 
-  ClientCard({@required this.client, @required this.name, @required this.trainer, this.onLongPress});
+
+  ClientCard({@required this.client, @required this.name, @required this.trainer, this.onLongPress, @required this.delete});
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      onPressed: (){
-        Navigator.push(context,
+      onPressed: () {
+        Navigator.of(context).push(
             MaterialPageRoute(builder: (context) =>
-                ClientDetails(client: this.client, name: this.name, trainer: this.trainer,),
+                ClientDetails(client: this.client, name: this.name, trainer: this.trainer, delete: this.delete,),
             ),
         );
       },
@@ -29,9 +31,9 @@ class ClientCard extends StatelessWidget {
             onLongPress: (){ this.onLongPress();
             this.selected = !this.selected; },
             onPressed: (){
-              Navigator.push(context,
+              Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) =>
-                      ClientDetails(client: this.client, name: this.name, trainer: this.trainer),
+                      ClientDetails(client: this.client, name: this.name, trainer: this.trainer, delete: this.delete,),
                   ),
               );
             },

@@ -31,7 +31,13 @@ class _TrainerPageState extends State<TrainerPage> {
         filteredClients.add(ClientCard(
           trainer: this.trainer,
           client: client,
-          name: clientName,)
+          name: clientName,
+          delete: () {
+            setState(() {
+              this.trainer.clients.remove(client);
+            });
+          },
+        )
         );
       }
     }

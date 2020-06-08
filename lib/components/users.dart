@@ -168,26 +168,26 @@ class UserCreator{
 
     List<Client> clients = [];
 
-    Director hiro = Director('Hiro', 'Diver', 'hiro@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
-    Director youssef = Director('Youssef', 'Nafei', 'you@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
+    Director dir1 = Director('Hiro', 'Diver', 'dir1@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
+    Director dir2 = Director('Youssef', 'Nafei', 'dir2@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
 
-    Trainer taqi = Trainer('Taqi', 'Hamoda', 'taqi@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
-    Trainer samy = Trainer('Samy', 'Hamoda', 'samy@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
+    Trainer train1 = Trainer('Taqi', 'Hamoda', 'train1@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
+    Trainer train2 = Trainer('Samy', 'Hamoda', 'train2@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
 
-    Client andrew = Client('Andrew', 'Petersen', 'andrew@app.com', 'Bebop', '1234567890');
-    andrew.addGoal(goals[0]);
-    andrew.addGoal(goals[2]);
-    andrew.addGoal(goals.elementAt(goals.length - 1));
+    Client client = Client('Andrew', 'Petersen', 'client@app.com', 'Bebop', '1234567890');
+    client.addGoal(goals[0]);
+    client.addGoal(goals[2]);
+    client.addGoal(goals.elementAt(goals.length - 1));
 
-    samy.addClient(andrew);
-    clients.add(andrew);
+    train2.addClient(client);
+    clients.add(client);
 
-    hiro.addTrainer(taqi);
-    hiro.addTrainer(samy);
-    youssef.addTrainer(taqi);
-    youssef.addTrainer(samy);
-    hiro.addDirector(youssef);
-    youssef.addDirector(hiro);
+    dir1.addTrainer(train1);
+    dir1.addTrainer(train2);
+    dir2.addTrainer(train1);
+    dir2.addTrainer(train2);
+    dir1.addDirector(dir2);
+    dir2.addDirector(dir1);
 
     for(int i = 0; i < 30; i++){
       String firstName = firstNames[generator.nextInt(firstNames.length)];
@@ -200,7 +200,7 @@ class UserCreator{
 
       if(number == 0){
         Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
-        hiro.addClient(client);
+        dir1.addClient(client);
         client.addGoal(goal1);
         client.addGoal(goal2);
         client.addGoal(goal3);
@@ -208,7 +208,7 @@ class UserCreator{
 
       else if(number == 1){
         Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
-        youssef.addClient(client);
+        dir2.addClient(client);
         client.addGoal(goal1);
         client.addGoal(goal2);
         client.addGoal(goal3);
@@ -216,7 +216,7 @@ class UserCreator{
 
       else if(number == 2){
         Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
-        taqi.addClient(client);
+        train1.addClient(client);
         client.addGoal(goal1);
         client.addGoal(goal2);
         client.addGoal(goal3);
@@ -224,7 +224,7 @@ class UserCreator{
 
       else{
         Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
-        samy.addClient(client);
+        train2.addClient(client);
         client.addGoal(goal1);
         client.addGoal(goal2);
         client.addGoal(goal3);
@@ -232,7 +232,7 @@ class UserCreator{
     }
 
 
-    List<User> users = [hiro, youssef, taqi, samy];
+    List<User> users = [dir1, dir2, train1, train2];
     users.addAll(clients);
 
     return users;

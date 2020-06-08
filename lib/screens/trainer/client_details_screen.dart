@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../main/messages_screen.dart';
 import 'program_card.dart';
+import 'goal_card.dart';
 import 'package:phone/components/users.dart';
 import 'package:phone/screens/main/custom_button.dart';
 import 'package:phone/screens/main/dialog.dart';
@@ -12,12 +13,17 @@ class ClientDetails extends StatefulWidget {
   final Client client;
   final String name;
   final Trainer trainer;
+  final Function delete;
 
-  ClientDetails({@required this.client, @required this.trainer, @required this.name});
-
+  ClientDetails(
+      {@required this.client,
+      @required this.trainer,
+      @required this.name,
+      @required this.delete});
 
   @override
-  _ClientDetails createState() => _ClientDetails(this.client, this.name, this.trainer);
+  _ClientDetails createState() =>
+      _ClientDetails(this.client, this.name, this.trainer);
 }
 
 class _ClientDetails extends State<ClientDetails> {
@@ -25,15 +31,30 @@ class _ClientDetails extends State<ClientDetails> {
   final String name;
   final Client client;
   List<ProgramCard> programCards = [];
+  List<GoalCard> goalCards = [];
 
-  _ClientDetails(this.client, this.name, this.trainer){
+  _ClientDetails(this.client, this.name, this.trainer) {
+    for (Program program in this.client.programs) {
+      this.programCards.add(ProgramCard(
+            program: program,
+            trainer: this.trainer,
+            delete: () {
+              for (ProgramCard programCard in this.programCards) {
+                if (programCard.program == program) {
+                  setState(() {
+                    this.programCards.remove(programCard);
+                  });
+                  break;
+                }
+              }
+            },
+          ));
+    }
 
-    for(Program program in this.client.programs){
-      this.programCards.add(ProgramCard(program: program, trainer: this.trainer));
+    for (Goal goal in this.client.goals) {
+      this.goalCards.add(GoalCard(goal: goal));
     }
   }
-
-  void delete() {}
 
   void addProgram() {
     String programName = '';
@@ -50,7 +71,22 @@ class _ClientDetails extends State<ClientDetails> {
           this.client.addProgram(program);
 
           setState(() {
-            this.programCards.add(ProgramCard(program: program, trainer: this.trainer,));
+            this.programCards.add(
+                  ProgramCard(
+                    program: program,
+                    trainer: this.trainer,
+                    delete: () {
+                      for (ProgramCard programCard in this.programCards) {
+                        if (programCard.program == program) {
+                          setState(() {
+                            this.programCards.remove(programCard);
+                          });
+                          break;
+                        }
+                      }
+                    },
+                  ),
+                );
           });
         },
         children: <Widget>[
@@ -75,9 +111,8 @@ class _ClientDetails extends State<ClientDetails> {
           IconButton(icon: Icon(Icons.near_me), onPressed: () {}),
           PopupMenuButton<Choices>(
             onSelected: (Choices result) {
-              setState(() {
-                delete();
-              });
+              Navigator.of(context).pop();
+              widget.delete();
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<Choices>>[
               PopupMenuItem<Choices>(
@@ -122,7 +157,8 @@ class _ClientDetails extends State<ClientDetails> {
                             info: this.client.phoneNum,
                             ext: 'tel:'),
                         PressableInfo(
-                            label: 'Sessions Remaining: ' + this.client.sessions.toString(),
+                            label: 'Sessions Remaining: ' +
+                                this.client.sessions.toString(),
                             info: '',
                             ext: '')
                       ],
@@ -138,6 +174,7 @@ class _ClientDetails extends State<ClientDetails> {
                 ],
               )
             ] +
+            this.goalCards +
             this.programCards +
             [
               CustomButton(
