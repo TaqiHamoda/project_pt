@@ -39,6 +39,8 @@ class _ClientDetails extends State<ClientDetails> {
             program: program,
             trainer: this.trainer,
             delete: () {
+              this.client.programs.remove(program);
+
               for (ProgramCard programCard in this.programCards) {
                 if (programCard.program == program) {
                   setState(() {
@@ -76,6 +78,8 @@ class _ClientDetails extends State<ClientDetails> {
                     program: program,
                     trainer: this.trainer,
                     delete: () {
+                      this.client.programs.remove(program);
+
                       for (ProgramCard programCard in this.programCards) {
                         if (programCard.program == program) {
                           setState(() {
