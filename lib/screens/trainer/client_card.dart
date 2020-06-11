@@ -18,8 +18,8 @@ class ClientCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) =>
+        Navigator.push(context,
+            MaterialPageRoute(builder: (_) =>
                 ClientDetails(client: this.client, name: this.name, trainer: this.trainer, delete: this.delete,),
             ),
         );
@@ -31,8 +31,8 @@ class ClientCard extends StatelessWidget {
             onLongPress: (){ this.onLongPress();
             this.selected = !this.selected; },
             onPressed: (){
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) =>
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) =>
                       ClientDetails(client: this.client, name: this.name, trainer: this.trainer, delete: this.delete,),
                   ),
               );

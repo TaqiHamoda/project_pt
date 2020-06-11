@@ -4,11 +4,11 @@ import 'package:phone/components/users.dart';
 
 class ExerciseCard extends StatelessWidget {
   final Exercise exercise;
-  final Function onChosen;
   final User user;
+  final Color colour;
   bool _chosen = false;
 
-  ExerciseCard({@required this.exercise, this.onChosen, @required this.user});
+  ExerciseCard({@required this.exercise, @required this.user, this.colour});
 
   bool get chosen{
     return this._chosen;
@@ -20,13 +20,12 @@ class ExerciseCard extends StatelessWidget {
       icon: Icon(Icons.trip_origin, color: this._chosen ? Colors.green : null,),
       onPressed: (){
       this._chosen = !this._chosen;
-      this.onChosen();
       },);
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: Card(
-        color: Colors.grey,
+        color: colour != null ? colour : Colors.grey,
         child: Column(
           children: <Widget>[
             Container(
@@ -145,35 +144,6 @@ class ExerciseCard extends StatelessWidget {
                 )
             ]),
       ),
-    );
-  }
-}
-
-
-class CircuitCard extends ExerciseCard {
-  final Circuit circuit;
-  final List<Widget> exerciseCards = [];
-  final User user;
-  int color = 0;
-
-  CircuitCard({@required this.circuit, @required this.user}){
-    for(Exercise exercise in circuit.exercises){
-
-      this.exerciseCards.add(Container(
-        margin: EdgeInsets.all(10.0),
-        padding: EdgeInsets.all(5.0),
-        child: ExerciseCard(exercise: exercise, user: this.user),
-        color: (this.color/2) == 0 ? Colors.grey[700] : Colors.grey[500],
-      ));
-
-      this.color += 1;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: this.exerciseCards,
     );
   }
 }

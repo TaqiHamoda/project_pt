@@ -15,87 +15,13 @@ class TrainerProgramPage extends StatefulWidget {
   TrainerProgramPage({@required this.programCard, @required this.trainer});
 
   @override
-  _TrainerProgramPageState createState() =>
-      _TrainerProgramPageState(this.programCard, this.trainer);
+  _TrainerProgramPageState createState() => _TrainerProgramPageState();
 }
 
 class _TrainerProgramPageState extends State<TrainerProgramPage> {
   final String rpe = "\n";
-  final ProgramCard programCard;
-  final Trainer trainer;
   Widget circuitButton = SizedBox();
-  List<ExerciseCard> exerciseCards;
-  List<ExerciseCard> chosenCards = [];
-
-  _TrainerProgramPageState(this.programCard, this.trainer) {
-    this.exerciseCards = this.createCards();
-  }
-
-  List<ExerciseCard> createCards(){
-    List<ExerciseCard> cards = [];
-
-      for (Exercise exercise in this.programCard.program.exercises) {
-        if(exercise is Circuit){
-          cards.add(CircuitCard(circuit: exercise, user: this.trainer,));
-        }
-
-        else{
-          cards.add(ExerciseCard(
-            exercise: exercise,
-            user: this.trainer,
-            onChosen: () {changeButton();},
-          ));
-        }
-      }
-
-      return cards;
-  }
-
-  void changeButton(){
-    bool chosen = false;
-
-    for(ExerciseCard exerciseCard in this.exerciseCards){
-      if(exerciseCard.chosen){
-        chosenCards.add(exerciseCard);
-        chosen = true;
-      }
-    }
-
-    if(chosen){
-      setState(() {
-        this.circuitButton = FlatButton(
-            onPressed: (){
-              createCircuit();
-              setState(() {
-                this.circuitButton = SizedBox();
-              });
-            },
-            child: Text('Create Circuit', style: TextStyle(color: Colors.white, fontSize: 15),),);
-      });
-    }
-
-  }
-
-
-  void createCircuit(){
-    if(this.chosenCards.length == 0){
-      return;
-    }
-
-    Circuit circuit = Circuit();
-
-    for(ExerciseCard exerciseCard in this.chosenCards){
-      circuit.addExercise(exerciseCard.exercise);
-      this.programCard.program.exercises.remove(exerciseCard.exercise);
-    }
-
-    this.programCard.program.addExercise(circuit);
-
-    setState(() {
-      this.exerciseCards = this.createCards();
-    });
-
-  }
+  Map<Key, Widget> exerciseCards;
 
   void get share async {
     final directory = await getTemporaryDirectory();
@@ -140,10 +66,56 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
   }
 
   @override
+  void initState() {
+    exerciseCards = {};
+
+    for (Exercise exercise in widget.programCard.program.exercises) {
+      Key key = UniqueKey();
+
+      exerciseCards[key] = Dismissible(
+        key: key,
+        child: ExerciseCard(
+          exercise: exercise,
+          user: widget.trainer,
+        ),
+        background: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+          margin: EdgeInsets.symmetric(vertical: 10.0),
+          child: Card(
+            color: Colors.red.withOpacity(0.8),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 60.0),
+                child: Icon(
+                  Icons.delete,
+                  size: 45,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+        onDismissed: (DismissDirection direction) {
+          setState(() {
+            if (this.mounted) {
+              widget.programCard.program.exercises.remove(exercise);
+              exerciseCards.remove(key);
+              print(exerciseCards);
+            }
+          });
+        },
+      );
+    }
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.programCard.program.name),
+        title: Text(widget.programCard.program.name),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.share),
@@ -165,26 +137,64 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
                     )),
               )
             ] +
-            this.programCard.goals +
-            this.exerciseCards +
+            exerciseCards.values.toList() +
             [
               CustomButton(
                   onTap: () {
                     Exercise exercise = Exercise();
-                    this.programCard.program.addExercise(exercise);
 
                     setState(() {
-                      this.exerciseCards.add(ExerciseCard(
-                            exercise: exercise,
-                            user: this.trainer,
-                            onChosen: () {},
-                          ));
+                      widget.programCard.program.addExercise(exercise);
+                    });
+
+                    Key key = UniqueKey();
+
+                    Widget newCard = Dismissible(
+                      key: key,
+                      child: ExerciseCard(
+                        exercise: exercise,
+                        user: widget.trainer,
+                      ),
+                      background: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20)),
+                        margin: EdgeInsets.symmetric(vertical: 10.0),
+                        child: Card(
+                          color: Colors.red.withOpacity(0.8),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 60.0),
+                              child: Icon(
+                                Icons.delete,
+                                size: 45,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      onDismissed: (DismissDirection direction) {
+                        setState(() {
+                          if (this.mounted) {
+                            widget.programCard.program.exercises
+                                .remove(exercise);
+                            exerciseCards.remove(key);
+                            print(exerciseCards);
+                          }
+                        });
+                      },
+                    );
+
+                    setState(() {
+                      exerciseCards[key] = newCard;
+                      print(exerciseCards);
                     });
                   },
                   label: 'Add an Exercise'),
               SizedBox(
                 height: 70.0,
-              )
+              ),
             ],
       ),
     );
