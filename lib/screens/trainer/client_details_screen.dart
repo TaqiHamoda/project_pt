@@ -37,7 +37,7 @@ class _ClientDetails extends State<ClientDetails> {
     for (Program program in this.client.programs) {
       this.programCards.add(ProgramCard(
             program: program,
-            trainer: this.trainer,
+            user: this.trainer,
             delete: () {
               this.client.programs.remove(program);
 
@@ -76,7 +76,7 @@ class _ClientDetails extends State<ClientDetails> {
             this.programCards.add(
                   ProgramCard(
                     program: program,
-                    trainer: this.trainer,
+                    user: this.trainer,
                     delete: () {
                       this.client.programs.remove(program);
 

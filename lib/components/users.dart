@@ -9,15 +9,17 @@ class User {
   String email;
   String _password;
   String phoneNum;
+  String unit;
   List<User> messageList = [];
   ImageProvider photo = AssetImage('images/profile.png');
 
-  User(firstName, lastName, email, password, cellNum) {
+  User(firstName, lastName, email, password, cellNum, {unit='Metric'}) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this._password = password;
     this.phoneNum = cellNum;
+    this.unit = unit;
   }
 
   bool signIn(String email, String password) {
@@ -178,6 +180,18 @@ class UserCreator{
     client.addGoal(goals[0]);
     client.addGoal(goals[2]);
     client.addGoal(goals.elementAt(goals.length - 1));
+
+    Program program = Program(name: 'PPL', goals: goals);
+
+    Exercise exercise = Exercise();
+    exercise.name = 'Bench Press';
+    exercise.sets = '3';
+    exercise.reps = '10';
+    exercise.rest = '30 s';
+    exercise.weight = '100 kg';
+
+    program.addExercise(exercise);
+    client.addProgram(program);
 
     train2.addClient(client);
     clients.add(client);

@@ -10,9 +10,9 @@ import 'package:phone/components/users.dart';
 
 class TrainerProgramPage extends StatefulWidget {
   final ProgramCard programCard;
-  final Trainer trainer;
+  final User user;
 
-  TrainerProgramPage({@required this.programCard, @required this.trainer});
+  TrainerProgramPage({@required this.programCard, @required this.user});
 
   @override
   _TrainerProgramPageState createState() => _TrainerProgramPageState();
@@ -72,11 +72,11 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
     for (Exercise exercise in widget.programCard.program.exercises) {
       Key key = UniqueKey();
 
-      exerciseCards[key] = Dismissible(
+      exerciseCards[key] = widget.user is Trainer ? Dismissible(
         key: key,
         child: ExerciseCard(
           exercise: exercise,
-          user: widget.trainer,
+          user: widget.user,
         ),
         background: Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
@@ -101,10 +101,12 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
             if (this.mounted) {
               widget.programCard.program.exercises.remove(exercise);
               exerciseCards.remove(key);
-              print(exerciseCards);
             }
           });
         },
+      ) : ExerciseCard(
+        exercise: exercise,
+        user: widget.user,
       );
     }
 
@@ -138,7 +140,7 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
               )
             ] +
             exerciseCards.values.toList() +
-            [
+            [widget.user is Trainer ?
               CustomButton(
                   onTap: () {
                     Exercise exercise = Exercise();
@@ -153,7 +155,7 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
                       key: key,
                       child: ExerciseCard(
                         exercise: exercise,
-                        user: widget.trainer,
+                        user: widget.user,
                       ),
                       background: Container(
                         decoration: BoxDecoration(
@@ -180,7 +182,6 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
                             widget.programCard.program.exercises
                                 .remove(exercise);
                             exerciseCards.remove(key);
-                            print(exerciseCards);
                           }
                         });
                       },
@@ -188,10 +189,9 @@ class _TrainerProgramPageState extends State<TrainerProgramPage> {
 
                     setState(() {
                       exerciseCards[key] = newCard;
-                      print(exerciseCards);
                     });
                   },
-                  label: 'Add an Exercise'),
+                  label: 'Add an Exercise') : Container(),
               SizedBox(
                 height: 70.0,
               ),

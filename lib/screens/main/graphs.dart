@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:phone/components/paperwork.dart';
 import 'package:phone/components/users.dart';
-import 'dart:math';
 
-
-
-
+Map <Goal, List<FlSpot>> map;
 
 class Graph extends StatelessWidget {
 
@@ -15,12 +12,17 @@ class Graph extends StatelessWidget {
   final Goal goal;
   List<FlSpot> monthlySpots = [];
 
-
-
   Graph(this.timeInterval, this.user, this.goal){
-    addSpot(1, _getMinY());
-    addSpot(2, _getMaxY());
-    addSpot(3, (_getMaxY() + _getMinY()) / 2);
+
+    if (map == null) {
+      addSpot(1, _getMinY());
+      addSpot(2, _getMaxY());
+      addSpot(3, (_getMaxY() + _getMinY()) / 2);
+    } else if (map[this.goal] == null) {
+      addSpot(1, _getMinY());
+      addSpot(2, _getMaxY());
+      addSpot(3, (_getMaxY() + _getMinY()) / 2);
+    }
   }
 
   String _getInterval(double value, String unit){
@@ -40,24 +42,65 @@ class Graph extends StatelessWidget {
 
     return '';
 
+  }
 
-
-
+  double getLastMonth (Goal goal) {
+    return map[goal].last.x;
   }
 
   double _getMinY(){
+    if (map == null) {
+      return (this.goal.current * 0.9).roundToDouble();
+    }
 
+    if (map[this.goal] == null) {
+      return (this.goal.current * 0.9).roundToDouble();
+    }
 
-    return (this.goal.current * 0.9).roundToDouble();
+    double minimum = 0;
+
+    for (int i = 0; i < map[this.goal].length; i++) {
+      if (map[this.goal][i].y < minimum) {
+        minimum = map[this.goal][i].y;
+      }
+    }
+
+    return minimum;
   }
 
   double _getMaxY(){
+    if (map == null) {
+      return (this.goal.current * 1.1).roundToDouble();
+    }
 
-    return (this.goal.current * 1.1).roundToDouble();
+    if (map[this.goal] == null) {
+      return (this.goal.current * 1.1).roundToDouble();
+    }
+
+    double maximum = 0;
+
+    for (int i = 0; i < map[this.goal].length; i++) {
+      if (map[this.goal][i].y > maximum) {
+        maximum = map[this.goal][i].y;
+      }
+    }
+
+    return maximum;
   }
 
   void addSpot(double x, double y){
-    this.monthlySpots.add(FlSpot(x, y));
+    if (map == null) {
+      map = {};
+      this.monthlySpots.add(FlSpot(x, y));
+      map[this.goal] = this.monthlySpots;
+
+    } else if (map[this.goal] == null) {
+      this.monthlySpots.add(FlSpot(x, y));
+      map[this.goal] = this.monthlySpots;
+
+    }else {
+      map[this.goal].add(FlSpot(x,y));
+    }
   }
 
   LineChartData _whichData(){
@@ -185,7 +228,7 @@ class Graph extends StatelessWidget {
   List<LineChartBarData> monthlySpotsData() {
     return [
        LineChartBarData(
-        spots: this.monthlySpots,
+        spots: map[this.goal],
         curveSmoothness: 0,
         colors: [
           Color(0x444af699),
@@ -281,7 +324,7 @@ class Graph extends StatelessWidget {
   List<LineChartBarData> monthly3SpotsData() {
     return [
        LineChartBarData(
-        spots: this.monthlySpots,
+        spots: map[this.goal],
         curveSmoothness: 0,
         colors: [
           Color(0x444af699),
@@ -373,10 +416,10 @@ class Graph extends StatelessWidget {
 
   List<FlSpot> _yearlyAverageSpots(){
     double average = 0;
-    for(FlSpot fs in this.monthlySpots){
+    for(FlSpot fs in map[this.goal]){
       average += fs.y;
     }
-    return [FlSpot(1, average / this.monthlySpots.length)];
+    return [FlSpot(1, average / map[this.goal].length)];
   }
 
   List<LineChartBarData> yearlySpotsData() {
@@ -392,6 +435,5 @@ class Graph extends StatelessWidget {
       ),
     ];
   }
-
 
 }

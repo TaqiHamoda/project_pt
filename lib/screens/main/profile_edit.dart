@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'login_screen.dart';
 
 class SettingsPage extends StatefulWidget {
-
   final User user;
   SettingsPage(this.user);
 
@@ -15,7 +14,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
   User user;
   String name = '';
   String email = '';
@@ -43,7 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: 20.0),
         child: FloatingActionButton.extended(
-          onPressed: (){
+          onPressed: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -59,18 +57,13 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         actions: <Widget>[
           FlatButton(
-            onPressed: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LoginPage()));
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginPage()));
             },
             child: Text(
               'Log Out',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20
-              ),
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),
         ],
@@ -78,18 +71,21 @@ class _SettingsPageState extends State<SettingsPage> {
           'Edit Profile',
         ),
       ),
-      body: ListView(
-        children: <Widget>[Padding(
+      body: ListView(children: <Widget>[
+        Padding(
           padding: EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  CircleAvatar(backgroundImage: this.user.photo, backgroundColor: Colors.transparent, radius: 100,),
-
+                  CircleAvatar(
+                    backgroundImage: this.user.photo,
+                    backgroundColor: Colors.transparent,
+                    radius: 100,
+                  ),
                   FlatButton(
-                    onPressed: (){
+                    onPressed: () {
                       getImage();
                     },
                     child: Text(
@@ -108,10 +104,12 @@ class _SettingsPageState extends State<SettingsPage> {
               TextFormField(
                 autovalidate: true,
                 initialValue: user.firstName + ' ' + user.lastName,
-                validator: (String value){
-                  return nameExp.hasMatch(value.trim()) ? null : 'Enter valid name';
+                validator: (String value) {
+                  return nameExp.hasMatch(value.trim())
+                      ? null
+                      : 'Enter valid name';
                 },
-                onFieldSubmitted: (String value){
+                onFieldSubmitted: (String value) {
                   this.user.setName(value);
                 },
                 decoration: InputDecoration(
@@ -121,7 +119,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               TextFormField(
                 initialValue: user.email,
-                onFieldSubmitted: (String value){
+                onFieldSubmitted: (String value) {
                   this.user.email = value;
                 },
                 decoration: InputDecoration(
@@ -132,10 +130,12 @@ class _SettingsPageState extends State<SettingsPage> {
               TextFormField(
                 autovalidate: true,
                 initialValue: user.phoneNum,
-                validator: (String value){
-                  return phoneExp.hasMatch(value.trim()) ? null : 'Enter valid phone number';
+                validator: (String value) {
+                  return phoneExp.hasMatch(value.trim())
+                      ? null
+                      : 'Enter valid phone number';
                 },
-                onFieldSubmitted: (String value){
+                onFieldSubmitted: (String value) {
                   this.user.phoneNum = value;
                 },
                 decoration: InputDecoration(
@@ -143,11 +143,51 @@ class _SettingsPageState extends State<SettingsPage> {
                   labelText: 'Phone Number',
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 25.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ButtonTheme(
+                      height: 50,
+                      minWidth: 120,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            user.unit = 'Metric';
+                          });
+                        },
+                        child: Text('Metric', style: TextStyle(color: Colors.white, fontSize: 18),),
+                        color: user.unit == 'Metric' ? Colors.blue : Colors.lightBlueAccent,
+                      ),
+                    ),
+                    SizedBox(width: 30,),
+                    ButtonTheme(
+                      height: 50,
+                      minWidth: 120,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            user.unit = 'Imperial';
+                          });
+                        },
+                        child: Text('Imperial', style: TextStyle(color: Colors.white, fontSize: 18),),
+                        color: user.unit == 'Imperial' ? Colors.blue : Colors.lightBlueAccent,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
-        ]
-      ),
+      ]),
     );
   }
 }

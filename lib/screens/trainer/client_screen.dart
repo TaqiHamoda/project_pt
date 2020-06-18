@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:phone/screens/main/messages_screen.dart';
-import 'package:phone/screens/main/custom_button.dart';
 import '../../components/users.dart';
 import 'package:phone/screens/main/profile_button.dart';
+import 'package:phone/screens/trainer/program_card.dart';
 import 'package:flutter/services.dart';
 import 'package:phone/screens/trainer/goal_card.dart';
-import 'package:phone/screens/main/graphs.dart';
 import 'package:phone/components/paperwork.dart';
 import 'goal_card.dart';
 
@@ -22,17 +21,32 @@ class ClientPage extends StatefulWidget {
 class _ClientPageState extends State<ClientPage> {
   Client client;
   String search = '';
-  String timeInterval = 'Monthly';
-  String whichGoal = 'Goal 1';
-  Goal currGoal;
   List<GoalCard> goalCards = [];
+  List<ProgramCard> programCards = [];
 
   _ClientPageState(this.client){
     for(Goal goal in this.client.goals){
-      this.goalCards.add(GoalCard(goal: goal));
+      this.goalCards.add(GoalCard(goal: goal, client: client),);
     }
-    
-    this.currGoal = this.client.goals[1];
+
+    for (Program program in this.client.programs) {
+      this.programCards.add(ProgramCard(
+        program: program,
+        user: this.client,
+        delete: () {
+          this.client.programs.remove(program);
+
+          for (ProgramCard programCard in this.programCards) {
+            if (programCard.program == program) {
+              setState(() {
+                this.programCards.remove(programCard);
+              });
+              break;
+            }
+          }
+        },
+      ));
+    }
   }
 
   @override
@@ -65,60 +79,7 @@ class _ClientPageState extends State<ClientPage> {
         ),
         body: Center(
           child: Column(
-            children: <Widget>[SizedBox(height: 10,)] + this.goalCards + <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(child: CustomButton(onTap: (){}, label: 'Programs')),
-                  Expanded(child: CustomButton(onTap: (){}, label: 'Par-Q'))
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  FlatButton(
-                    onPressed: (){
-                      setState(() {
-                        if(timeInterval == 'Monthly'){
-                          timeInterval = '3 Month';
-                        }
-                        else if(timeInterval == '3 Month'){
-                          timeInterval = 'Yearly';
-                        }
-                        else{
-                          timeInterval = 'Monthly';
-                        }
-
-                      });
-                    },
-                    child: Text(
-                      this.timeInterval,
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: (){
-                      setState(() { // can prob be cleaned up but allow it for now
-                        if(whichGoal == 'Goal 1'){
-                          this.currGoal = this.client.goals[1]; // index 1 for testing purposes
-                          whichGoal = 'Goal 2';
-                        }
-                        else if(whichGoal == 'Goal 2'){
-                          this.currGoal = this.client.goals[1];
-                          whichGoal = 'Goal 3';
-                        }
-                        else{
-                          this.currGoal = this.client.goals[1];
-                          whichGoal = 'Goal 1';
-                        }
-                      });
-                    },
-                    child: Text(
-                      whichGoal,
-                    ),
-                  ),
-                ],
-              ),
-              Expanded(child: Graph(this.timeInterval, this.client, this.currGoal)),
-            ],
+            children: <Widget>[SizedBox(height: 10,)] + this.goalCards + this.programCards
           ),
         ),
 

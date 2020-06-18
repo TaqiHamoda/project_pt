@@ -7,11 +7,11 @@ import 'package:phone/screens/trainer/trainer_program_screen.dart';
 
 class ProgramCard extends StatelessWidget {
   final Program program;
-  final Trainer trainer;
+  final User user;
   final Function delete;
 
   ProgramCard(
-      {@required this.program, @required this.trainer, @required this.delete});
+      {@required this.program, @required this.user, @required this.delete});
 
   get goals {
     List<GoalCard> goals = [];
@@ -63,7 +63,7 @@ class ProgramCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
         leading: Icon(Icons.table_chart),
-        trailing: IconButton(
+        trailing: this.user is Trainer ? IconButton(
           onPressed: () {
             _showDialog(context);
           },
@@ -71,14 +71,14 @@ class ProgramCard extends StatelessWidget {
             Icons.delete,
             color: Colors.red,
           ),
-        ),
+        ) : null,
         onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => TrainerProgramPage(
                         programCard: this,
-                        trainer: this.trainer,
+                        user: this.user,
                       )));
         },
         title: Text(
