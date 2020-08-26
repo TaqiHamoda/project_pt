@@ -8,6 +8,10 @@ class NewMessagePage extends StatefulWidget {
 class _NewMessagePageState extends State<NewMessagePage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Messages'),
+      ),
+    );
   }
 }
