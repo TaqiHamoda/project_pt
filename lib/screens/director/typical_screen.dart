@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:phone/screens/main/messages_screen.dart';
+import 'package:phone/screens/main/messaging_screen.dart';
 import 'package:phone/screens/main/dialog.dart';
 import 'package:phone/components/users.dart';
+import 'package:phone/screens/main/message_list.dart';
 import 'typical_card.dart';
 
 class UserPage extends StatefulWidget {
@@ -66,7 +67,7 @@ class _UserPageState extends State<UserPage> {
     String phone;
 
     SpecialDialog(
-        context: this.context,
+      context: context,
         title: 'Create a ' + this.screenType,
         onSubmit: () {
           if (this.screenType == 'Trainer') {
@@ -180,7 +181,7 @@ class _UserPageState extends State<UserPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MessagePage(this.director)));
+                      builder: (context) => NewMessagePage())); //fix later
             },
           ),
         ],

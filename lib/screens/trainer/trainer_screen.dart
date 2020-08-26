@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:phone/screens/main/messages_screen.dart';
+import 'package:phone/screens/main/messaging_screen.dart';
+import 'package:phone/screens/main/message_list.dart';
 import 'package:phone/screens/trainer/client_card.dart';
 import 'package:phone/screens/main/dialog.dart';
 import '../../components/users.dart';
@@ -52,7 +53,7 @@ class _TrainerPageState extends State<TrainerPage> {
     String phone;
 
     SpecialDialog(
-        context: this.context,
+      context: context,
         title: 'Create a client',
         onSubmit: () {
           setState(() {
@@ -161,7 +162,7 @@ class _TrainerPageState extends State<TrainerPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MessagePage(this.trainer)));
+                        builder: (context) => NewMessagePage(currentUser: trainer,))); //fix later
               },
             ),
           ],

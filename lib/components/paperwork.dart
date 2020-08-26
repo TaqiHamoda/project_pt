@@ -1,7 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:phone/screens/trainer/trainer_program_screen.dart';
 import 'dart:core';
 
 class Program{

@@ -4,18 +4,30 @@ import 'package:phone/components/paperwork.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:phone/screens/main/graphs.dart';
 import 'package:phone/screens/main/dialog.dart';
+import 'package:phone/screens/trainer/client_details_screen.dart';
+import 'package:phone/screens/trainer/client_screen.dart';
 
 class GoalPage extends StatefulWidget {
   final Goal goal;
   final Client client;
+  final bool userIsClient;
 
-  GoalPage({@required this.goal, @required this.client});
+  GoalPage(
+      {@required this.goal,
+      @required this.client,
+      @required this.userIsClient});
 
   @override
   _GoalPageState createState() => _GoalPageState();
 }
 
 class _GoalPageState extends State<GoalPage> {
+  String selectedUnit;
+  String exerciseName;
+  int targetValue;
+  String date;
+  double currentRecord;
+
   String timeInterval = "Monthly";
   Graph graph;
 
@@ -23,7 +35,7 @@ class _GoalPageState extends State<GoalPage> {
     double currentRecord;
 
     SpecialDialog(
-        context: this.context,
+        context: context,
         title: 'Update Goal',
         onSubmit: () {
           setState(() {
@@ -55,9 +67,187 @@ class _GoalPageState extends State<GoalPage> {
         ]);
   }
 
+  void changeGoal() {
+    SpecialDialog(
+        context: context,
+        title: 'Change Goal',
+        onSubmit: () {
+          setState(() {
+            Goal goal = Goal(
+                exercise: exerciseName,
+                date: date,
+                load: targetValue,
+                current: currentRecord,
+                unit: selectedUnit);
+
+            int index = widget.client.goals.indexOf(widget.goal);
+            widget.client.goals[index] = goal;
+
+            Navigator.pop(context);
+
+            if (widget.userIsClient) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ClientPage(
+                            client: widget.client,
+                          )));
+            } else {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ClientDetails(
+                          client: widget.client,
+                          trainer: widget.client.trainer,
+                          name: widget.client.firstName +
+                              ' ' +
+                              widget.client.lastName,
+                          delete: () {
+                            setState(() {
+                              widget.client.trainer.clients
+                                  .remove(widget.client);
+                            });
+                          })));
+            }
+          });
+        },
+
+        children: <Widget>[
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Exercise/Action (e.g. Bench Press, Run, Lose, etc.)',
+            ),
+            onChanged: (value) {
+              exerciseName = value;
+            },
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10.0),
+                    labelText: 'Target Value',
+                  ),
+                  onChanged: (value) {
+                    targetValue = int.parse(value);
+                  },
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              DropdownButton<String>(
+                hint: selectedUnit == null ? Text('Unit') : Text(selectedUnit),
+                items: <String>[
+                  'lbs',
+                  'kgs',
+                  'sec',
+                  'min',
+                  'hr',
+                  'miles',
+                  'km',
+                  'm',
+                  'ft',
+                  'other'
+                ].map((String value) {
+                  return new DropdownMenuItem<String>(
+                    value: value,
+                    child: new Text(value),
+                  );
+                }).toList(),
+                onChanged: (newValue) {
+                  setState(() {
+                    if (newValue == 'other') {
+                      addNewUnit();
+                    } else {
+                      selectedUnit = newValue;
+                      Navigator.pop(context);
+                      changeGoal();
+                    }
+                  });
+                },
+                underline: Container(),
+              ),
+            ],
+          ),
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Deadline (Month Year)',
+            ),
+            onChanged: (value) {
+              date = value;
+            },
+          ),
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10.0),
+              labelText: 'Current Record',
+            ),
+            onChanged: (value) {
+              currentRecord = double.parse(value);
+            },
+          ),
+        ]);
+  }
+
+  void addNewUnit() {
+    String newUnit;
+
+    SpecialDialog(
+      context: context,
+      title: 'Input unit',
+      onSubmit: () {
+        setState(() {
+          selectedUnit = newUnit;
+          Navigator.pop(context);
+          changeGoal();
+        });
+      },
+      children: <Widget>[
+        TextField(
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(left: 10.0),
+            labelText: 'Unit (e.g. stones, weeks, pushups, etc.)',
+          ),
+          onChanged: (value) {
+            newUnit = value;
+          },
+        ),
+      ],
+    );
+  }
+
+  void editGoal() {
+    int newTarget;
+
+    SpecialDialog(
+      context: context,
+      title: 'Edit Goal',
+      onSubmit: () {
+        setState(() {
+          widget.goal.load = newTarget;
+        });
+      },
+      children: <Widget>[
+        TextField(
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(left: 10.0),
+            labelText: 'New Target',
+          ),
+          onChanged: (value) {
+            newTarget = int.parse(value);
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   void initState() {
-    print(widget.client.unit);
     graph = Graph(timeInterval, widget.client, widget.goal);
     super.initState();
   }
@@ -65,26 +255,39 @@ class _GoalPageState extends State<GoalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: <Widget>[
-          Center(
-            child: IconButton(
-              icon: Icon(Icons.refresh, size: 30,),
-              onPressed: () {
-                updateGoal();
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton<String>(
+              items: <String>['Change Goal', 'Update Goal', 'Edit Goal']
+                  .map((String value) {
+                return new DropdownMenuItem<String>(
+                  value: value,
+                  child: new Text(value),
+                );
+              }).toList(),
+              icon: Icon(
+                Icons.more_vert,
+                color: Colors.white,
+              ),
+              underline: Container(),
+              onChanged: (newValue) {
+                setState(() {
+                  if (newValue == 'Update Goal') {
+                    updateGoal();
+                  } else if (newValue == 'Change Goal') {
+                    changeGoal();
+                  } else if (newValue == 'Edit Goal') {
+                    editGoal();
+                  }
+                });
               },
-            ),
-          ),
-          SizedBox(width: 15,),
-          Center(
-            child: IconButton(
-              icon: Icon(Icons.create, size: 30,),
-              onPressed: () {},
             ),
           ),
         ],
       ),
-
       body: Column(
         children: <Widget>[
           Container(
@@ -92,13 +295,15 @@ class _GoalPageState extends State<GoalPage> {
             alignment: Alignment(0, 0),
             child: CircularPercentIndicator(
               radius: 200,
-              percent: widget.goal.current <= widget.goal.load ? (widget.goal.current / widget.goal.load) : 1.0,
+              percent: widget.goal.current <= widget.goal.load
+                  ? (widget.goal.current / widget.goal.load)
+                  : 1.0,
               progressColor: Colors.blue,
               backgroundColor: Colors.grey,
               lineWidth: 10.0,
               circularStrokeCap: CircularStrokeCap.round,
               center: Container(
-                width: 190,
+                width: 178,
                 child: Text(
                   widget.goal.toString(),
                   textAlign: TextAlign.center,
@@ -125,7 +330,10 @@ class _GoalPageState extends State<GoalPage> {
                     ),
                     title: Text(
                       'Percentage Done: ' +
-                          (100 * (widget.goal.current <= widget.goal.load ? (widget.goal.current / widget.goal.load) : 1.0))
+                          (100 *
+                                  (widget.goal.current <= widget.goal.load
+                                      ? (widget.goal.current / widget.goal.load)
+                                      : 1.0))
                               .toStringAsFixed(1) +
                           ' %',
                       style: TextStyle(fontSize: 18),
@@ -145,7 +353,7 @@ class _GoalPageState extends State<GoalPage> {
                     'Current: ' +
                         widget.goal.current.toString() +
                         ' ' +
-                        'l',
+                        widget.goal.unit,
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
@@ -167,7 +375,7 @@ class _GoalPageState extends State<GoalPage> {
                         'Min: ' +
                             widget.goal.minimum.toString() +
                             ' ' +
-                            'l',
+                            widget.goal.unit,
                         style: TextStyle(fontSize: 18),
                       ),
                       Padding(
@@ -176,7 +384,7 @@ class _GoalPageState extends State<GoalPage> {
                           'Max: ' +
                               widget.goal.maximum.toString() +
                               ' ' +
-                              'l',
+                              widget.goal.unit,
                           style: TextStyle(fontSize: 18),
                         ),
                       ),
@@ -199,7 +407,7 @@ class _GoalPageState extends State<GoalPage> {
                 Center(
                   child: Container(
                     width: 355,
-                    child: graph, //TODO: graph moves up with keyboard
+                    child: graph,
                   ),
                 ),
                 Container(
@@ -215,7 +423,8 @@ class _GoalPageState extends State<GoalPage> {
                             timeInterval = 'Monthly';
                           }
 
-                          graph = Graph(timeInterval, widget.client, widget.goal);
+                          graph =
+                              Graph(timeInterval, widget.client, widget.goal);
                         });
                       },
                       elevation: 5.0,

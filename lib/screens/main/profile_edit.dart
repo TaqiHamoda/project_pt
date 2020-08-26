@@ -4,6 +4,7 @@ import 'package:phone/components/users.dart';
 import 'package:phone/screens/main/change_password_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SettingsPage extends StatefulWidget {
   final User user;
@@ -21,6 +22,7 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _darkMode = false;
   Widget _image;
 
+  final _auth = FirebaseAuth.instance;
   final RegExp nameExp = RegExp(r"^[a-z]+ [a-z]+$", caseSensitive: false);
   final RegExp phoneExp = RegExp(r"^[0-9]{10}$");
   // No regex for email cuz a7a bro there's .com, .ca, youssef.nafei@mail.utoronto.ca
@@ -57,7 +59,8 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         actions: <Widget>[
           FlatButton(
-            onPressed: () {
+            onPressed: () async {
+              _auth.signOut();
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => LoginPage()));
             },
@@ -141,47 +144,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 decoration: InputDecoration(
                   icon: Icon(Icons.phone),
                   labelText: 'Phone Number',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    ButtonTheme(
-                      height: 50,
-                      minWidth: 120,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            user.unit = 'Metric';
-                          });
-                        },
-                        child: Text('Metric', style: TextStyle(color: Colors.white, fontSize: 18),),
-                        color: user.unit == 'Metric' ? Colors.blue : Colors.lightBlueAccent,
-                      ),
-                    ),
-                    SizedBox(width: 30,),
-                    ButtonTheme(
-                      height: 50,
-                      minWidth: 120,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            user.unit = 'Imperial';
-                          });
-                        },
-                        child: Text('Imperial', style: TextStyle(color: Colors.white, fontSize: 18),),
-                        color: user.unit == 'Imperial' ? Colors.blue : Colors.lightBlueAccent,
-                      ),
-                    ),
-                  ],
                 ),
               ),
             ],

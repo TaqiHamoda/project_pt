@@ -42,7 +42,7 @@ class _TypicalTrainerDetails extends State<TypicalTrainerDetails> {
     String phone;
 
     SpecialDialog(
-        context: this.context,
+      context: context,
         title: 'Create a client',
         onSubmit: () {
           this.user.addClient(Client(firstName, lastName, email, 'Bebop', phone));

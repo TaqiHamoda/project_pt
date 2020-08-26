@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:phone/screens/main/messages_screen.dart';
+import 'package:phone/screens/main/messaging_screen.dart';
+import 'package:phone/screens/main/message_list.dart';
 import 'package:phone/screens/trainer/client_card.dart';
 import 'package:phone/screens/main/profile_edit.dart';
 import 'package:phone/screens/main/custom_button.dart';
@@ -33,7 +34,8 @@ class _DirectorPageState extends State<DirectorPage> {
       if (clientName.toLowerCase().contains(this.search)) {
         filteredClients.add(ClientCard(
           client: client,
-          name: clientName,)
+          name: clientName,
+        trainer: client.trainer,)
         );
       }
     }
@@ -80,7 +82,7 @@ class _DirectorPageState extends State<DirectorPage> {
     String phone;
 
     SpecialDialog(
-        context: this.context,
+      context: context,
         title: 'Create a client',
         onSubmit: () {
           setState(() {
@@ -217,7 +219,7 @@ class _DirectorPageState extends State<DirectorPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MessagePage(this.director)));
+                        builder: (context) => NewMessagePage())); //fix later
               },
             ),
           ],

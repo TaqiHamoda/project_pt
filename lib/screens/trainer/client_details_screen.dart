@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../main/messages_screen.dart';
+import '../main/messaging_screen.dart';
 import 'program_card.dart';
 import 'goal_card.dart';
 import 'package:phone/components/users.dart';
@@ -54,7 +54,7 @@ class _ClientDetails extends State<ClientDetails> {
     }
 
     for (Goal goal in this.client.goals) {
-      this.goalCards.add(GoalCard(goal: goal));
+      this.goalCards.add(GoalCard(goal: goal, client: this.client, userIsClient: false,));
     }
   }
 
@@ -62,7 +62,7 @@ class _ClientDetails extends State<ClientDetails> {
     String programName = '';
 
     SpecialDialog(
-        context: this.context,
+      context: context,
         title: 'Create a new workout',
         onSubmit: () {
           Program program = Program(
@@ -112,7 +112,11 @@ class _ClientDetails extends State<ClientDetails> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.near_me), onPressed: () {}),
+          IconButton(icon: Icon(Icons.near_me), onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => MessagePage(
+              receiver: client,
+            )));
+          }),
           PopupMenuButton<Choices>(
             onSelected: (Choices result) {
               Navigator.of(context).pop();

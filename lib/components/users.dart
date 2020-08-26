@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'paperwork.dart';
@@ -9,17 +10,15 @@ class User {
   String email;
   String _password;
   String phoneNum;
-  String unit;
   List<User> messageList = [];
   ImageProvider photo = AssetImage('images/profile.png');
 
-  User(firstName, lastName, email, password, cellNum, {unit='Metric'}) {
+  User(firstName, lastName, email, password, cellNum) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this._password = password;
     this.phoneNum = cellNum;
-    this.unit = unit;
   }
 
   bool signIn(String email, String password) {
@@ -156,6 +155,14 @@ class UserCreator{
     return phoneNum;
   }
 
+  static void registerUser(String email, String password) async {
+    try {
+      final _auth = FirebaseAuth.instance;
+      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await _auth.signOut();
+    } catch (e) {print(e);}
+  }
+
   static List<User> create(){
     Random generator = Random();
 
@@ -170,13 +177,18 @@ class UserCreator{
 
     List<Client> clients = [];
 
-    Director dir1 = Director('Hiro', 'Diver', 'dir1@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
-    Director dir2 = Director('Youssef', 'Nafei', 'dir2@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
+    Director dir1 = Director('Hiro', 'Diver', 'dir1@app.com', 'Bebop!', UserCreator.phoneNumberGenerator());
+    //registerUser(dir1.email, dir1._password);
+    Director dir2 = Director('Youssef', 'Nafei', 'dir2@app.com', 'Bebop!', UserCreator.phoneNumberGenerator());
+    //registerUser(dir2.email, dir2._password);
 
-    Trainer train1 = Trainer('Taqi', 'Hamoda', 'train1@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
-    Trainer train2 = Trainer('Samy', 'Hamoda', 'train2@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
+    Trainer train1 = Trainer('Taqi', 'Hamoda', 'train1@app.com', 'Bebop!', UserCreator.phoneNumberGenerator());
+    //registerUser(train1.email, train1._password);
+    Trainer train2 = Trainer('Samy', 'Hamoda', 'train2@app.com', 'Bebop!', UserCreator.phoneNumberGenerator());
+    //registerUser(train2.email, train2._password);
 
-    Client client = Client('Andrew', 'Petersen', 'client@app.com', 'Bebop', '1234567890');
+    Client client = Client('Andrew', 'Petersen', 'client@app.com', 'Bebop!', '1234567890');
+    //registerUser(client.email, client._password);
     client.addGoal(goals[0]);
     client.addGoal(goals[2]);
     client.addGoal(goals.elementAt(goals.length - 1));
@@ -210,10 +222,12 @@ class UserCreator{
       Goal goal2 = goals[generator.nextInt(goals.length)];
       Goal goal3 = goals[generator.nextInt(goals.length)];
 
+      Client client = Client(firstName, lastName, firstName.toLowerCase() + lastName.toLowerCase() + '@app.com', 'Bebop!', UserCreator.phoneNumberGenerator());
+      //registerUser(client.email, client._password);
+
       int number = generator.nextInt(4);
 
       if(number == 0){
-        Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
         dir1.addClient(client);
         client.addGoal(goal1);
         client.addGoal(goal2);
@@ -221,7 +235,6 @@ class UserCreator{
       }
 
       else if(number == 1){
-        Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
         dir2.addClient(client);
         client.addGoal(goal1);
         client.addGoal(goal2);
@@ -229,7 +242,6 @@ class UserCreator{
       }
 
       else if(number == 2){
-        Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
         train1.addClient(client);
         client.addGoal(goal1);
         client.addGoal(goal2);
@@ -237,7 +249,6 @@ class UserCreator{
       }
 
       else{
-        Client client = Client(firstName, lastName, firstName.toLowerCase() + '@app.com', 'Bebop', UserCreator.phoneNumberGenerator());
         train2.addClient(client);
         client.addGoal(goal1);
         client.addGoal(goal2);

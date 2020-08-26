@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:phone/screens/main/messages_screen.dart';
+import 'package:phone/screens/main/messaging_screen.dart';
 import '../../components/users.dart';
 import 'package:phone/screens/main/profile_button.dart';
 import 'package:phone/screens/trainer/program_card.dart';
@@ -26,7 +26,7 @@ class _ClientPageState extends State<ClientPage> {
 
   _ClientPageState(this.client){
     for(Goal goal in this.client.goals){
-      this.goalCards.add(GoalCard(goal: goal, client: client),);
+      this.goalCards.add(GoalCard(goal: goal, client: client, userIsClient: true,),);
     }
 
     for (Program program in this.client.programs) {
@@ -72,7 +72,7 @@ class _ClientPageState extends State<ClientPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MessagePage(this.client)));
+                        builder: (context) => MessagePage(receiver: this.client.trainer,)));
               },
             ),
           ],

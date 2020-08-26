@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../director/director_screen.dart';
@@ -5,6 +6,7 @@ import '../trainer/trainer_screen.dart';
 import '../trainer/client_screen.dart';
 import 'typical_submit_info_screen.dart';
 import '../../components/users.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -16,12 +18,31 @@ class _LoginPageState extends State<LoginPage> {
   String _userPassword = '';
   bool error = false;
   final List<User> users = UserCreator.create();
+  final _firestore = Firestore.instance;
+  FirebaseUser firebaseUser;
 
-  void logIn() {
+  void logIn() async {
+    final _auth = FirebaseAuth.instance;
+
+    try {
+      await _auth.signInWithEmailAndPassword(email: _userEmail, password: _userPassword);
+      final tempUser = await _auth.currentUser();
+
+      if (tempUser != null) {
+        firebaseUser = tempUser;
+      }
+    } catch (e) {
+      print(e);
+    }
+
     bool success = false;
 
     for (User user in this.users) {
       if (user.signIn(this._userEmail, this._userPassword)) {
+
+        String userType = user is Client ? 'client' : user is Director ? 'director' : user is Trainer ? 'trainer' : '';
+
+        _firestore.collection('users').document(firebaseUser.email).setData({'email': firebaseUser.email, 'user': userType});
 
         if (user is Client) {
           success = true;
