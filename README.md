@@ -2,7 +2,7 @@
 
 A personal trainer management app that is solely coded in flutter. Developed for IOS/Android.
 
-<img src="Project_pt.gif" height="300">
+<img src="Project_pt.gif" height="900">
 
 ## About Project PT
 
