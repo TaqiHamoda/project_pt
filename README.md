@@ -1,18 +1,9 @@
-# phone
+# Project PT
 
-A new Flutter project.
+A personal trainer management app that is solely coded in flutter. Developed for IOS/Android.
 
 ![](Project_pt.gif)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This project is made to solve many of the communication issues that trainers face such as messaging, scheduling, tracking clients' progress, and sharing workout programs.
